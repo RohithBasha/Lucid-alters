@@ -9,6 +9,8 @@ on:
 jobs:
   check-bands:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     steps:
       - name: Checkout code
@@ -37,3 +39,11 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python main.py
+
+      - name: Commit trade journal
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add trade_journal.csv || true
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update trade journal [skip ci]" && git push)
+        continue-on-error: true

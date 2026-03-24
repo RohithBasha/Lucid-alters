@@ -13,6 +13,9 @@ import config
 from data_fetcher import fetch_all_instruments, is_market_open
 from bollinger import detect_signals
 from telegram_notifier import send_alert
+import journaler
+import traceback
+
 
 
 def load_state() -> dict:
@@ -60,13 +63,28 @@ def main():
     print(f"🕐 Commodity BB Alert — {datetime.now(timezone.utc).isoformat()} UTC")
     print("=" * 60)
 
-    # Check if market is open
-    if not is_market_open():
-        print("📴 Market is closed. Skipping.")
-        return
-
     # Load dedup state
     state = load_state()
+    
+    # Market open/close state tracking
+    currently_open = is_market_open()
+    last_status = state.get("last_market_status", None)
+    
+    if currently_open and last_status == "CLOSED":
+        # Market just opened!
+        send_alert({"emoji": "🟢", "label": "Market is OPEN!", "type": "INFO", "close": 0, "high": 0, "low": 0, "upper_bb": 0, "lower_bb": 0, "timestamp": datetime.now(timezone.utc).isoformat()}, "SYSTEM")
+    elif not currently_open and last_status == "OPEN":
+        # Market just closed!
+        send_alert({"emoji": "🔴", "label": "Market is CLOSED for the weekend/break.", "type": "INFO", "close": 0, "high": 0, "low": 0, "upper_bb": 0, "lower_bb": 0, "timestamp": datetime.now(timezone.utc).isoformat()}, "SYSTEM")
+        
+    # Update last known status
+    state["last_market_status"] = "OPEN" if currently_open else "CLOSED"
+    save_state(state) # Save early in case of later errors
+
+    # Check if market is open
+    if not currently_open:
+        print("📴 Market is closed. Skipping data fetch.")
+        return
 
     # Fetch candles for all instruments
     print("\n📊 Fetching 15-min candle data...")
@@ -101,6 +119,7 @@ def main():
 
             if success:
                 record_alert(state, symbol, signal["type"], signal["timestamp"])
+                journaler.log_alert(symbol, signal["type"], signal["close"], signal["upper_bb"], signal["lower_bb"], signal["timestamp"])
                 alerts_sent += 1
 
     # Save state
@@ -110,6 +129,23 @@ def main():
     print(f"✅ Done. {alerts_sent} alert(s) sent.")
     print(f"{'=' * 60}")
 
+def run_with_error_handling():
+    """Wrapper to catch and alert on fatal errors."""
+    try:
+        main()
+    except Exception as e:
+        error_trace = traceback.format_exc()
+        print(f"❌ FATAL ERROR:\n{error_trace}")
+        
+        # Send error alert to Telegram
+        error_msg = {
+            "emoji": "⚠️",
+            "label": f"SYSTEM ERROR: {str(e)[:50]}...",
+            "type": "ERROR",
+            "close": 0, "high": 0, "low": 0, "upper_bb": 0, "lower_bb": 0,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }
+        send_alert(error_msg, "SYSTEM")
 
 if __name__ == "__main__":
-    main()
+    run_with_error_handling()
