@@ -3,7 +3,11 @@ Telegram Bot API integration for sending alerts.
 Completely free, unlimited messages.
 """
 import requests
+from datetime import datetime
+from zoneinfo import ZoneInfo
 import config
+
+IST = ZoneInfo("Asia/Kolkata")
 
 
 def send_alert(signal: dict, symbol: str) -> bool:
@@ -22,6 +26,15 @@ def send_alert(signal: dict, symbol: str) -> bool:
     emoji = signal["emoji"]
     label = signal["label"]
 
+    # Convert timestamp to IST
+    try:
+        ts = datetime.fromisoformat(str(signal["timestamp"]))
+        if ts.tzinfo is None:
+            ts = ts.replace(tzinfo=ZoneInfo("UTC"))
+        ist_time = ts.astimezone(IST).strftime("%d-%b-%Y %I:%M %p IST")
+    except Exception:
+        ist_time = signal["timestamp"]
+
     if "CROSS" in signal["type"]:
         price_line = f"💰 Close: ${signal['close']:,.2f}"
     else:
@@ -32,7 +45,7 @@ def send_alert(signal: dict, symbol: str) -> bool:
         f"\n"
         f"{price_line}\n"
         f"📊 Upper BB: ${signal['upper_bb']:,.2f} | Lower BB: ${signal['lower_bb']:,.2f}\n"
-        f"⏱️ 15m candle | {signal['timestamp']}\n"
+        f"⏱️ 15m candle | {ist_time}\n"
         f"📍 Trade on TradeSea"
     )
 
