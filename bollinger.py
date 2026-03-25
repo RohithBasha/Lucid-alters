@@ -1,6 +1,6 @@
 """
 Bollinger Band calculation and signal detection.
-Detects two signal types: Touch and Cross.
+Detects three signal types: Touch, Cross, and Priority (full candle outside).
 """
 import pandas as pd
 import config
@@ -22,25 +22,28 @@ def compute_bollinger_bands(df: pd.DataFrame) -> pd.DataFrame:
 
 def detect_signals(df: pd.DataFrame) -> list[dict]:
     """
-    Check the LAST CLOSED candle for touch/cross signals.
+    Check the LAST CLOSED candle for touch/cross/priority signals.
     Returns a list of signal dicts (can be 0, 1, or 2 signals).
 
     Signal types:
-    - TOUCH_UPPER: High >= Upper Band AND Close <= Upper Band (wicked into band)
-    - TOUCH_LOWER: Low <= Lower Band AND Close >= Lower Band (wicked into band)
-    - CROSS_UPPER: Close > Upper Band (candle closed above band)
-    - CROSS_LOWER: Close < Lower Band (candle closed below band)
+    - TOUCH_UPPER:    High >= Upper Band AND Close <= Upper Band (wick touched)
+    - TOUCH_LOWER:    Low <= Lower Band AND Close >= Lower Band (wick touched)
+    - CROSS_UPPER:    Close > Upper Band (candle closed above band)
+    - CROSS_LOWER:    Close < Lower Band (candle closed below band)
+    - PRIORITY_UPPER: Entire candle above upper band (Low > Upper Band — no wick contact)
+    - PRIORITY_LOWER: Entire candle below lower band (High < Lower Band — no wick contact)
 
-    Note: Touch and Cross are mutually exclusive per band side.
-    A candle either touches (wick only) or crosses (close beyond).
+    Note: Priority is a subset of Cross. If Priority fires, Cross does NOT also fire
+    (one signal per band side, the strongest one wins).
     """
+    if df is None or df.empty:
+        return []
+
     df = compute_bollinger_bands(df)
 
-    # Use the last completed candle (second-to-last row if last row is still forming)
-    # In practice, yfinance returns completed candles for historical data
     last = df.iloc[-1]
 
-    if pd.isna(last["BB_Upper"]) or pd.isna(last["BB_Lower"]):
+    if pd.isna(last.get("BB_Upper")) or pd.isna(last.get("BB_Lower")):
         return []
 
     signals = []
@@ -63,8 +66,16 @@ def detect_signals(df: pd.DataFrame) -> list[dict]:
     }
 
     # ── Upper Band ──
-    if close > upper:
-        # CROSS: close is above upper band
+    if low > upper:
+        # PRIORITY: Entire candle is ABOVE the upper band (no wick contact at all)
+        signals.append({
+            "type": "PRIORITY_UPPER",
+            "emoji": "🚨🔴",
+            "label": "⚠️ PRIORITY: Full candle ABOVE Upper Band!",
+            **candle_data,
+        })
+    elif close > upper:
+        # CROSS: close is above upper band (but wick dipped inside)
         signals.append({
             "type": "CROSS_UPPER",
             "emoji": "🔴",
@@ -81,8 +92,16 @@ def detect_signals(df: pd.DataFrame) -> list[dict]:
         })
 
     # ── Lower Band ──
-    if close < lower:
-        # CROSS: close is below lower band
+    if high < lower:
+        # PRIORITY: Entire candle is BELOW the lower band (no wick contact at all)
+        signals.append({
+            "type": "PRIORITY_LOWER",
+            "emoji": "🚨🟢",
+            "label": "⚠️ PRIORITY: Full candle BELOW Lower Band!",
+            **candle_data,
+        })
+    elif close < lower:
+        # CROSS: close is below lower band (but wick reached inside)
         signals.append({
             "type": "CROSS_LOWER",
             "emoji": "🟢",

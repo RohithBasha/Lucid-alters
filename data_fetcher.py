@@ -5,6 +5,8 @@ Same exchange data that TradeSea uses via Rithmic.
 import yfinance as yf
 import pandas as pd
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+import time
 import config
 
 
@@ -14,8 +16,6 @@ def is_market_open() -> bool:
     Globex hours: Sunday 5:00 PM CT – Friday 4:00 PM CT
     with a daily maintenance break 4:00 PM – 5:00 PM CT (Mon-Thu).
     """
-    from zoneinfo import ZoneInfo
-
     ct = datetime.now(ZoneInfo("America/Chicago"))
     weekday = ct.weekday()  # Mon=0 ... Sun=6
     hour = ct.hour
@@ -42,27 +42,40 @@ def fetch_candles(ticker: str, fallback_ticker: str | None = None) -> pd.DataFra
     """
     Fetch recent 15-minute candles for a given ticker.
     Returns DataFrame with columns: Open, High, Low, Close, Volume
-    or None if fetch fails.
+    or None if fetch fails. Retries up to 3 times on failure.
     """
-    for t in [ticker, fallback_ticker]:
-        if t is None:
-            continue
-        try:
-            data = yf.download(
-                t,
-                period=config.LOOKBACK_PERIOD,
-                interval=config.INTERVAL,
-                progress=False,
-                auto_adjust=True,
-            )
-            if data is not None and not data.empty and len(data) >= config.BB_PERIOD:
-                # Flatten multi-level columns if present
-                if isinstance(data.columns, pd.MultiIndex):
-                    data.columns = data.columns.get_level_values(0)
-                return data
-        except Exception as e:
-            print(f"[DataFetcher] Error fetching {t}: {e}")
-            continue
+    tickers_to_try = [t for t in [ticker, fallback_ticker] if t is not None]
+
+    for t in tickers_to_try:
+        for attempt in range(1, 4):  # 3 retries
+            try:
+                data = yf.download(
+                    t,
+                    period=config.LOOKBACK_PERIOD,
+                    interval=config.INTERVAL,
+                    progress=False,
+                    auto_adjust=True,
+                )
+                if data is not None and not data.empty and len(data) >= config.BB_PERIOD:
+                    # Flatten multi-level columns if present
+                    if isinstance(data.columns, pd.MultiIndex):
+                        data.columns = data.columns.get_level_values(0)
+
+                    # Drop rows with NaN in critical columns
+                    data = data.dropna(subset=["Open", "High", "Low", "Close"])
+
+                    if len(data) >= config.BB_PERIOD:
+                        return data
+
+                    print(f"[DataFetcher] {t}: Not enough clean rows ({len(data)}/{config.BB_PERIOD})")
+                else:
+                    print(f"[DataFetcher] {t}: Empty or insufficient data (attempt {attempt}/3)")
+
+            except Exception as e:
+                print(f"[DataFetcher] Error fetching {t} (attempt {attempt}/3): {e}")
+
+            if attempt < 3:
+                time.sleep(2)  # Brief pause before retry
 
     return None
 
