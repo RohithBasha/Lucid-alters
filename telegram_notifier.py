@@ -89,3 +89,40 @@ def send_alert(signal: dict, symbol: str) -> bool:
 
     print(f"[Telegram] ❌ Failed after 3 retries: {symbol} — {label}")
     return False
+
+
+def send_photo(image_path: str, caption: str = "") -> bool:
+    """Send a photo to Telegram. Returns True if sent successfully."""
+    if not config.TELEGRAM_BOT_TOKEN or not config.TELEGRAM_CHAT_ID:
+        return False
+
+    url = f"https://api.telegram.org/bot{config.TELEGRAM_BOT_TOKEN}/sendPhoto"
+
+    for attempt in range(1, 4):
+        try:
+            with open(image_path, "rb") as photo:
+                payload = {
+                    "chat_id": config.TELEGRAM_CHAT_ID,
+                    "caption": caption[:1024],  # Telegram caption limit
+                    "parse_mode": "Markdown",
+                }
+                files = {"photo": photo}
+                response = requests.post(url, data=payload, files=files, timeout=15)
+
+            if response.status_code == 200:
+                print(f"[Telegram] ✅ Chart image sent")
+                return True
+            elif response.status_code == 429:
+                retry_after = int(response.headers.get("Retry-After", 5))
+                time.sleep(retry_after)
+            else:
+                print(f"[Telegram] ❌ Photo failed ({response.status_code}): {response.text}")
+                return False
+        except requests.exceptions.Timeout:
+            print(f"[Telegram] ⏳ Photo timeout (attempt {attempt}/3)")
+            time.sleep(2)
+        except Exception as e:
+            print(f"[Telegram] ❌ Photo error: {e}")
+            return False
+
+    return False

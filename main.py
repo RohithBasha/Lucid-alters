@@ -12,8 +12,9 @@ from datetime import datetime, timezone
 import config
 from data_fetcher import fetch_all_instruments, is_market_open
 from bollinger import detect_signals
-from telegram_notifier import send_alert
+from telegram_notifier import send_alert, send_photo
 import journaler
+import chart_generator
 import bot_commands
 import traceback
 
@@ -125,6 +126,12 @@ def main():
             if success:
                 record_alert(state, symbol, signal["type"], signal["timestamp"])
                 journaler.log_alert(symbol, signal["type"], signal["close"], signal["upper_bb"], signal["lower_bb"], signal["timestamp"])
+
+                # Generate and send chart image
+                chart_path = chart_generator.generate_chart(df, symbol, instrument_name, signal)
+                if chart_path:
+                    send_photo(chart_path, f"📊 {instrument_name} ({symbol}) — {signal['label']}")
+
                 alerts_sent += 1
 
     # Save state

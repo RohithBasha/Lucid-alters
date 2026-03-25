@@ -1,4 +1,7 @@
 git add .
-git commit -m "Add interactive /status command for live price and BB levels"
+git reset HEAD gen_chart.py
+git reset HEAD run_chart.ps1
+git commit -m "Add BB chart images to Telegram alerts"
 git push
-Remove-Item $MyInvocation.MyCommand.Path
+del gen_chart.py
+del run_chart.ps1
