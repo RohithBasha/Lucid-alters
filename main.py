@@ -127,10 +127,12 @@ def main():
                 record_alert(state, symbol, signal["type"], signal["timestamp"])
                 journaler.log_alert(symbol, signal["type"], signal["close"], signal["upper_bb"], signal["lower_bb"], signal["timestamp"])
 
-                # Generate and send chart image
-                chart_path = chart_generator.generate_chart(df, symbol, instrument_name, signal)
-                if chart_path:
-                    send_photo(chart_path, f"📊 {instrument_name} ({symbol}) — {signal['label']}")
+                # Generate chart only for CROSS and PRIORITY (candle closed beyond BB)
+                sig_type = signal["type"]
+                if "CROSS" in sig_type or "PRIORITY" in sig_type:
+                    chart_path = chart_generator.generate_chart(df, symbol, instrument_name, signal)
+                    if chart_path:
+                        send_photo(chart_path, f"📊 {instrument_name} ({symbol}) — {signal['label']}")
 
                 alerts_sent += 1
 
