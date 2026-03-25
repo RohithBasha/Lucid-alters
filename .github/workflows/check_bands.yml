@@ -25,17 +25,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # Restore previous alert state (dedup across runs)
-      - name: Download alert state
-        uses: actions/cache@v4
-        with:
-          path: |
-            alert_state.json
-            last_update_id.txt
-          key: alert-state-${{ github.run_id }}
-          restore-keys: |
-            alert-state-
-
       - name: Run Bollinger Band check
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -43,10 +32,11 @@ jobs:
         run: python main.py
         timeout-minutes: 3
 
-      - name: Commit trade journal
+      - name: Commit state and journal
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add trade_journal.csv || true
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update trade journal [skip ci]" && git push)
+          git pull --rebase || true
+          git add trade_journal.csv alert_state.json last_update_id.txt 2>/dev/null || true
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update state [skip ci]" && git push)
         continue-on-error: true
