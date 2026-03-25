@@ -14,6 +14,7 @@ from data_fetcher import fetch_all_instruments, is_market_open
 from bollinger import detect_signals
 from telegram_notifier import send_alert
 import journaler
+import bot_commands
 import traceback
 
 
@@ -62,6 +63,10 @@ def main():
     print("=" * 60)
     print(f"🕐 Commodity BB Alert — {datetime.now(timezone.utc).isoformat()} UTC")
     print("=" * 60)
+
+    # Check for interactive commands (/status, /s)
+    print("\n🤖 Checking for bot commands...")
+    bot_commands.process_commands()
 
     # Load dedup state
     state = load_state()

@@ -29,7 +29,9 @@ jobs:
       - name: Download alert state
         uses: actions/cache@v4
         with:
-          path: alert_state.json
+          path: |
+            alert_state.json
+            last_update_id.txt
           key: alert-state-${{ github.run_id }}
           restore-keys: |
             alert-state-
