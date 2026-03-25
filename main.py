@@ -65,9 +65,16 @@ def main():
     print(f"🕐 Commodity BB Alert — {datetime.now(timezone.utc).isoformat()} UTC")
     print("=" * 60)
 
-    # Check for interactive commands (/status, /s)
+    # Check for interactive commands (/status, /s) — ALWAYS runs
     print("\n🤖 Checking for bot commands...")
     bot_commands.process_commands()
+
+    # Quiet hours: 1 AM - 6 AM IST — skip BB alerts (save GitHub minutes)
+    from zoneinfo import ZoneInfo
+    ist_hour = datetime.now(ZoneInfo("Asia/Kolkata")).hour
+    if 1 <= ist_hour < 6:
+        print("🌙 Quiet hours (1-6 AM IST). Skipping BB check. /status still active.")
+        return
 
     # Load dedup state
     state = load_state()
