@@ -2,10 +2,10 @@ name: Check Bollinger Bands
 
 on:
   schedule:
-    # Backup: GitHub's own cron (unreliable on free tier)
-    - cron: '*/5 * * * *'
+    # BACKUP: GitHub cron at 15-min intervals (fallback if cron-job.org is down)
+    - cron: '*/15 * * * *'
   repository_dispatch:
-    types: [cron_trigger]  # Triggered by cron-job.org every 5 min
+    types: [cron_trigger]  # PRIMARY: Triggered by cron-job.org
   workflow_dispatch:  # Allow manual trigger for testing
 
 jobs:

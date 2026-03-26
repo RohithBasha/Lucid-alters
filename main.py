@@ -1,23 +1,28 @@
 """
 Commodity Bollinger Band Alert Tool — Main Entry Point.
 
-Runs as a single invocation (called by GitHub Actions every 15 min).
+Runs as a single invocation (called by cron-job.org / GitHub Actions).
 Fetches data → computes BB → checks signals → sends Telegram alerts → exits.
+Includes run-dedup to prevent double-firing when both triggers are active.
 """
 import json
 import os
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 import config
 from data_fetcher import fetch_all_instruments, is_market_open
-from bollinger import detect_signals
+from bollinger import detect_signals, check_reversal
 from telegram_notifier import send_alert, send_photo
 import journaler
 import chart_generator
 import bot_commands
 import traceback
 
+
+# Minimum gap between runs (seconds). If last run was within this window, skip.
+# Prevents double-firing when both cron-job.org and GitHub cron trigger.
+RUN_DEDUP_SECONDS = 180  # 3 minutes
 
 
 def load_state() -> dict:
@@ -35,6 +40,25 @@ def save_state(state: dict):
     """Save alert state for dedup across runs."""
     with open(config.STATE_FILE, "w") as f:
         json.dump(state, f, indent=2)
+
+
+def is_run_duplicate(state: dict) -> bool:
+    """
+    Check if another run completed recently (within RUN_DEDUP_SECONDS).
+    Prevents double-firing when both cron-job.org and GitHub cron trigger.
+    """
+    last_run = state.get("last_run_time")
+    if not last_run:
+        return False
+    try:
+        last_dt = datetime.fromisoformat(last_run)
+        elapsed = (datetime.now(timezone.utc) - last_dt).total_seconds()
+        if elapsed < RUN_DEDUP_SECONDS:
+            print(f"⏭️  Run dedup: last run was {elapsed:.0f}s ago (< {RUN_DEDUP_SECONDS}s). Skipping.")
+            return True
+    except (ValueError, TypeError):
+        pass
+    return False
 
 
 def is_duplicate(state: dict, symbol: str, signal_type: str, timestamp: str) -> bool:
@@ -60,6 +84,18 @@ def record_alert(state: dict, symbol: str, signal_type: str, timestamp: str):
         state["sent_alerts"] = dict(entries[-100:])
 
 
+def send_error_alert(error_type: str, details: str):
+    """Send a structured error alert to Telegram."""
+    error_msg = {
+        "emoji": "⚠️",
+        "label": f"{error_type}: {details[:80]}",
+        "type": "ERROR",
+        "close": 0, "high": 0, "low": 0, "upper_bb": 0, "lower_bb": 0,
+        "timestamp": datetime.now(timezone.utc).isoformat()
+    }
+    send_alert(error_msg, "SYSTEM")
+
+
 def main():
     print("=" * 60)
     print(f"🕐 Commodity BB Alert — {datetime.now(timezone.utc).isoformat()} UTC")
@@ -78,7 +114,14 @@ def main():
 
     # Load dedup state
     state = load_state()
-    
+
+    # ── Run dedup: skip if another trigger already ran recently ──
+    if is_run_duplicate(state):
+        return
+
+    # Mark this run's timestamp (save immediately for dedup)
+    state["last_run_time"] = datetime.now(timezone.utc).isoformat()
+
     # Market open/close state tracking
     currently_open = is_market_open()
     last_status = state.get("last_market_status", None)
@@ -92,7 +135,7 @@ def main():
         
     # Update last known status
     state["last_market_status"] = "OPEN" if currently_open else "CLOSED"
-    save_state(state) # Save early in case of later errors
+    save_state(state)  # Save early in case of later errors
 
     # Check if market is open
     if not currently_open:
@@ -105,7 +148,14 @@ def main():
 
     if not data:
         print("❌ No data fetched for any instrument. Exiting.")
+        send_error_alert("DATA ERROR", "No data fetched for any instrument. yfinance may be down.")
         return
+
+    # Check for partial failures (some instruments missing)
+    missing = [sym for sym in config.INSTRUMENTS if sym not in data]
+    if missing:
+        print(f"⚠️ Missing data for: {', '.join(missing)}")
+        send_error_alert("DATA WARNING", f"No data for: {', '.join(missing)}")
 
     alerts_sent = 0
 
@@ -113,8 +163,38 @@ def main():
         instrument_name = config.INSTRUMENTS[symbol]["name"]
         print(f"\n🔍 Analyzing {instrument_name} ({symbol})...")
 
-        # Detect signals on last candle
-        signals = detect_signals(df)
+        signals = []
+
+        # ── 1. Check for Reversal Confirmations on Active Triggers ──
+        if "trigger_candles" not in state:
+            state["trigger_candles"] = {}
+            
+        active_trigger = state["trigger_candles"].get(symbol)
+        if active_trigger:
+            reversal_signals, expired = check_reversal(df, active_trigger)
+            
+            if expired:
+                print(f"   ⏳ Trigger expired for {symbol} (4 candles passed).")
+                del state["trigger_candles"][symbol]
+            elif reversal_signals:
+                # We have a reversal break or close!
+                signals.extend(reversal_signals)
+                
+                # If a CLOSE confirmation happens, the setup has completed its lifecycle.
+                # Remove the trigger so we don't get duplicate 'Reversal Confirmed' spam 
+                # on the next 15-min candle if price stays below the trigger line.
+                if any("CLOSE" in s["type"] for s in reversal_signals):
+                    print(f"   ✅ Reversal Confirmed for {symbol}. Setup complete, removing trigger.")
+                    del state["trigger_candles"][symbol]
+
+        # ── 2. Detect Standard Signals on Last Candle ──
+        try:
+            standard_signals = detect_signals(df)
+            signals.extend(standard_signals)
+        except Exception as e:
+            print(f"   ❌ Signal detection error for {symbol}: {e}")
+            send_error_alert("SIGNAL ERROR", f"{symbol}: {str(e)}")
+            continue
 
         if not signals:
             print(f"   ✅ No signal — price within bands.")
@@ -134,12 +214,31 @@ def main():
                 record_alert(state, symbol, signal["type"], signal["timestamp"])
                 journaler.log_alert(symbol, signal["type"], signal["close"], signal["upper_bb"], signal["lower_bb"], signal["timestamp"])
 
-                # Generate chart only for CROSS and PRIORITY (candle closed beyond BB)
+                # ── Record New Triggers ──
+                # If this was a PRIORITY signal, save it as an active trigger for reversal checks
                 sig_type = signal["type"]
-                if "CROSS" in sig_type or "PRIORITY" in sig_type:
-                    chart_path = chart_generator.generate_chart(df, symbol, instrument_name, signal)
-                    if chart_path:
-                        send_photo(chart_path, f"📊 {instrument_name} ({symbol}) — {signal['label']}")
+                if "PRIORITY" in sig_type:
+                    if "trigger_candles" not in state:
+                        state["trigger_candles"] = {}
+                    
+                    state["trigger_candles"][symbol] = {
+                        "type": sig_type,
+                        "trigger_timestamp": signal["timestamp"],
+                        "trigger_low": signal["low"],
+                        "trigger_high": signal["high"]
+                    }
+                    print(f"   🎯 Saved active trigger for {symbol}: {sig_type}")
+
+                # ── Generate Charts ──
+                # Only for PRIORITY (trigger) and REVERSAL signals
+                if "PRIORITY" in sig_type or "REVERSAL" in sig_type:
+                    try:
+                        chart_path = chart_generator.generate_chart(df, symbol, instrument_name, signal)
+                        if chart_path:
+                            send_photo(chart_path, f"📊 {instrument_name} ({symbol}) — {signal['label']}")
+                    except Exception as e:
+                        print(f"   ❌ Chart generation error: {e}")
+                        send_error_alert("CHART ERROR", f"{symbol}: {str(e)}")
 
                 alerts_sent += 1
 
@@ -158,15 +257,8 @@ def run_with_error_handling():
         error_trace = traceback.format_exc()
         print(f"❌ FATAL ERROR:\n{error_trace}")
         
-        # Send error alert to Telegram
-        error_msg = {
-            "emoji": "⚠️",
-            "label": f"SYSTEM ERROR: {str(e)[:50]}...",
-            "type": "ERROR",
-            "close": 0, "high": 0, "low": 0, "upper_bb": 0, "lower_bb": 0,
-            "timestamp": datetime.now(timezone.utc).isoformat()
-        }
-        send_alert(error_msg, "SYSTEM")
+        # Send detailed error alert to Telegram
+        send_error_alert("🔥 FATAL ERROR", str(e))
 
 if __name__ == "__main__":
     run_with_error_handling()

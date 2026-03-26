@@ -34,12 +34,14 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
         # Determine signal marker color
         if "PRIORITY" in sig_type:
             signal_color = "#FF0000"
+        elif "REVERSAL_CLOSE" in sig_type:
+            signal_color = "#00E5FF"
+        elif "REVERSAL_BREAK" in sig_type:
+            signal_color = "#FF8800"
         elif "CROSS_UPPER" in sig_type:
             signal_color = "#FF4444"
         elif "CROSS_LOWER" in sig_type:
             signal_color = "#00CC66"
-        elif "TOUCH" in sig_type:
-            signal_color = "#FF8800"
         else:
             signal_color = "#888888"
 
