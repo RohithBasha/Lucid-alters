@@ -165,41 +165,44 @@ def check_reversal(df: pd.DataFrame, trigger_info: dict) -> tuple[list[dict], bo
     signals = []
 
     if "UPPER" in trigger_type:
-        # Bearish reversal: Low breaks below trigger candle's Low
-        if low < trigger_low:
+        # Bearish reversal: Price must come BACK INTO the bands
+        # Conditions: (1) Low breaks below trigger Low AND (2) Low is below the Upper BB
+        # This prevents false signals from candle-to-candle noise when price is still above BB
+        if low < trigger_low and low < upper_bb:
             signals.append({
                 "type": "REVERSAL_BREAK_UPPER",
                 "emoji": "🔻",
-                "label": "Reversal Break! Low broke below Trigger Low",
+                "label": "Reversal Break! Low broke below Trigger Low & Upper BB",
                 "trigger_level": trigger_low,
                 **candle_data,
             })
-        # Close-based confirmation
-        if close < trigger_low:
+        # Close-based confirmation: Close must be below trigger Low AND below Upper BB
+        if close < trigger_low and close < upper_bb:
             signals.append({
                 "type": "REVERSAL_CLOSE_UPPER",
                 "emoji": "✅🔻",
-                "label": "Reversal Confirmed! Close below Trigger Low",
+                "label": "Reversal Confirmed! Close below Trigger Low & Upper BB",
                 "trigger_level": trigger_low,
                 **candle_data,
             })
 
     elif "LOWER" in trigger_type:
-        # Bullish reversal: High breaks above trigger candle's High
-        if high > trigger_high:
+        # Bullish reversal: Price must come BACK INTO the bands
+        # Conditions: (1) High breaks above trigger High AND (2) High is above the Lower BB
+        if high > trigger_high and high > lower_bb:
             signals.append({
                 "type": "REVERSAL_BREAK_LOWER",
                 "emoji": "🔺",
-                "label": "Reversal Break! High broke above Trigger High",
+                "label": "Reversal Break! High broke above Trigger High & Lower BB",
                 "trigger_level": trigger_high,
                 **candle_data,
             })
-        # Close-based confirmation
-        if close > trigger_high:
+        # Close-based confirmation: Close must be above trigger High AND above Lower BB
+        if close > trigger_high and close > lower_bb:
             signals.append({
                 "type": "REVERSAL_CLOSE_LOWER",
                 "emoji": "✅🔺",
-                "label": "Reversal Confirmed! Close above Trigger High",
+                "label": "Reversal Confirmed! Close above Trigger High & Lower BB",
                 "trigger_level": trigger_high,
                 **candle_data,
             })
