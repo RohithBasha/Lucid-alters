@@ -61,6 +61,40 @@ def _set_sleep_state(asleep: bool):
     except Exception as e:
         print(f"[BotCmd] ❌ Failed to write sleep state: {e}")
 
+def _add_alarm(symbol: str, price: float):
+    state = {}
+    if os.path.exists(config.STATE_FILE):
+        try:
+            with open(config.STATE_FILE, "r") as f:
+                state = json.load(f)
+        except Exception: pass
+    alarms = state.setdefault("price_alarms", {})
+    if symbol not in alarms:
+        alarms[symbol] = []
+    if price not in alarms[symbol]:
+        alarms[symbol].append(price)
+    with open(config.STATE_FILE, "w") as f:
+        json.dump(state, f, indent=2)
+
+def _get_alarms() -> dict:
+    if os.path.exists(config.STATE_FILE):
+        try:
+            with open(config.STATE_FILE, "r") as f:
+                return json.load(f).get("price_alarms", {})
+        except Exception: pass
+    return {}
+
+def _clear_alarms():
+    state = {}
+    if os.path.exists(config.STATE_FILE):
+        try:
+            with open(config.STATE_FILE, "r") as f:
+                state = json.load(f)
+        except Exception: pass
+    state["price_alarms"] = {}
+    with open(config.STATE_FILE, "w") as f:
+        json.dump(state, f, indent=2)
+
 
 def _build_status_message() -> str:
     """Fetch live prices and BB levels for all instruments."""
@@ -204,6 +238,44 @@ def process_commands():
                 commands_found += 1
                 _set_sleep_state(False)
                 _send_reply(chat_id, "☀️ *Bot is AWAKE!*\n\nI will now resume sending signal alerts for all instruments.")
+
+            elif chat_id and (text.startswith("/alarm ") or text.startswith("alarm ")):
+                print(f"[BotCmd] 📩 /alarm command from chat {chat_id}")
+                commands_found += 1
+                parts = text.split()
+                if len(parts) >= 3:
+                    sym = parts[1].upper()
+                    if sym not in config.INSTRUMENTS:
+                        _send_reply(chat_id, f"⚠️ Unknown symbol `{sym}`. Valid options: {', '.join(config.INSTRUMENTS.keys())}")
+                    else:
+                        try:
+                            price = float(parts[2])
+                            _add_alarm(sym, price)
+                            _send_reply(chat_id, f"⏰ *Alarm Set!*\n\nI will alert you instantly when {sym} crosses `${price:,.2f}`.")
+                        except ValueError:
+                            _send_reply(chat_id, "⚠️ Invalid price format. Use: `/alarm SIL 68.50`")
+                else:
+                    _send_reply(chat_id, "⚠️ Usage: `/alarm <SYMBOL> <PRICE>`\nExample: `/alarm MGC 4400.50`")
+
+            elif chat_id and text in ["/alarms", "alarms"]:
+                print(f"[BotCmd] 📩 /alarms command from chat {chat_id}")
+                commands_found += 1
+                alarms = _get_alarms()
+                if not alarms or all(len(v) == 0 for v in alarms.values()):
+                    _send_reply(chat_id, "ℹ️ You have no active price alarms. Set one with `/alarm <SYMBOL> <PRICE>`")
+                else:
+                    lines = ["⏰ *Active Price Alarms*"]
+                    for sym, prices in alarms.items():
+                        if prices:
+                            lines.append(f"• *{sym}*: " + ", ".join(f"${p:,.2f}" for p in prices))
+                    lines.append("\n_Use /clearalarms to remove all._")
+                    _send_reply(chat_id, "\n".join(lines))
+
+            elif chat_id and text in ["/clearalarms", "clearalarms"]:
+                print(f"[BotCmd] 📩 /clearalarms command from chat {chat_id}")
+                commands_found += 1
+                _clear_alarms()
+                _send_reply(chat_id, "🗑️ All custom price alarms have been cleared.")
 
             # Always update the offset to acknowledge ALL messages
             if update_id > last_id:

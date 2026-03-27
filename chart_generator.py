@@ -42,6 +42,8 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
             signal_color = "#FF4444"
         elif "CROSS_LOWER" in sig_type:
             signal_color = "#00CC66"
+        elif "ALARM" in sig_type:
+            signal_color = "#FFFF00"
         else:
             signal_color = "#888888"
 

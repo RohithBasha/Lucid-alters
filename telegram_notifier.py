@@ -54,6 +54,11 @@ def send_alert(signal: dict, symbol: str) -> bool:
                 f"🎯 Trigger High: ${trigger_level:,.2f} | Current High: ${signal.get('high', 0):,.2f}\n"
                 f"💰 Close: ${signal.get('close', 0):,.2f}"
             )
+    elif "ALARM" in signal.get("type", ""):
+        price_line = (
+            f"📈 High: ${signal.get('high', 0):,.2f} | Low: ${signal.get('low', 0):,.2f}\n"
+            f"💰 Close: ${signal.get('close', 0):,.2f}"
+        )
     elif "CROSS" in signal.get("type", ""):
         price_line = f"💰 Close: ${signal.get('close', 0):,.2f}"
     else:

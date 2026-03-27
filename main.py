@@ -192,6 +192,39 @@ def main():
                     print(f"   ✅ Reversal Confirmed for {symbol}. Setup complete, removing trigger.")
                     del state["trigger_candles"][symbol]
 
+        # ── 1.5 Check Custom Price Alarms ──
+        active_alarms = state.get("price_alarms", {}).get(symbol, [])
+        if active_alarms:
+            new_alarms = []
+            triggered_any = False
+            
+            for alarm_price in active_alarms:
+                c_low = float(df.iloc[-1]["Low"])
+                c_high = float(df.iloc[-1]["High"])
+                c_close = float(df.iloc[-1]["Close"])
+                
+                # If the alarm price is within this candle's High/Low range, it crossed!
+                if c_low <= alarm_price <= c_high:
+                    signals.append({
+                        "type": "ALARM",
+                        "emoji": "⏰",
+                        "label": f"PRICE ALARM TRIGGERED: ${alarm_price:,.2f}!",
+                        "close": c_close,
+                        "high": c_high,
+                        "low": c_low,
+                        "timestamp": str(df.index[-1]),
+                        "upper_bb": float(df.iloc[-1].get("BB_Upper", 0)) if not pd.isna(df.iloc[-1].get("BB_Upper")) else 0,
+                        "lower_bb": float(df.iloc[-1].get("BB_Lower", 0)) if not pd.isna(df.iloc[-1].get("BB_Lower")) else 0,
+                    })
+                    triggered_any = True
+                    print(f"   ⏰ Custom Alarm fired for {symbol} at {alarm_price}")
+                else:
+                    new_alarms.append(alarm_price)
+            
+            if triggered_any:
+                # Remove the triggered alarms from state so they don't fire again
+                state["price_alarms"][symbol] = new_alarms
+
         # ── 2. Detect Standard Signals on Last Candle ──
         try:
             standard_signals = detect_signals(df)
@@ -235,8 +268,8 @@ def main():
                     print(f"   🎯 Saved active trigger for {symbol}: {sig_type}")
 
                 # ── Generate Charts ──
-                # Only for PRIORITY (trigger) and REVERSAL signals
-                if "PRIORITY" in sig_type or "REVERSAL" in sig_type:
+                # Only for PRIORITY (trigger), REVERSAL signals, and ALARMs
+                if "PRIORITY" in sig_type or "REVERSAL" in sig_type or "ALARM" in sig_type:
                     try:
                         chart_path = chart_generator.generate_chart(df, symbol, instrument_name, signal)
                         if chart_path:
