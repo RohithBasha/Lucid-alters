@@ -137,6 +137,11 @@ def main():
     state["last_market_status"] = "OPEN" if currently_open else "CLOSED"
     save_state(state)  # Save early in case of later errors
 
+    # Check if bot is asleep from Telegram command
+    if state.get("is_sleeping", False):
+        print("💤 Bot is sleeping (/sleep). Skipping all checks.")
+        return
+
     # Check if market is open
     if not currently_open:
         print("📴 Market is closed. Skipping data fetch.")

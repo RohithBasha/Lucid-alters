@@ -10,6 +10,7 @@ import traceback
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
+import json
 import config
 import pandas as pd
 from data_fetcher import fetch_candles
@@ -40,6 +41,25 @@ def _save_last_update_id(update_id: int):
         print(f"[BotCmd] 💾 Saved last_update_id: {update_id}")
     except IOError as e:
         print(f"[BotCmd] ❌ Failed to save last_update_id: {e}")
+
+def _set_sleep_state(asleep: bool):
+    """Update global state to pause/resume alerts."""
+    state = {}
+    if os.path.exists(config.STATE_FILE):
+        try:
+            with open(config.STATE_FILE, "r") as f:
+                state = json.load(f)
+        except Exception:
+            pass
+    
+    state["is_sleeping"] = asleep
+    
+    try:
+        with open(config.STATE_FILE, "w") as f:
+            json.dump(state, f, indent=2)
+        print(f"[BotCmd] Sleep state set to: {asleep}")
+    except Exception as e:
+        print(f"[BotCmd] ❌ Failed to write sleep state: {e}")
 
 
 def _build_status_message() -> str:
@@ -172,6 +192,18 @@ def process_commands():
                     traceback.print_exc()
                     # Send a simple error reply so the user knows something happened
                     _send_reply(chat_id, "⚠️ Error generating status report. Will retry on next cycle.")
+
+            elif chat_id and text in ["/sleep", "sleep"]:
+                print(f"[BotCmd] 📩 /sleep command from chat {chat_id}")
+                commands_found += 1
+                _set_sleep_state(True)
+                _send_reply(chat_id, "💤 *Bot is now SLEEPING.*\n\nI will continue tracking prices in the background, but I will **NOT** send any signal alerts. \n\nSend `/wakeup` to resume alerts.")
+
+            elif chat_id and text in ["/wakeup", "wakeup"]:
+                print(f"[BotCmd] 📩 /wakeup command from chat {chat_id}")
+                commands_found += 1
+                _set_sleep_state(False)
+                _send_reply(chat_id, "☀️ *Bot is AWAKE!*\n\nI will now resume sending signal alerts for all instruments.")
 
             # Always update the offset to acknowledge ALL messages
             if update_id > last_id:
