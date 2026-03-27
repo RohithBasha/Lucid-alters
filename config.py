@@ -7,22 +7,22 @@ import os
 # ─── Instruments ───────────────────────────────────────────────────────────────
 INSTRUMENTS = {
     "MGC": {
-        "ticker": "MGC=F",
+        "ticker": "GC=F",
         "name": "Micro Gold",
         "exchange": "COMEX",
         "fallback_ticker": None,
     },
     "SIL": {
-        "ticker": "SIL=F",
+        "ticker": "SI=F",
         "name": "Micro Silver",
         "exchange": "COMEX",
         "fallback_ticker": None,
     },
     "MCL": {
-        "ticker": "MCL=F",
+        "ticker": "CL=F",
         "name": "Micro Crude",
         "exchange": "NYMEX",
-        "fallback_ticker": "CL=F",  # Standard WTI crude as fallback
+        "fallback_ticker": None,
     },
 }
 
