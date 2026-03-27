@@ -130,13 +130,17 @@ def check_reversal(df: pd.DataFrame, trigger_info: dict) -> tuple[list[dict], bo
     if current_ts == trigger_ts_str:
         return [], False
 
-    # Check if within 4-candle buffer (60 minutes for 15-min candles)
+    # Check if within 4-candle buffer (based on index, not time, to survive weekends)
     try:
         trigger_dt = pd.Timestamp(trigger_ts_str)
-        current_dt = df.index[-1]
-        elapsed_minutes = (current_dt - trigger_dt).total_seconds() / 60
-        if elapsed_minutes > 60:  # Beyond 4 candles
-            return [], True  # expired
+        if trigger_dt in df.index:
+            trigger_loc = df.index.get_loc(trigger_dt)
+            current_loc = len(df) - 1
+            if current_loc - trigger_loc > 4:
+                return [], True  # Expired
+        else:
+            # If trigger candle is no longer in the dataframe, it's definitely expired
+            return [], True
     except Exception:
         return [], True
 

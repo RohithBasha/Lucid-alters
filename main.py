@@ -11,6 +11,7 @@ import sys
 from datetime import datetime, timezone, timedelta
 
 import config
+import pandas as pd
 from data_fetcher import fetch_all_instruments, is_market_open
 from bollinger import detect_signals, check_reversal
 from telegram_notifier import send_alert, send_photo
@@ -36,10 +37,38 @@ def load_state() -> dict:
     return {}
 
 
-def save_state(state: dict):
-    """Save alert state for dedup across runs."""
-    with open(config.STATE_FILE, "w") as f:
-        json.dump(state, f, indent=2)
+def save_state(memory_state: dict):
+    """Save alert state for dedup across runs, safely merging variables modified by Telegram bot."""
+    current_state = {}
+    if os.path.exists(config.STATE_FILE):
+        try:
+            with open(config.STATE_FILE, "r") as f:
+                current_state = json.load(f)
+        except (json.JSONDecodeError, IOError):
+            pass
+
+    # Preserve Telegram-driven states if they were modified mid-run
+    if "is_sleeping" in current_state:
+        memory_state["is_sleeping"] = current_state["is_sleeping"]
+
+    # Preserve custom price alarms added mid-run
+    if "price_alarms" in current_state:
+        mem_alarms = memory_state.get("price_alarms", {})
+        file_alarms = current_state["price_alarms"]
+        for sym, alarms in file_alarms.items():
+            if sym not in mem_alarms:
+                mem_alarms[sym] = alarms
+            else:
+                # Merge unique values
+                merged = list(set(mem_alarms[sym] + alarms))
+                mem_alarms[sym] = merged
+        memory_state["price_alarms"] = mem_alarms
+
+    try:
+        with open(config.STATE_FILE, "w") as f:
+            json.dump(memory_state, f, indent=2)
+    except IOError as e:
+        print(f"❌ Error saving state: {e}")
 
 
 def is_run_duplicate(state: dict) -> bool:
