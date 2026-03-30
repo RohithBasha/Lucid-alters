@@ -8,6 +8,12 @@ on:
     types: [cron_trigger]  # PRIMARY: Triggered by cron-job.org
   workflow_dispatch:  # Allow manual trigger for testing
 
+# PREVENT DEDUP RACE CONDITIONS:
+# Ensure only one instance of the bot runs at any given time.
+concurrency:
+  group: system-alerts
+  cancel-in-progress: false
+
 jobs:
   check-bands:
     runs-on: ubuntu-latest
