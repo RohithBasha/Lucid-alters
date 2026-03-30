@@ -277,6 +277,29 @@ def process_commands():
                 _clear_alarms()
                 _send_reply(chat_id, "🗑️ All custom price alarms have been cleared.")
 
+            elif chat_id and text in ["/reset", "reset"]:
+                print(f"[BotCmd] 📩 /reset command from chat {chat_id}")
+                commands_found += 1
+                state = {}
+                if os.path.exists(config.STATE_FILE):
+                    try:
+                        with open(config.STATE_FILE, "r") as f:
+                            state = json.load(f)
+                    except Exception: pass
+                
+                # Keep important user settings, wipe trading state (triggers, recent history)
+                new_state = {}
+                if "is_sleeping" in state: new_state["is_sleeping"] = state["is_sleeping"]
+                if "price_alarms" in state: new_state["price_alarms"] = state["price_alarms"]
+                if "last_market_status" in state: new_state["last_market_status"] = state["last_market_status"]
+                
+                try:
+                    with open(config.STATE_FILE, "w") as f:
+                        json.dump(new_state, f, indent=2)
+                    _send_reply(chat_id, "🔄 *System Reset Complete!*\n\nAll active trade triggers and recent alert deduplication history have been wiped. The bot will evaluate the market completely fresh on the next run.")
+                except Exception as e:
+                    _send_reply(chat_id, f"❌ Failed to reset state: {str(e)}")
+
             # Always update the offset to acknowledge ALL messages
             if update_id > last_id:
                 last_id = update_id
