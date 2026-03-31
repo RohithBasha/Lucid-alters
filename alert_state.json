@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-03-31T08:30:57.006940+00:00",
+  "last_run_time": "2026-03-31T08:35:34.383996+00:00",
   "trigger_candles": {
     "SIL": {
       "type": "PRIORITY_UPPER",
