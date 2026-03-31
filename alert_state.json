@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-03-31T00:55:31.724245+00:00",
+  "last_run_time": "2026-03-31T01:01:01.615787+00:00",
   "trigger_candles": {
     "MGC": {
       "type": "PRIORITY_UPPER",
