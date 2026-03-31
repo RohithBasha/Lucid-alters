@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-03-31T07:35:38.007065+00:00",
+  "last_run_time": "2026-03-31T07:40:43.850512+00:00",
   "trigger_candles": {},
   "sent_alerts": {
     "MGC_CROSS_UPPER_2026-03-30 11:15:00+00:00": "2026-03-30T11:25:40.523234+00:00",
