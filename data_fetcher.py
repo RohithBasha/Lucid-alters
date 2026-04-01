@@ -93,3 +93,48 @@ def fetch_all_instruments() -> dict[str, pd.DataFrame]:
         else:
             print(f"[DataFetcher] WARNING: No data for {symbol} ({info['ticker']})")
     return results
+
+
+def fetch_htf_candles(ticker: str, fallback_ticker: str | None = None) -> pd.DataFrame | None:
+    """
+    Fetch higher-timeframe (1h) candles for multi-TF analysis.
+    Same retry logic as fetch_candles but uses HTF config.
+    """
+    tickers_to_try = [t for t in [ticker, fallback_ticker] if t is not None]
+
+    for t in tickers_to_try:
+        for attempt in range(1, 4):
+            try:
+                data = yf.download(
+                    t,
+                    period=config.HTF_LOOKBACK,
+                    interval=config.HTF_INTERVAL,
+                    progress=False,
+                    auto_adjust=True,
+                )
+                if data is not None and not data.empty and len(data) >= config.BB_PERIOD:
+                    if isinstance(data.columns, pd.MultiIndex):
+                        data.columns = data.columns.get_level_values(0)
+                    data = data.dropna(subset=["Open", "High", "Low", "Close"])
+                    if len(data) >= config.BB_PERIOD:
+                        return data
+                    print(f"[DataFetcher] {t} (HTF): Not enough clean rows ({len(data)}/{config.BB_PERIOD})")
+                else:
+                    print(f"[DataFetcher] {t} (HTF): Empty or insufficient data (attempt {attempt}/3)")
+            except Exception as e:
+                print(f"[DataFetcher] Error fetching {t} HTF (attempt {attempt}/3): {e}")
+            if attempt < 3:
+                time.sleep(2)
+    return None
+
+
+def fetch_all_htf_instruments() -> dict[str, pd.DataFrame]:
+    """Fetch 1h candles for all configured instruments."""
+    results = {}
+    for symbol, info in config.INSTRUMENTS.items():
+        df = fetch_htf_candles(info["ticker"], info.get("fallback_ticker"))
+        if df is not None:
+            results[symbol] = df
+        else:
+            print(f"[DataFetcher] WARNING: No HTF data for {symbol}")
+    return results

@@ -10,6 +10,7 @@ run_chart.ps1
 trade_journal.csv
 alert_state.json
 last_update_id.txt
+signal_results.csv
 
 # Test/debug scripts
 test_diagnostic.py

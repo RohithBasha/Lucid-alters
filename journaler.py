@@ -27,3 +27,23 @@ def log_alert(symbol: str, signal_type: str, close_price: float, upper_bb: float
             round(lower_bb, 2)
         ])
     print(f"[Journaler] Logged {signal_type} for {symbol} to trade_journal.csv")
+
+
+RESULTS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "signal_results.csv")
+
+def log_result(symbol: str, signal_type: str, direction: str, entry_price: float,
+               exit_price: float, sl: float, target: float, result: str, pnl: float, timestamp: str):
+    """Appends a win/loss result to the signal results CSV."""
+    file_exists = os.path.isfile(RESULTS_FILE)
+
+    with open(RESULTS_FILE, mode='a', newline='') as f:
+        writer = csv.writer(f)
+        if not file_exists:
+            writer.writerow(["Timestamp", "Instrument", "Signal_Type", "Direction",
+                             "Entry_Price", "SL", "Target", "Exit_Price", "Result", "PnL_Points"])
+        writer.writerow([
+            timestamp, symbol, signal_type, direction,
+            round(entry_price, 2), round(sl, 2), round(target, 2),
+            round(exit_price, 2), result, round(pnl, 2)
+        ])
+    print(f"[Journaler] Logged {result} for {symbol} to signal_results.csv")

@@ -118,7 +118,102 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
         print(f"[Chart] \u2705 Generated chart for {symbol} at {chart_path}")
         return chart_path
 
+
     except Exception as e:
         print(f"[Chart] \u274c Error generating chart for {symbol}: {e}")
+        plt.close("all")
+        return None
+
+
+def generate_status_chart(df: pd.DataFrame, symbol: str, name: str) -> str | None:
+    """
+    Generate a live BB status chart (no signal marker).
+    Used by the /chart command for on-demand visual checks.
+    """
+    try:
+        from bollinger import compute_bollinger_bands
+        df = compute_bollinger_bands(df)
+        df = df.dropna(subset=["BB_Upper"])
+        df = df.tail(40).copy()
+
+        if len(df) < 10:
+            print(f"[Chart] Not enough data for status chart {symbol}")
+            return None
+
+        close = float(df.iloc[-1]["Close"])
+        upper = float(df.iloc[-1]["BB_Upper"])
+        lower = float(df.iloc[-1]["BB_Lower"])
+        mid = float(df.iloc[-1]["BB_Mid"])
+
+        # Position label
+        if close > upper:
+            pos_label = "🔴 ABOVE Upper Band"
+            pos_color = "#FF4444"
+        elif close < lower:
+            pos_label = "🟢 BELOW Lower Band"
+            pos_color = "#00CC66"
+        elif close > mid:
+            pos_label = "↗️ Above midline"
+            pos_color = "#FFAA00"
+        else:
+            pos_label = "↘️ Below midline"
+            pos_color = "#4ECDC4"
+
+        fig, ax = plt.subplots(figsize=(12, 6), facecolor="#1a1a2e")
+        ax.set_facecolor("#1a1a2e")
+        x = np.arange(len(df))
+        dates = df.index
+
+        # Candlesticks
+        for i in range(len(df)):
+            row = df.iloc[i]
+            o, h, l, c = float(row["Open"]), float(row["High"]), float(row["Low"]), float(row["Close"])
+            color = "#00CC66" if c >= o else "#FF4444"
+            ax.plot([x[i], x[i]], [l, h], color=color, linewidth=0.8)
+            body_bottom = min(o, c)
+            body_height = max(abs(c - o), 0.1)
+            ax.bar(x[i], body_height, bottom=body_bottom, width=0.6, color=color, edgecolor=color)
+
+        # Bollinger Bands
+        ax.plot(x, df["BB_Upper"].values, color="#FF6B6B", linewidth=1.5, label="Upper BB (1.5σ)", linestyle="--", alpha=0.9)
+        ax.plot(x, df["BB_Mid"].values, color="#4ECDC4", linewidth=1.2, label="Mid BB (SMA 20)", alpha=0.7)
+        ax.plot(x, df["BB_Lower"].values, color="#45B7D1", linewidth=1.5, label="Lower BB (1.5σ)", linestyle="--", alpha=0.9)
+        ax.fill_between(x, df["BB_Upper"].values, df["BB_Lower"].values, alpha=0.08, color="#4ECDC4")
+
+        # Current price horizontal line
+        ax.axhline(y=close, color=pos_color, linewidth=1, linestyle=":", alpha=0.8)
+        ax.text(x[-1] + 0.5, close, f"${close:,.2f}", color=pos_color, fontsize=10, fontweight="bold", va="center")
+
+        # Styling
+        ax.set_title(f"{name} ({symbol}) — Live BB Status", fontsize=16, fontweight="bold", color="white", pad=15)
+        ax.set_ylabel("Price ($)", fontsize=12, color="#cccccc")
+        ax.tick_params(colors="#888888")
+        for spine in ["top", "right"]:
+            ax.spines[spine].set_visible(False)
+        for spine in ["left", "bottom"]:
+            ax.spines[spine].set_color("#333333")
+        ax.grid(axis="y", color="#333333", linewidth=0.5, alpha=0.5)
+        ax.legend(loc="upper left", fontsize=9, facecolor="#1a1a2e", edgecolor="#333333", labelcolor="white")
+
+        step = max(1, len(df) // 6)
+        tick_positions = x[::step]
+        tick_labels = [dates[i].strftime("%d %b\n%H:%M") for i in range(0, len(dates), step)]
+        ax.set_xticks(tick_positions)
+        ax.set_xticklabels(tick_labels, fontsize=8, color="#888888")
+
+        ax.text(0.98, 0.02, "Lucid Alerts \u2022 TradeSea", transform=ax.transAxes,
+                fontsize=8, color="#555555", ha="right", va="bottom", style="italic")
+
+        plt.tight_layout()
+
+        chart_path = os.path.join(tempfile.gettempdir(), f"bb_status_{symbol}.png")
+        plt.savefig(chart_path, dpi=150, bbox_inches="tight", facecolor="#1a1a2e")
+        plt.close(fig)
+
+        print(f"[Chart] \u2705 Generated status chart for {symbol}")
+        return chart_path
+
+    except Exception as e:
+        print(f"[Chart] \u274c Error generating status chart for {symbol}: {e}")
         plt.close("all")
         return None

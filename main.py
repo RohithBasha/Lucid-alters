@@ -12,12 +12,13 @@ from datetime import datetime, timezone, timedelta
 
 import config
 import pandas as pd
-from data_fetcher import fetch_all_instruments, is_market_open
-from bollinger import detect_signals, check_reversal
+from data_fetcher import fetch_all_instruments, fetch_all_htf_instruments, is_market_open
+from bollinger import detect_signals, check_reversal, compute_bollinger_bands
 from telegram_notifier import send_alert, send_photo
 import journaler
 import chart_generator
 import bot_commands
+import signal_tracker
 import traceback
 
 
@@ -185,11 +186,37 @@ def main():
         send_error_alert("DATA ERROR", "No data fetched for any instrument. yfinance may be down.")
         return
 
+    # Fetch 1h candles for multi-timeframe confirmation
+    print("📊 Fetching 1h candle data (multi-TF)...")
+    htf_data = fetch_all_htf_instruments()
+
     # Check for partial failures (some instruments missing)
     missing = [sym for sym in config.INSTRUMENTS if sym not in data]
     if missing:
         print(f"⚠️ Missing data for: {', '.join(missing)}")
         send_error_alert("DATA WARNING", f"No data for: {', '.join(missing)}")
+
+    # ── Update Win/Loss Tracking ──
+    print("\n📈 Updating signal tracking...")
+    completed_signals = signal_tracker.update_tracking(state, data)
+    for outcome in completed_signals:
+        emoji = "✅" if outcome["result"] == "WIN" else "❌" if outcome["result"] == "LOSS" else "⏳"
+        result_msg = (
+            f"{emoji} *Signal Result: {outcome['result']}*\n"
+            f"\n"
+            f"📍 {outcome['symbol']} {outcome['direction']}\n"
+            f"💰 Entry: ${outcome['entry_price']:,.2f}\n"
+            f"🎯 Target: ${outcome['target']:,.2f} | 🛑 SL: ${outcome['sl']:,.2f}\n"
+            f"📊 Exit: ${outcome['exit_price']:,.2f} ({outcome['pnl_points']:+,.2f} pts)\n"
+            f"⏱️ Resolved in {outcome['candles_to_resolve']} candles"
+        )
+        send_alert({"emoji": emoji, "label": f"Signal {outcome['result']}", "type": "RESULT", "close": outcome['exit_price'], "high": 0, "low": 0, "upper_bb": 0, "lower_bb": 0, "timestamp": outcome['resolved_at']}, "SYSTEM")
+        # Send the detailed result as a separate message
+        from telegram_notifier import send_alert as _sa
+        import requests
+        if config.TELEGRAM_BOT_TOKEN and config.TELEGRAM_CHAT_ID:
+            url = f"https://api.telegram.org/bot{config.TELEGRAM_BOT_TOKEN}/sendMessage"
+            requests.post(url, json={"chat_id": config.TELEGRAM_CHAT_ID, "text": result_msg, "parse_mode": "Markdown"}, timeout=10)
 
     alerts_sent = 0
 
@@ -263,6 +290,35 @@ def main():
             send_error_alert("SIGNAL ERROR", f"{symbol}: {str(e)}")
             continue
 
+        # ── 3. Multi-Timeframe Confirmation ──
+        htf_df = htf_data.get(symbol)
+        htf_above_upper = False
+        htf_below_lower = False
+        if htf_df is not None and not htf_df.empty:
+            try:
+                htf_bb = compute_bollinger_bands(htf_df)
+                htf_last = htf_bb.iloc[-1]
+                if not pd.isna(htf_last.get("BB_Upper")) and not pd.isna(htf_last.get("BB_Lower")):
+                    htf_close = float(htf_last["Close"])
+                    htf_upper = float(htf_last["BB_Upper"])
+                    htf_lower = float(htf_last["BB_Lower"])
+                    htf_above_upper = htf_close > htf_upper
+                    htf_below_lower = htf_close < htf_lower
+            except Exception as e:
+                print(f"   ⚠️ HTF check error for {symbol}: {e}")
+
+        # Tag signals with multi-TF confirmation
+        for signal in signals:
+            sig_type = signal.get("type", "")
+            if "UPPER" in sig_type and htf_above_upper:
+                signal["multi_tf"] = True
+                signal["label"] = "🚨🚨 DOUBLE TIMEFRAME! " + signal["label"]
+                print(f"   🔥 Multi-TF CONFIRMED on 1h for {symbol} UPPER")
+            elif "LOWER" in sig_type and htf_below_lower:
+                signal["multi_tf"] = True
+                signal["label"] = "🚨🚨 DOUBLE TIMEFRAME! " + signal["label"]
+                print(f"   🔥 Multi-TF CONFIRMED on 1h for {symbol} LOWER")
+
         if not signals:
             print(f"   ✅ No signal — price within bands.")
             continue
@@ -295,6 +351,9 @@ def main():
                         "trigger_high": signal["high"]
                     }
                     print(f"   🎯 Saved active trigger for {symbol}: {sig_type}")
+
+                    # ── Start Win/Loss Tracking ──
+                    signal_tracker.track_new_signal(state, symbol, signal)
 
                 # ── Generate Charts ──
                 # Only for PRIORITY (trigger), REVERSAL signals, and ALARMs

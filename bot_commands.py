@@ -15,6 +15,9 @@ import config
 import pandas as pd
 from data_fetcher import fetch_candles
 from bollinger import compute_bollinger_bands
+import chart_generator
+from telegram_notifier import send_photo
+import signal_tracker
 
 IST = ZoneInfo("Asia/Kolkata")
 LAST_UPDATE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "last_update_id.txt")
@@ -284,6 +287,50 @@ def process_commands():
                 commands_found += 1
                 _clear_alarms()
                 _send_reply(chat_id, "🗑️ All custom price alarms have been cleared.")
+
+            elif chat_id and (text.startswith("/chart") or text.startswith("/c ") or text == "/c"):
+                print(f"[BotCmd] 📩 /chart command from chat {chat_id}")
+                commands_found += 1
+                parts = text.split()
+                
+                # Determine which instruments to chart
+                if len(parts) >= 2:
+                    sym = parts[1].upper()
+                    if sym not in config.INSTRUMENTS:
+                        _send_reply(chat_id, f"⚠️ Unknown symbol `{sym}`. Valid: {', '.join(config.INSTRUMENTS.keys())}")
+                    else:
+                        symbols_to_chart = {sym: config.INSTRUMENTS[sym]}
+                else:
+                    symbols_to_chart = config.INSTRUMENTS
+                
+                _send_reply(chat_id, f"📊 Generating {'chart' if len(symbols_to_chart) == 1 else 'charts'}...")
+                
+                for sym, info in symbols_to_chart.items():
+                    try:
+                        df = fetch_candles(info["ticker"], info.get("fallback_ticker"))
+                        if df is None:
+                            _send_reply(chat_id, f"❌ No data for {sym}")
+                            continue
+                        chart_path = chart_generator.generate_status_chart(df, sym, info["name"])
+                        if chart_path:
+                            send_photo(chart_path, f"📊 {info['name']} ({sym}) — Live BB Status")
+                        else:
+                            _send_reply(chat_id, f"❌ Chart generation failed for {sym}")
+                    except Exception as e:
+                        print(f"[BotCmd] ❌ Chart error for {sym}: {e}")
+                        _send_reply(chat_id, f"❌ Error generating chart for {sym}: {str(e)[:50]}")
+
+            elif chat_id and text in ["/stats", "stats"]:
+                print(f"[BotCmd] 📩 /stats command from chat {chat_id}")
+                commands_found += 1
+                state = {}
+                if os.path.exists(config.STATE_FILE):
+                    try:
+                        with open(config.STATE_FILE, "r") as f:
+                            state = json.load(f)
+                    except Exception: pass
+                stats_msg = signal_tracker.get_stats(state)
+                _send_reply(chat_id, stats_msg)
 
             elif chat_id and text in ["/reset", "reset"]:
                 print(f"[BotCmd] 📩 /reset command from chat {chat_id}")
