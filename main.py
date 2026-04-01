@@ -210,13 +210,14 @@ def main():
             f"📊 Exit: ${outcome['exit_price']:,.2f} ({outcome['pnl_points']:+,.2f} pts)\n"
             f"⏱️ Resolved in {outcome['candles_to_resolve']} candles"
         )
-        send_alert({"emoji": emoji, "label": f"Signal {outcome['result']}", "type": "RESULT", "close": outcome['exit_price'], "high": 0, "low": 0, "upper_bb": 0, "lower_bb": 0, "timestamp": outcome['resolved_at']}, "SYSTEM")
+        # Temporarily disable signal result alerts
+        # send_alert({"emoji": emoji, "label": f"Signal {outcome['result']}", "type": "RESULT", "close": outcome['exit_price'], "high": 0, "low": 0, "upper_bb": 0, "lower_bb": 0, "timestamp": outcome['resolved_at']}, "SYSTEM")
         # Send the detailed result as a separate message
-        from telegram_notifier import send_alert as _sa
-        import requests
-        if config.TELEGRAM_BOT_TOKEN and config.TELEGRAM_CHAT_ID:
-            url = f"https://api.telegram.org/bot{config.TELEGRAM_BOT_TOKEN}/sendMessage"
-            requests.post(url, json={"chat_id": config.TELEGRAM_CHAT_ID, "text": result_msg, "parse_mode": "Markdown"}, timeout=10)
+        # from telegram_notifier import send_alert as _sa
+        # import requests
+        # if config.TELEGRAM_BOT_TOKEN and config.TELEGRAM_CHAT_ID:
+        #     url = f"https://api.telegram.org/bot{config.TELEGRAM_BOT_TOKEN}/sendMessage"
+        #     requests.post(url, json={"chat_id": config.TELEGRAM_CHAT_ID, "text": result_msg, "parse_mode": "Markdown"}, timeout=10)
 
     alerts_sent = 0
 
