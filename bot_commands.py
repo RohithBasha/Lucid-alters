@@ -207,6 +207,7 @@ def process_commands():
             return
 
         commands_found = 0
+        authorized_chat_id = config.TELEGRAM_CHAT_ID
         for update in results:
             update_id = update.get("update_id", 0)
             message = update.get("message", {})
@@ -214,6 +215,13 @@ def process_commands():
             chat_id = message.get("chat", {}).get("id")
 
             print(f"[BotCmd] Processing update {update_id}: text='{text}' chat={chat_id}")
+
+            # Security: Only accept commands from the authorized chat
+            if chat_id and authorized_chat_id and str(chat_id) != str(authorized_chat_id):
+                print(f"[BotCmd] ⛔ Unauthorized chat {chat_id} — ignoring command.")
+                if update_id > last_id:
+                    last_id = update_id
+                continue
 
             if chat_id and text in ["/status", "/s", "status"]:
                 print(f"[BotCmd] 📩 /status command from chat {chat_id}")

@@ -5,3 +5,13 @@ push.ps1
 push.bat
 gen_chart.py
 run_chart.ps1
+
+# Sensitive runtime state — don't expose in public repo
+trade_journal.csv
+alert_state.json
+last_update_id.txt
+
+# Test/debug scripts
+test_diagnostic.py
+test_tickers.py
+compare_silver.py
