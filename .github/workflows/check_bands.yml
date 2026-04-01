@@ -24,6 +24,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Restore state files
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            alert_state.json
+            last_update_id.txt
+            trade_journal.csv
+          key: bot-state-${{ github.run_id }}
+          restore-keys: |
+            bot-state-
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -40,11 +51,12 @@ jobs:
         run: python main.py
         timeout-minutes: 3
 
-      - name: Commit state and journal
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git pull --rebase || true
-          git add trade_journal.csv alert_state.json last_update_id.txt 2>/dev/null || true
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update state [skip ci]" && git push)
-        continue-on-error: true
+      - name: Save state files
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: |
+            alert_state.json
+            last_update_id.txt
+            trade_journal.csv
+          key: bot-state-${{ github.run_id }}
