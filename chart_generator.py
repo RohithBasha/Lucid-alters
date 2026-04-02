@@ -80,20 +80,20 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
             signal_color = "#888888"
 
         # --- Build Chart ---
-        fig, ax = plt.subplots(figsize=(12, 6), facecolor="#1a1a2e")
+        fig, ax = plt.subplots(figsize=(12, 8), facecolor="#1a1a2e")
         ax.set_facecolor("#1a1a2e")
         x = np.arange(len(df))
         dates = df.index
 
-        # Candlesticks
+        # Candlesticks (thicker wicks + wider bodies for visibility)
         for i in range(len(df)):
             row = df.iloc[i]
             o, h, l, c = float(row["Open"]), float(row["High"]), float(row["Low"]), float(row["Close"])
             color = "#00CC66" if c >= o else "#FF4444"
-            ax.plot([x[i], x[i]], [l, h], color=color, linewidth=0.8)
+            ax.plot([x[i], x[i]], [l, h], color=color, linewidth=1.2)
             body_bottom = min(o, c)
             body_height = max(abs(c - o), 0.1)
-            ax.bar(x[i], body_height, bottom=body_bottom, width=0.6, color=color, edgecolor=color)
+            ax.bar(x[i], body_height, bottom=body_bottom, width=0.7, color=color, edgecolor=color)
 
         # Bollinger Bands
         ax.plot(x, df["BB_Upper"].values, color="#FF6B6B", linewidth=1.5, label="Upper BB (1.5\u03c3)", linestyle="--", alpha=0.9)
@@ -104,19 +104,14 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
         # Signal marker
         ax.scatter(x[-1], close, s=200, color=signal_color, zorder=10, edgecolors="white", linewidth=2)
 
-        # ── Y-axis: Focus on candle price range + nearby BB ──
+        # ── Y-axis: Tight focus on candle price range ──
         price_min = float(df["Low"].min())
         price_max = float(df["High"].max())
-        bb_upper_max = float(df["BB_Upper"].max())
-        bb_lower_min = float(df["BB_Lower"].min())
-        # Include BB bands if they're reasonably close to price
         price_range = price_max - price_min
         if price_range < 0.001:
             price_range = price_max * 0.01
-        chart_min = min(price_min, max(bb_lower_min, price_min - price_range * 0.5))
-        chart_max = max(price_max, min(bb_upper_max, price_max + price_range * 0.5))
-        padding = (chart_max - chart_min) * 0.15
-        ax.set_ylim(chart_min - padding, chart_max + padding)
+        padding = price_range * 0.10
+        ax.set_ylim(price_min - padding, price_max + padding)
 
         # Position annotation smartly using price range (not BB range)
         annotation_offset = price_range * 0.15
@@ -207,20 +202,20 @@ def generate_status_chart(df: pd.DataFrame, symbol: str, name: str) -> str | Non
             pos_label = "↘️ Below midline"
             pos_color = "#4ECDC4"
 
-        fig, ax = plt.subplots(figsize=(12, 6), facecolor="#1a1a2e")
+        fig, ax = plt.subplots(figsize=(12, 8), facecolor="#1a1a2e")
         ax.set_facecolor("#1a1a2e")
         x = np.arange(len(df))
         dates = df.index
 
-        # Candlesticks
+        # Candlesticks (thicker wicks + wider bodies for visibility)
         for i in range(len(df)):
             row = df.iloc[i]
             o, h, l, c = float(row["Open"]), float(row["High"]), float(row["Low"]), float(row["Close"])
             color = "#00CC66" if c >= o else "#FF4444"
-            ax.plot([x[i], x[i]], [l, h], color=color, linewidth=0.8)
+            ax.plot([x[i], x[i]], [l, h], color=color, linewidth=1.2)
             body_bottom = min(o, c)
             body_height = max(abs(c - o), 0.1)
-            ax.bar(x[i], body_height, bottom=body_bottom, width=0.6, color=color, edgecolor=color)
+            ax.bar(x[i], body_height, bottom=body_bottom, width=0.7, color=color, edgecolor=color)
 
         # Bollinger Bands
         ax.plot(x, df["BB_Upper"].values, color="#FF6B6B", linewidth=1.5, label="Upper BB (1.5σ)", linestyle="--", alpha=0.9)
@@ -232,18 +227,14 @@ def generate_status_chart(df: pd.DataFrame, symbol: str, name: str) -> str | Non
         ax.axhline(y=close, color=pos_color, linewidth=1, linestyle=":", alpha=0.8)
         ax.text(x[-1] + 0.5, close, f"${close:,.2f}", color=pos_color, fontsize=10, fontweight="bold", va="center")
 
-        # ── Y-axis: Focus on candle price range + nearby BB ──
+        # ── Y-axis: Tight focus on candle price range ──
         price_min = float(df["Low"].min())
         price_max = float(df["High"].max())
-        bb_upper_max = float(df["BB_Upper"].max())
-        bb_lower_min = float(df["BB_Lower"].min())
         price_range = price_max - price_min
         if price_range < 0.001:
             price_range = price_max * 0.01
-        chart_min = min(price_min, max(bb_lower_min, price_min - price_range * 0.5))
-        chart_max = max(price_max, min(bb_upper_max, price_max + price_range * 0.5))
-        padding = (chart_max - chart_min) * 0.15
-        ax.set_ylim(chart_min - padding, chart_max + padding)
+        padding = price_range * 0.10
+        ax.set_ylim(price_min - padding, price_max + padding)
 
         # Styling
         ax.set_title(f"{name} ({symbol}) — Live BB Status", fontsize=16, fontweight="bold", color="white", pad=15)
