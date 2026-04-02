@@ -144,7 +144,7 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
         ax.set_xticks(tick_positions)
         ax.set_xticklabels(tick_labels, fontsize=8, color="#888888")
 
-        ax.text(0.98, 0.02, "Lucid Alerts \u2022 TradeSea", transform=ax.transAxes,
+        ax.text(0.98, 0.02, "Lucid Alerts", transform=ax.transAxes,
                 fontsize=8, color="#555555", ha="right", va="bottom", style="italic")
 
         plt.tight_layout()
@@ -253,7 +253,7 @@ def generate_status_chart(df: pd.DataFrame, symbol: str, name: str) -> str | Non
         ax.set_xticks(tick_positions)
         ax.set_xticklabels(tick_labels, fontsize=8, color="#888888")
 
-        ax.text(0.98, 0.02, "Lucid Alerts \u2022 TradeSea", transform=ax.transAxes,
+        ax.text(0.98, 0.02, "Lucid Alerts", transform=ax.transAxes,
                 fontsize=8, color="#555555", ha="right", va="bottom", style="italic")
 
         plt.tight_layout()

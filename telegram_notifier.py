@@ -70,7 +70,6 @@ def send_alert(signal: dict, symbol: str) -> bool:
         f"{price_line}\n"
         f"📊 Upper BB: ${signal.get('upper_bb', 0):,.2f} | Lower BB: ${signal.get('lower_bb', 0):,.2f}\n"
         f"⏱️ 15m candle | {ist_time}\n"
-        f"📍 Trade on TradeSea"
     )
 
     url = f"https://api.telegram.org/bot{config.TELEGRAM_BOT_TOKEN}/sendMessage"

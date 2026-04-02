@@ -1,6 +1,5 @@
 """
 Fetches 15-minute OHLC candle data from Yahoo Finance (COMEX/NYMEX).
-Same exchange data that TradeSea uses via Rithmic.
 """
 import yfinance as yf
 import pandas as pd
