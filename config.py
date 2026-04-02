@@ -32,7 +32,7 @@ BB_STD_DEV = 1.5        # Standard deviation multiplier
 
 # ─── Timeframe ────────────────────────────────────────────────────────────────
 INTERVAL = "15m"         # yfinance interval
-LOOKBACK_PERIOD = "5d"   # How far back to fetch (need >= BB_PERIOD candles)
+LOOKBACK_PERIOD = "10d"  # How far back to fetch (need >= BB_PERIOD candles, extra buffer for weekends)
 
 # ─── Higher Timeframe (for multi-TF confirmation) ────────────────────────────
 HTF_INTERVAL = "1h"      # Higher timeframe interval

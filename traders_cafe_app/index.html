@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traders Cafe | Ultimate Design Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Roboto+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --bg: #000;
+            --sidebar-bg: #0f172a;
+            --accent-blue: #3D52FF;
+            --accent-pink: #FF3A92;
+            --accent-orange: #FF8B00;
+            --text-main: #FFFFFF;
+            --text-dim: #9ca3af;
+            --brand-gradient: linear-gradient(135deg, var(--accent-blue), var(--accent-pink), var(--accent-orange));
+
+            /* Global Defaults */
+            --card-radius: 20px;
+            --card-opacity: 0.05;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* --- Sidebar UI --- */
+        .sidebar {
+            width: 380px;
+            background-color: var(--sidebar-bg);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-y: auto;
+            z-index: 1000;
+            scrollbar-width: thin;
+        }
+
+        .category-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--accent-pink);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.8rem;
+            padding-top: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .control-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .control-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        input[type="range"], input[type="color"] {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        input[type="color"] {
+            height: 30px;
+            border: none;
+            background: none;
+        }
+
+        .btn-flex {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .btn-primary { background: var(--accent-blue); color: white; }
+        .btn-success { background: #10b981; color: white; }
+        .btn-outline { background: transparent; border: 1px solid #334155; color: white; }
+
+        /* --- Design Canvas --- */
+        .preview-pane {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #020617;
+            position: relative;
+            overflow: auto;
+        }
+
+        #artboard {
+            width: 1000px;
+            height: 1000px;
+            background-color: #000;
+            position: relative;
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.8);
+            border: 1px solid #111;
+        }
+
+        /* --- Draggable Components --- */
+        .draggable {
+            position: absolute !important;
+            cursor: move;
+            transition: outline 0.1s;
+        }
+
+        .draggable:hover {
+            outline: 2px dashed rgba(255,255,255,0.2);
+        }
+
+        .active-element {
+            outline: 2px solid var(--accent-blue) !important;
+        }
+
+        .editable-text {
+            user-select: text;
+            outline: none;
+            min-width: 50px;
+        }
+
+        /* Positions matching Final Requirements */
+        .art-headline {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 42px;
+            width: 900px;
+            text-align: center;
+            top: 60px; left: 50px;
+            color: #fff;
+        }
+
+        .art-logo {
+            width: 250px;
+            top: 860px; left: 375px;
+            border-radius: 8px;
+        }
+
+        .art-card {
+            background: rgba(255, 255, 255, var(--card-opacity));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--card-radius);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(15px);
+            width: 420px;
+            height: 320px;
+        }
+
+        #opt-card { top: 300px; left: 50px; }
+        #fut-card { top: 300px; left: 530px; }
+
+        .art-label {
+            font-size: 18px;
+            color: var(--text-dim);
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .art-metric {
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 700;
+            font-size: 105px;
+            background: var(--brand-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .art-note {
+            width: 500px;
+            text-align: right;
+            font-size: 14px;
+            color: var(--text-dim);
+            top: 940px; left: 480px;
+            white-space: nowrap;
+        }
+
+        .custom-textbox {
+            color: white;
+            padding: 10px;
+            font-size: 24px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div>
+            <h1 style="font-size: 1.1rem; font-weight: 800;">Traders Cafe Studio</h1>
+            <p style="font-size: 0.65rem; color: var(--text-dim)">Ultimate Image Editor | Pro Tools</p>
+        </div>
+
+        <div class="category-title">Studio Actions</div>
+        <div class="btn-flex">
+            <button class="btn btn-primary" onclick="addTextbox()">+ Add Text</button>
+            <button class="btn btn-success" onclick="downloadPNG()">Download PNG</button>
+        </div>
+        <button class="btn btn-outline" style="width: 100%; margin-top: 0.5rem" onclick="location.reload()">Reset Canvas</button>
+
+        <div id="prop-category">
+            <div class="category-title">Element Properties</div>
+            <p id="no-selection" style="font-size: 0.7rem; color: var(--text-dim); text-align: center;">Click an element to see properties</p>
+            
+            <div id="editor-controls" style="display: none;">
+                <div class="control-row">
+                    <span class="control-label" id="prop-type">Size</span>
+                    <input type="range" id="prop-size" min="10" max="300" value="36">
+                </div>
+
+                <div class="control-row">
+                    <span class="control-label">Font Weight</span>
+                    <input type="range" id="prop-weight" min="300" max="900" value="700">
+                </div>
+
+                <div class="control-row">
+                    <span class="control-label">Element Color</span>
+                    <input type="color" id="prop-color" value="#ffffff">
+                    <button class="btn btn-outline" style="font-size: 0.6rem; padding: 4px; margin-top: 4px;" onclick="resetGradient()">Apply Brand Gradient</button>
+                </div>
+
+                <div class="control-row">
+                    <span class="control-label">Shadow/Glow</span>
+                    <input type="range" id="prop-shadow" min="0" max="50" value="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="category-title">Global Styling</div>
+        <div class="control-row">
+            <span class="control-label">Card Radius</span>
+            <input type="range" id="glob-radius" min="0" max="100" value="20">
+        </div>
+        <div class="control-row">
+            <span class="control-label">Card Transparency</span>
+            <input type="range" id="glob-opacity" step="0.01" min="0" max="0.5" value="0.05">
+        </div>
+    </aside>
+
+    <main class="preview-pane">
+        <div id="artboard">
+            <div class="draggable art-headline editable-text" contenteditable="true" spellcheck="false" id="drag-h1">New Index Breakeven Points after STT Changes</div>
+            
+            <img src="media__1775025521538.png" alt="Logo" class="draggable art-logo" id="drag-logo">
+
+            <div class="draggable art-card" id="opt-card">
+                <div class="art-label editable-text" contenteditable="true">Options Breakeven</div>
+                <div class="art-metric editable-text" contenteditable="true" id="opt-val">+1.22 Points</div>
+            </div>
+
+            <div class="draggable art-card" id="fut-card">
+                <div class="art-label editable-text" contenteditable="true">Futures Breakeven</div>
+                <div class="art-metric editable-text" contenteditable="true" id="fut-val">+13.74 Points</div>
+            </div>
+
+            <div class="draggable art-note editable-text" contenteditable="true" id="drag-note">
+                * New rules from 1st April 2026
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const artboard = document.getElementById('artboard');
+        let activeEl = null; let isDragging = false; let offset = { x: 0, y: 0 };
+        const controls = document.getElementById('editor-controls');
+        const noSelText = document.getElementById('no-selection');
+        const pSize = document.getElementById('prop-size');
+        const pWeight = document.getElementById('prop-weight');
+        const pColor = document.getElementById('prop-color');
+        const pShadow = document.getElementById('prop-shadow');
+
+        document.addEventListener('mousedown', e => {
+            const el = e.target.closest('.draggable');
+            if (el) {
+                activeEl = el; isDragging = true;
+                document.querySelectorAll('.draggable').forEach(d => d.classList.remove('active-element'));
+                activeEl.classList.add('active-element');
+                noSelText.style.display = 'none'; controls.style.display = 'block';
+                const style = window.getComputedStyle(activeEl);
+                pSize.value = parseFloat(style.fontSize || style.width);
+                pWeight.value = style.fontWeight; pColor.value = rgbToHex(style.color);
+                const rect = activeEl.getBoundingClientRect();
+                const parentRect = artboard.getBoundingClientRect();
+                offset.x = e.clientX - rect.left; offset.y = e.clientY - rect.top;
+            } else if (!e.target.closest('.sidebar')) {
+                activeEl = null; document.querySelectorAll('.draggable').forEach(d => d.classList.remove('active-element'));
+                noSelText.style.display = 'block'; controls.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('mousemove', e => {
+            if (isDragging && activeEl) {
+                const parentRect = artboard.getBoundingClientRect();
+                activeEl.style.left = (e.clientX - parentRect.left - offset.x) + 'px';
+                activeEl.style.top = (e.clientY - parentRect.top - offset.y) + 'px';
+            }
+        });
+
+        document.addEventListener('mouseup', () => isDragging = false);
+
+        pSize.addEventListener('input', () => {
+            if (activeEl.tagName === 'IMG') activeEl.style.width = pSize.value + 'px';
+            else activeEl.style.fontSize = pSize.value + 'px';
+        });
+        pWeight.addEventListener('input', () => activeEl.style.fontWeight = pWeight.value);
+        pColor.addEventListener('input', () => {
+            activeEl.style.background = 'none'; activeEl.style.webkitBackgroundClip = 'initial';
+            activeEl.style.webkitTextFillColor = 'initial'; activeEl.style.color = pColor.value;
+        });
+        pShadow.addEventListener('input', () => activeEl.style.textShadow = `0 0 ${pShadow.value}px rgba(255,255,255,0.5)`);
+
+        document.getElementById('glob-radius').addEventListener('input', e => {
+            document.querySelectorAll('.art-card').forEach(c => c.style.borderRadius = e.target.value + 'px');
+        });
+        document.getElementById('glob-opacity').addEventListener('input', e => {
+            document.querySelectorAll('.art-card').forEach(c => c.style.backgroundColor = `rgba(255,255,255,${e.target.value})`);
+        });
+
+        function addTextbox() {
+            const div = document.createElement('div');
+            div.className = 'draggable custom-textbox editable-text';
+            div.contentEditable = true; div.innerHTML = 'NEW TEXT LAYER';
+            div.style.left = '400px'; div.style.top = '500px';
+            artboard.appendChild(div);
+        }
+
+        function resetGradient() {
+            if (!activeEl) return;
+            activeEl.style.background = 'linear-gradient(135deg, #3D52FF, #FF3A92, #FF8B00)';
+            activeEl.style.webkitBackgroundClip = 'text'; activeEl.style.webkitTextFillColor = 'transparent';
+        }
+
+        function downloadPNG() {
+            const el = activeEl; if (el) el.classList.remove('active-element');
+            html2canvas(artboard, { backgroundColor: '#000', scale: 2, useCORS: true }).then(canvas => {
+                const link = document.createElement('a'); link.download = 'TradersCafe_FinalReport.png';
+                link.href = canvas.toDataURL('image/png'); link.click();
+            });
+        }
+
+        function rgbToHex(rgb) {
+            if (!rgb || rgb === 'initial' || rgb.includes('rgba(0, 0, 0, 0)')) return '#ffffff'; const res = rgb.match(/\d+/g);
+            if (!res) return '#ffffff';
+            return "#" + ((1 << 24) + (parseInt(res[0]) << 16) + (parseInt(res[1]) << 8) + parseInt(res[2])).toString(16).slice(1);
+        }
+    </script>
+</body>
+</html>

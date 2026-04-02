@@ -9,6 +9,40 @@ matplotlib.use('Agg')  # Non-interactive backend for server/CI
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import config
+
+
+def _clean_continuous_data(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Remove large time gaps from the data to prevent visual gaps in charts.
+    Keeps only the most recent continuous block of candles.
+    A 'gap' is defined as > 3x the median time interval between candles.
+    """
+    if len(df) < 5:
+        return df
+
+    df = df.copy()
+    # Calculate time differences between consecutive candles
+    time_diffs = df.index.to_series().diff()
+    
+    # Median interval (should be ~15min for 15m data)
+    median_interval = time_diffs.median()
+    
+    if pd.isna(median_interval) or median_interval.total_seconds() <= 0:
+        return df
+    
+    # Find gaps larger than 3x the median (e.g., > 45 min for 15m data)
+    # This catches weekend gaps, session breaks, and missing data periods
+    gap_threshold = median_interval * 3
+    gap_mask = time_diffs > gap_threshold
+    
+    if gap_mask.any():
+        # Find the LAST large gap — keep only data after it
+        last_gap_idx = gap_mask[gap_mask].index[-1]
+        last_gap_pos = df.index.get_loc(last_gap_idx)
+        df = df.iloc[last_gap_pos:]
+    
+    return df
 
 
 def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> str | None:
@@ -18,6 +52,11 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
     """
     try:
         from bollinger import compute_bollinger_bands
+
+        # Step 1: Remove time gaps (weekends, session breaks) BEFORE computing BB
+        df = _clean_continuous_data(df)
+
+        # Step 2: Compute BB on clean, continuous data
         df = compute_bollinger_bands(df)
         df = df.dropna(subset=["BB_Upper"])
 
@@ -132,6 +171,10 @@ def generate_status_chart(df: pd.DataFrame, symbol: str, name: str) -> str | Non
     """
     try:
         from bollinger import compute_bollinger_bands
+
+        # Remove time gaps before computing BB for clean charts
+        df = _clean_continuous_data(df)
+
         df = compute_bollinger_bands(df)
         df = df.dropna(subset=["BB_Upper"])
         df = df.tail(40).copy()
