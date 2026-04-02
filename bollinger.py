@@ -54,6 +54,16 @@ def detect_signals(df: pd.DataFrame) -> list[dict]:
     mid = float(last["BB_Mid"])
     timestamp = df.index[-1]
 
+    # ── BB Stability Gate ──
+    # After a weekend/holiday gap, the SMA takes ~20 candles to adjust.
+    # During this period, bands are inflated and signals are false noise.
+    # Skip detection if BB midline is more than 2% from current close.
+    if close > 0:
+        mid_deviation_pct = abs(close - mid) / close * 100
+        if mid_deviation_pct > 2.0:
+            print(f"  ⚠️ BB unstable: mid ${mid:.2f} is {mid_deviation_pct:.1f}% from close ${close:.2f}. Skipping signals.")
+            return []
+
     candle_data = {
         "close": close,
         "high": high,

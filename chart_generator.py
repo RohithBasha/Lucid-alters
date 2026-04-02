@@ -16,24 +16,17 @@ def _clean_continuous_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Remove large time gaps from the data to prevent visual gaps in charts.
     Keeps only the most recent continuous block of candles.
-    A 'gap' is defined as > 3x the median time interval between candles.
+    Only catches significant gaps (weekends, holidays) — NOT daily maintenance.
     """
     if len(df) < 5:
         return df
 
     df = df.copy()
-    # Calculate time differences between consecutive candles
     time_diffs = df.index.to_series().diff()
     
-    # Median interval (should be ~15min for 15m data)
-    median_interval = time_diffs.median()
-    
-    if pd.isna(median_interval) or median_interval.total_seconds() <= 0:
-        return df
-    
-    # Find gaps larger than 3x the median (e.g., > 45 min for 15m data)
-    # This catches weekend gaps, session breaks, and missing data periods
-    gap_threshold = median_interval * 3
+    # Only catch significant gaps (>4 hours): weekends, holidays.
+    # Daily CME maintenance break (~1h) is fine to compute BB across.
+    gap_threshold = pd.Timedelta(hours=4)
     gap_mask = time_diffs > gap_threshold
     
     if gap_mask.any():
@@ -109,22 +102,34 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
         ax.fill_between(x, df["BB_Upper"].values, df["BB_Lower"].values, alpha=0.08, color="#4ECDC4")
 
         # Signal marker
-        upper_val = float(df.iloc[-1]["BB_Upper"])
-        lower_val = float(df.iloc[-1]["BB_Lower"])
-        band_range = upper_val - lower_val
-
         ax.scatter(x[-1], close, s=200, color=signal_color, zorder=10, edgecolors="white", linewidth=2)
 
-        # Position annotation smartly (above or below based on signal)
+        # ── Y-axis: Focus on candle price range + nearby BB ──
+        price_min = float(df["Low"].min())
+        price_max = float(df["High"].max())
+        bb_upper_max = float(df["BB_Upper"].max())
+        bb_lower_min = float(df["BB_Lower"].min())
+        # Include BB bands if they're reasonably close to price
+        price_range = price_max - price_min
+        if price_range < 0.001:
+            price_range = price_max * 0.01
+        chart_min = min(price_min, max(bb_lower_min, price_min - price_range * 0.5))
+        chart_max = max(price_max, min(bb_upper_max, price_max + price_range * 0.5))
+        padding = (chart_max - chart_min) * 0.15
+        ax.set_ylim(chart_min - padding, chart_max + padding)
+
+        # Position annotation smartly using price range (not BB range)
+        annotation_offset = price_range * 0.15
         if "LOWER" in sig_type:
-            text_y = close - band_range * 0.3
+            text_y = close - annotation_offset
         else:
-            text_y = close + band_range * 0.3
+            text_y = close + annotation_offset
 
         ax.annotate(sig_label, xy=(x[-1], close), xytext=(x[-1] - 6, text_y),
                     fontsize=10, fontweight="bold", color=signal_color,
                     arrowprops=dict(arrowstyle="->", color=signal_color, lw=2),
-                    bbox=dict(boxstyle="round,pad=0.3", facecolor="#1a1a2e", edgecolor=signal_color))
+                    bbox=dict(boxstyle="round,pad=0.3", facecolor="#1a1a2e", edgecolor=signal_color),
+                    annotation_clip=True)
 
         # Styling
         ax.set_title(f"{name} ({symbol}) - Bollinger Band Alert", fontsize=16, fontweight="bold", color="white", pad=15)
@@ -226,6 +231,19 @@ def generate_status_chart(df: pd.DataFrame, symbol: str, name: str) -> str | Non
         # Current price horizontal line
         ax.axhline(y=close, color=pos_color, linewidth=1, linestyle=":", alpha=0.8)
         ax.text(x[-1] + 0.5, close, f"${close:,.2f}", color=pos_color, fontsize=10, fontweight="bold", va="center")
+
+        # ── Y-axis: Focus on candle price range + nearby BB ──
+        price_min = float(df["Low"].min())
+        price_max = float(df["High"].max())
+        bb_upper_max = float(df["BB_Upper"].max())
+        bb_lower_min = float(df["BB_Lower"].min())
+        price_range = price_max - price_min
+        if price_range < 0.001:
+            price_range = price_max * 0.01
+        chart_min = min(price_min, max(bb_lower_min, price_min - price_range * 0.5))
+        chart_max = max(price_max, min(bb_upper_max, price_max + price_range * 0.5))
+        padding = (chart_max - chart_min) * 0.15
+        ax.set_ylim(chart_min - padding, chart_max + padding)
 
         # Styling
         ax.set_title(f"{name} ({symbol}) — Live BB Status", fontsize=16, fontweight="bold", color="white", pad=15)

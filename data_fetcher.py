@@ -22,14 +22,10 @@ def _remove_time_gaps(df: pd.DataFrame) -> pd.DataFrame:
         return df
 
     time_diffs = df.index.to_series().diff()
-    median_interval = time_diffs.median()
     
-    if pd.isna(median_interval) or median_interval.total_seconds() <= 0:
-        return df
-    
-    # A "gap" = more than 3x the median candle interval
-    # For 15m data: gap > 45 minutes (catches 1-hour daily maintenance + weekends)
-    gap_threshold = median_interval * 3
+    # Only catch SIGNIFICANT gaps: weekends (~49h), holidays, multi-hour outages.
+    # Daily CME maintenance break (~1h, 4-5 PM CT) is NOT a gap — prices barely move.
+    gap_threshold = pd.Timedelta(hours=4)
     gap_indices = time_diffs[time_diffs > gap_threshold].index
     
     if len(gap_indices) == 0:
