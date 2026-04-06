@@ -80,40 +80,51 @@ def fetch_candles(ticker: str, fallback_ticker: str | None = None) -> pd.DataFra
     tickers_to_try = [t for t in [ticker, fallback_ticker] if t is not None]
 
     for t in tickers_to_try:
-        for attempt in range(1, 4):  # 3 retries
-            try:
-                data = yf.download(
-                    t,
-                    period=config.LOOKBACK_PERIOD,
-                    interval=config.INTERVAL,
-                    progress=False,
-                    auto_adjust=True,
-                )
-                if data is not None and not data.empty and len(data) >= config.BB_PERIOD:
-                    # Flatten multi-level columns if present
-                    if isinstance(data.columns, pd.MultiIndex):
-                        data.columns = data.columns.get_level_values(0)
+        for interval in [config.INTERVAL, "5m"]:
+            for attempt in range(1, 4):  # 3 retries per interval
+                try:
+                    data = yf.download(
+                        t,
+                        period=config.LOOKBACK_PERIOD,
+                        interval=interval,
+                        progress=False,
+                        auto_adjust=True,
+                    )
+                    if data is not None and not data.empty and len(data) >= config.BB_PERIOD:
+                        # Flatten multi-level columns if present
+                        if isinstance(data.columns, pd.MultiIndex):
+                            data.columns = data.columns.get_level_values(0)
 
-                    # Drop rows with NaN in critical columns
-                    data = data.dropna(subset=["Open", "High", "Low", "Close"])
+                        if interval == "5m":
+                            print(f"[DataFetcher] Data fallback triggered! Resampling 5m data to 15m for {t}")
+                            try:
+                                agg_dict = {'Open': 'first', 'High': 'max', 'Low': 'min', 'Close': 'last', 'Volume': 'sum'}
+                                available_cols = {col: agg_dict[col] for col in agg_dict if col in data.columns}
+                                data = data.resample("15min", closed='left', label='left').agg(available_cols).dropna()
+                            except Exception as e:
+                                print(f"[DataFetcher] Resampling error: {e}")
 
-                    if len(data) >= config.BB_PERIOD:
-                        # Remove large time gaps (weekends/session breaks) that can
-                        # distort Bollinger Band calculations and cause chart artifacts
-                        data = _remove_time_gaps(data)
+                        # Drop rows with NaN in critical columns
+                        if all(c in data.columns for c in ["Open", "High", "Low", "Close"]):
+                            data = data.dropna(subset=["Open", "High", "Low", "Close"])
+
                         if len(data) >= config.BB_PERIOD:
-                            return data
-                        print(f"[DataFetcher] {t}: Not enough data after gap-cleaning ({len(data)}/{config.BB_PERIOD})")
+                            # Remove large time gaps (weekends/session breaks) that can
+                            # distort Bollinger Band calculations and cause chart artifacts
+                            data = _remove_time_gaps(data)
+                            if len(data) >= config.BB_PERIOD:
+                                return data
+                            print(f"[DataFetcher] {t}: Not enough data after gap-cleaning ({len(data)}/{config.BB_PERIOD})")
 
-                    print(f"[DataFetcher] {t}: Not enough clean rows ({len(data)}/{config.BB_PERIOD})")
-                else:
-                    print(f"[DataFetcher] {t}: Empty or insufficient data (attempt {attempt}/3)")
+                        print(f"[DataFetcher] {t}: Not enough clean rows ({len(data)}/{config.BB_PERIOD})")
+                    else:
+                        print(f"[DataFetcher] {t} [{interval}]: Empty or insufficient data (attempt {attempt}/3)")
 
-            except Exception as e:
-                print(f"[DataFetcher] Error fetching {t} (attempt {attempt}/3): {e}")
+                except Exception as e:
+                    print(f"[DataFetcher] Error fetching {t} [{interval}] (attempt {attempt}/3): {e}")
 
-            if attempt < 3:
-                time.sleep(2)  # Brief pause before retry
+                if attempt < 3:
+                    time.sleep(2)  # Brief pause before retry
 
     return None
 

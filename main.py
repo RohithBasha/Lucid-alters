@@ -8,6 +8,7 @@ Includes run-dedup to prevent double-firing when both triggers are active.
 import json
 import os
 import sys
+import shutil
 from datetime import datetime, timezone, timedelta
 
 import config
@@ -28,12 +29,18 @@ RUN_DEDUP_SECONDS = 180  # 3 minutes
 
 
 def load_state() -> dict:
-    """Load the last alert state to prevent duplicate alerts."""
+    """Load the last alert state to prevent duplicate alerts. Auto-heals if corrupted."""
     if os.path.exists(config.STATE_FILE):
         try:
             with open(config.STATE_FILE, "r") as f:
                 return json.load(f)
-        except (json.JSONDecodeError, IOError):
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"⚠️ State file corrupted ({e}). Auto-healing by backing up and wiping.")
+            try:
+                backup_path = config.STATE_FILE + ".corrupt"
+                shutil.copy2(config.STATE_FILE, backup_path)
+            except Exception:
+                pass
             return {}
     return {}
 
@@ -359,13 +366,35 @@ def main():
                 # ── Generate Charts ──
                 # Only for PRIORITY (trigger), REVERSAL signals, and ALARMs
                 if "PRIORITY" in sig_type or "REVERSAL" in sig_type or "ALARM" in sig_type:
-                    try:
-                        chart_path = chart_generator.generate_chart(df, symbol, instrument_name, signal)
-                        if chart_path:
-                            send_photo(chart_path, f"📊 {instrument_name} ({symbol}) — {signal['label']}")
-                    except Exception as e:
-                        print(f"   ❌ Chart generation error: {e}")
-                        send_error_alert("CHART ERROR", f"{symbol}: {str(e)}")
+                    circuit_breaker_expiry = state.get("circuit_breakers", {}).get("charts", 0)
+                    now_ts = datetime.now(timezone.utc).timestamp()
+
+                    if now_ts < circuit_breaker_expiry:
+                        mins_left = (circuit_breaker_expiry - now_ts) / 60
+                        print(f"   ⚠️ Chart generation skipped (Circuit Breaker active for {mins_left:.1f} mins)")
+                    else:
+                        try:
+                            chart_path = chart_generator.generate_chart(df, symbol, instrument_name, signal)
+                            if chart_path:
+                                send_photo(chart_path, f"📊 {instrument_name} ({symbol}) — {signal['label']}")
+                                # Reset error counter on success
+                                if "chart_errors" in state:
+                                    state["chart_errors"] = 0
+                        except Exception as e:
+                            print(f"   ❌ Chart generation error: {e}")
+                            send_error_alert("CHART ERROR", f"{symbol}: {str(e)}")
+                            
+                            # Increment error streak
+                            errors = state.get("chart_errors", 0) + 1
+                            state["chart_errors"] = errors
+                            
+                            # Trip circuit breaker if failing repeatedly
+                            if errors >= 3:
+                                if "circuit_breakers" not in state:
+                                    state["circuit_breakers"] = {}
+                                state["circuit_breakers"]["charts"] = now_ts + (2 * 3600)  # 2 hours
+                                print(f"   🚨 Tripping circuit breaker for charts (2 hours).")
+                                send_error_alert("HEALING", "Chart module crashed 3 times. Circuit Breaker tripped for 2 hours to prevent spam.")
 
                 alerts_sent += 1
 

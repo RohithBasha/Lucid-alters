@@ -14,12 +14,8 @@ import config
 
 def _clean_continuous_data(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Remove large time gaps from the data to prevent visual gaps in charts.
-    Keeps the most recent continuous block that has enough candles for BB.
-    Only catches significant gaps (weekends, holidays) — NOT daily maintenance.
-    
-    Mirrors data_fetcher._remove_time_gaps logic: walks backwards through gaps
-    to find a block with >= BB_PERIOD candles, so charts always have data.
+    Remove large time gaps from the data to prevent horizontal visual gaps in charts.
+    Keeps only the most recent continuous trading session.
     """
     if len(df) < 5:
         return df
@@ -28,26 +24,14 @@ def _clean_continuous_data(df: pd.DataFrame) -> pd.DataFrame:
     time_diffs = df.index.to_series().diff()
     
     # Only catch significant gaps (>4 hours): weekends, holidays.
-    # Daily CME maintenance break (~1h) is fine to compute BB across.
     gap_threshold = pd.Timedelta(hours=4)
     gap_mask = time_diffs > gap_threshold
-    gap_indices = gap_mask[gap_mask].index
     
-    if len(gap_indices) == 0:
-        return df  # No gaps, data is continuous
+    if gap_mask.any():
+        last_gap_idx = gap_mask[gap_mask].index[-1]
+        last_gap_pos = df.index.get_loc(last_gap_idx)
+        df = df.iloc[last_gap_pos:]
     
-    # Walk backwards through gaps, looking for a post-gap block
-    # large enough for BB computation + chart display
-    min_candles = max(config.BB_PERIOD, 30)  # Need at least 30 for a clean chart
-    
-    for gap_idx in reversed(gap_indices):
-        gap_pos = df.index.get_loc(gap_idx)
-        candidate = df.iloc[gap_pos:]
-        if len(candidate) >= min_candles:
-            return candidate
-    
-    # No single post-gap block is large enough — return all data
-    # (BB will still compute, charts may show a gap but won't fail)
     return df
 
 
@@ -59,14 +43,14 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
     try:
         from bollinger import compute_bollinger_bands
 
-        # Step 1: Remove time gaps (weekends, session breaks) BEFORE computing BB
-        df = _clean_continuous_data(df)
-
-        # Step 2: Compute BB on clean, continuous data
+        # Step 1: Compute BB on the FULL history to guarantee mathematical accuracy and no NaN crashes.
         df = compute_bollinger_bands(df)
         df = df.dropna(subset=["BB_Upper"])
 
-        # Last 30 candles for a clean chart
+        # Step 2: Remove time gaps VISUALLY. We only want to plot the continuous block.
+        df = _clean_continuous_data(df)
+
+        # Ensure we don't plot too many candles if the session is long
         df = df.tail(30).copy()
         if len(df) < 10:
             print(f"[Chart] Not enough data for {symbol}")
@@ -117,14 +101,24 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
         # Signal marker
         ax.scatter(x[-1], close, s=200, color=signal_color, zorder=10, edgecolors="white", linewidth=2)
 
-        # ── Y-axis: Tight focus on candle price range ──
+        # ── Y-axis: Focus on candles but keep BB visible ──
         price_min = float(df["Low"].min())
         price_max = float(df["High"].max())
         price_range = price_max - price_min
         if price_range < 0.001:
             price_range = price_max * 0.01
-        padding = price_range * 0.10
-        ax.set_ylim(price_min - padding, price_max + padding)
+            
+        bb_max = float(df["BB_Upper"].max())
+        bb_min = float(df["BB_Lower"].min())
+        
+        y_bottom = max(bb_min, price_min - (price_range * 1.5))
+        y_bottom = min(y_bottom, price_min)
+        
+        y_top = min(bb_max, price_max + (price_range * 1.5))
+        y_top = max(y_top, price_max)
+
+        padding = (y_top - y_bottom) * 0.10
+        ax.set_ylim(y_bottom - padding, y_top + padding)
 
         # Position annotation smartly using price range (not BB range)
         annotation_offset = price_range * 0.15
@@ -185,11 +179,12 @@ def generate_status_chart(df: pd.DataFrame, symbol: str, name: str) -> str | Non
     try:
         from bollinger import compute_bollinger_bands
 
-        # Remove time gaps before computing BB for clean charts
-        df = _clean_continuous_data(df)
-
+        # Compute first for math robustness
         df = compute_bollinger_bands(df)
         df = df.dropna(subset=["BB_Upper"])
+        
+        # Remove time gaps visually
+        df = _clean_continuous_data(df)
         df = df.tail(40).copy()
 
         if len(df) < 10:
@@ -240,14 +235,24 @@ def generate_status_chart(df: pd.DataFrame, symbol: str, name: str) -> str | Non
         ax.axhline(y=close, color=pos_color, linewidth=1, linestyle=":", alpha=0.8)
         ax.text(x[-1] + 0.5, close, f"${close:,.2f}", color=pos_color, fontsize=10, fontweight="bold", va="center")
 
-        # ── Y-axis: Tight focus on candle price range ──
+        # ── Y-axis: Focus on candles but keep BB visible ──
         price_min = float(df["Low"].min())
         price_max = float(df["High"].max())
         price_range = price_max - price_min
         if price_range < 0.001:
             price_range = price_max * 0.01
-        padding = price_range * 0.10
-        ax.set_ylim(price_min - padding, price_max + padding)
+            
+        bb_max = float(df["BB_Upper"].max())
+        bb_min = float(df["BB_Lower"].min())
+        
+        y_bottom = max(bb_min, price_min - (price_range * 1.5))
+        y_bottom = min(y_bottom, price_min)
+        
+        y_top = min(bb_max, price_max + (price_range * 1.5))
+        y_top = max(y_top, price_max)
+
+        padding = (y_top - y_bottom) * 0.10
+        ax.set_ylim(y_bottom - padding, y_top + padding)
 
         # Styling
         ax.set_title(f"{name} ({symbol}) — Live BB Status", fontsize=16, fontweight="bold", color="white", pad=15)
