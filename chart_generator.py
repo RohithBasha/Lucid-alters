@@ -15,8 +15,11 @@ import config
 def _clean_continuous_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Remove large time gaps from the data to prevent visual gaps in charts.
-    Keeps only the most recent continuous block of candles.
+    Keeps the most recent continuous block that has enough candles for BB.
     Only catches significant gaps (weekends, holidays) — NOT daily maintenance.
+    
+    Mirrors data_fetcher._remove_time_gaps logic: walks backwards through gaps
+    to find a block with >= BB_PERIOD candles, so charts always have data.
     """
     if len(df) < 5:
         return df
@@ -28,13 +31,23 @@ def _clean_continuous_data(df: pd.DataFrame) -> pd.DataFrame:
     # Daily CME maintenance break (~1h) is fine to compute BB across.
     gap_threshold = pd.Timedelta(hours=4)
     gap_mask = time_diffs > gap_threshold
+    gap_indices = gap_mask[gap_mask].index
     
-    if gap_mask.any():
-        # Find the LAST large gap — keep only data after it
-        last_gap_idx = gap_mask[gap_mask].index[-1]
-        last_gap_pos = df.index.get_loc(last_gap_idx)
-        df = df.iloc[last_gap_pos:]
+    if len(gap_indices) == 0:
+        return df  # No gaps, data is continuous
     
+    # Walk backwards through gaps, looking for a post-gap block
+    # large enough for BB computation + chart display
+    min_candles = max(config.BB_PERIOD, 30)  # Need at least 30 for a clean chart
+    
+    for gap_idx in reversed(gap_indices):
+        gap_pos = df.index.get_loc(gap_idx)
+        candidate = df.iloc[gap_pos:]
+        if len(candidate) >= min_candles:
+            return candidate
+    
+    # No single post-gap block is large enough — return all data
+    # (BB will still compute, charts may show a gap but won't fail)
     return df
 
 
