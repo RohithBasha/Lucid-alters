@@ -104,6 +104,17 @@ def _build_status_message() -> str:
     now_ist = datetime.now(IST).strftime("%d-%b-%Y %I:%M %p IST")
     lines = ["📊 *Live Status Report*", f"🕐 {now_ist}\n"]
 
+    # Check sleep state
+    if os.path.exists(config.STATE_FILE):
+        try:
+            with open(config.STATE_FILE, "r") as f:
+                state = json.load(f)
+                if state.get("is_sleeping", False):
+                    lines.append("💤 *ALERTS PAUSED* (Bot is Sleeping)")
+                    lines.append("_Use /wakeup to resume automated alerts_\n")
+        except Exception:
+            pass
+
     for symbol, info in config.INSTRUMENTS.items():
         name = info["name"]
         try:
