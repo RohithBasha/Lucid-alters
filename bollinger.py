@@ -23,92 +23,86 @@ def compute_bollinger_bands(df: pd.DataFrame) -> pd.DataFrame:
 
 def detect_signals(df: pd.DataFrame) -> list[dict]:
     """
-    Check the LAST CLOSED candle for cross/priority signals.
-    Returns a list of signal dicts (can be 0, 1, or 2 signals).
-
-    Signal types:
-    - CROSS_UPPER:    Close > Upper Band (candle closed above band)
-    - CROSS_LOWER:    Close < Lower Band (candle closed below band)
-    - PRIORITY_UPPER: Entire candle above upper band (Low > Upper Band — no wick contact)
-    - PRIORITY_LOWER: Entire candle below lower band (High < Lower Band — no wick contact)
-
-    Note: Priority is a subset of Cross. If Priority fires, Cross does NOT also fire
-    (one signal per band side, the strongest one wins).
+    Check the last two candles (last closed and current active) for cross/priority signals.
+    We check the last 2 because our 15-minute cron runs at the exact boundary of the next candle,
+    meaning the previous (fully closed) candle has now shifted to df.iloc[-2]. Checking both
+    guarantees we never miss the close of a breakout.
     """
     if df is None or df.empty:
         return []
 
     df = compute_bollinger_bands(df)
-
-    last = df.iloc[-1]
-
-    if pd.isna(last.get("BB_Upper")) or pd.isna(last.get("BB_Lower")):
-        return []
-
+    
     signals = []
-    close = float(last["Close"])
-    high = float(last["High"])
-    low = float(last["Low"])
-    upper = float(last["BB_Upper"])
-    lower = float(last["BB_Lower"])
-    mid = float(last["BB_Mid"])
-    timestamp = df.index[-1]
+    
+    # Check both the last closed candle (-2) and current active candle (-1)
+    # Start with -2 so if both have signals, the earlier timestamp is processed first.
+    rows_to_check = []
+    if len(df) >= 2:
+        rows_to_check.append(df.iloc[-2])
+    if len(df) >= 1:
+        rows_to_check.append(df.iloc[-1])
 
-    # ── BB Stability Gate ──
-    # After a weekend/holiday gap, the SMA takes ~20 candles to adjust.
-    # During this period, bands are inflated and signals are false noise.
-    # Skip detection if BB midline is more than 2% from current close.
-    if close > 0:
-        mid_deviation_pct = abs(close - mid) / close * 100
-        if mid_deviation_pct > 2.0:
-            print(f"  ⚠️ BB unstable: mid ${mid:.2f} is {mid_deviation_pct:.1f}% from close ${close:.2f}. Skipping signals.")
-            return []
+    for last in rows_to_check:
+        if pd.isna(last.get("BB_Upper")) or pd.isna(last.get("BB_Lower")):
+            continue
 
-    candle_data = {
-        "close": close,
-        "high": high,
-        "low": low,
-        "upper_bb": round(upper, 2),
-        "lower_bb": round(lower, 2),
-        "mid_bb": round(mid, 2),
-        "timestamp": str(timestamp),
-    }
+        close = float(last["Close"])
+        high = float(last["High"])
+        low = float(last["Low"])
+        upper = float(last["BB_Upper"])
+        lower = float(last["BB_Lower"])
+        mid = float(last["BB_Mid"])
+        timestamp = last.name
 
-    # ── Upper Band ──
-    if low > upper:
-        # PRIORITY: Entire candle is ABOVE the upper band (no wick contact at all)
-        signals.append({
-            "type": "PRIORITY_UPPER",
-            "emoji": "🚨🔴",
-            "label": "⚠️ PRIORITY: Full candle ABOVE Upper Band!",
-            **candle_data,
-        })
-    elif close > upper:
-        # CROSS: close is above upper band (but wick dipped inside)
-        signals.append({
-            "type": "CROSS_UPPER",
-            "emoji": "🔴",
-            "label": "Crossed Upper Band!",
-            **candle_data,
-        })
+        # ── BB Stability Gate ──
+        if close > 0:
+            mid_deviation_pct = abs(close - mid) / close * 100
+            if mid_deviation_pct > 2.0:
+                print(f"  ⚠️ BB unstable at {timestamp}: mid ${mid:.2f} is {mid_deviation_pct:.1f}% from close ${close:.2f}. Skipping.")
+                continue
 
-    # ── Lower Band ──
-    if high < lower:
-        # PRIORITY: Entire candle is BELOW the lower band (no wick contact at all)
-        signals.append({
-            "type": "PRIORITY_LOWER",
-            "emoji": "🚨🟢",
-            "label": "⚠️ PRIORITY: Full candle BELOW Lower Band!",
-            **candle_data,
-        })
-    elif close < lower:
-        # CROSS: close is below lower band (but wick reached inside)
-        signals.append({
-            "type": "CROSS_LOWER",
-            "emoji": "🟢",
-            "label": "Crossed Lower Band!",
-            **candle_data,
-        })
+        candle_data = {
+            "close": close,
+            "high": high,
+            "low": low,
+            "upper_bb": round(upper, 2),
+            "lower_bb": round(lower, 2),
+            "mid_bb": round(mid, 2),
+            "timestamp": str(timestamp),
+        }
+
+        # ── Upper Band ──
+        if low > upper:
+            signals.append({
+                "type": "PRIORITY_UPPER",
+                "emoji": "🚨🔴",
+                "label": "⚠️ PRIORITY: Full candle ABOVE Upper Band!",
+                **candle_data,
+            })
+        elif close > upper:
+            signals.append({
+                "type": "CROSS_UPPER",
+                "emoji": "🔴",
+                "label": "Crossed Upper Band!",
+                **candle_data,
+            })
+
+        # ── Lower Band ──
+        if high < lower:
+            signals.append({
+                "type": "PRIORITY_LOWER",
+                "emoji": "🚨🟢",
+                "label": "⚠️ PRIORITY: Full candle BELOW Lower Band!",
+                **candle_data,
+            })
+        elif close < lower:
+            signals.append({
+                "type": "CROSS_LOWER",
+                "emoji": "🟢",
+                "label": "Crossed Lower Band!",
+                **candle_data,
+            })
 
     return signals
 
