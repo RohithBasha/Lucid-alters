@@ -109,22 +109,42 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
             ax.bar(x[i], body_height, bottom=body_bottom, width=0.7, color=color, edgecolor=color)
 
         # Bollinger Bands
-        ax.plot(x, df["BB_Upper"].values, color="#FF6B6B", linewidth=1.5, label="Upper BB (1.5\u03c3)", linestyle="--", alpha=0.9)
+        ax.plot(x, df["BB_Upper"].values, color="#FF6B6B", linewidth=1.5, label="Upper BB (1.5σ)", linestyle="--", alpha=0.9)
         ax.plot(x, df["BB_Mid"].values, color="#4ECDC4", linewidth=1.2, label="Mid BB (SMA 20)", alpha=0.7)
-        ax.plot(x, df["BB_Lower"].values, color="#45B7D1", linewidth=1.5, label="Lower BB (1.5\u03c3)", linestyle="--", alpha=0.9)
+        ax.plot(x, df["BB_Lower"].values, color="#45B7D1", linewidth=1.5, label="Lower BB (1.5σ)", linestyle="--", alpha=0.9)
         ax.fill_between(x, df["BB_Upper"].values, df["BB_Lower"].values, alpha=0.08, color="#4ECDC4")
+
+        # Emphasize large time gaps on chart directly
+        time_diffs = dates.to_series().diff()
+        gap_indices = time_diffs[time_diffs > pd.Timedelta(hours=4)].index
+        for gap_idx in gap_indices:
+            g_pos = df.index.get_loc(gap_idx)
+            if g_pos > 0 and g_pos < len(x):
+                mid_x = (x[g_pos-1] + x[g_pos]) / 2.0
+                ax.axvline(x=mid_x, color="#666666", linestyle=":", alpha=0.8, linewidth=1)
+                ax.text(mid_x, max(float(df["High"].max()), float(df["BB_Upper"].max() if not pd.isna(df["BB_Upper"].max()) else 0)), "Weekend/Holiday Gap", color="#888888", fontsize=8, rotation=90, va='top', ha='right', style='italic')
 
         # Signal marker
         ax.scatter(x[-1], close, s=200, color=signal_color, zorder=10, edgecolors="white", linewidth=2)
 
-        # ── Y-axis: Tight focus on candle price range ──
+        # ── Y-axis: Focus on candles but gracefully include BB ──
         price_min = float(df["Low"].min())
         price_max = float(df["High"].max())
         price_range = price_max - price_min
         if price_range < 0.001:
             price_range = price_max * 0.01
-        padding = price_range * 0.10
-        ax.set_ylim(price_min - padding, price_max + padding)
+
+        bb_min = float(df["BB_Lower"].min())
+        bb_max = float(df["BB_Upper"].max())
+
+        y_bottom = max(bb_min, price_min - (price_range * 1.5))
+        y_bottom = min(y_bottom, price_min)
+        
+        y_top = min(bb_max, price_max + (price_range * 1.5))
+        y_top = max(y_top, price_max)
+
+        padding = (y_top - y_bottom) * 0.10
+        ax.set_ylim(y_bottom - padding, y_top + padding)
 
         # Position annotation smartly using price range (not BB range)
         annotation_offset = price_range * 0.15
@@ -236,18 +256,38 @@ def generate_status_chart(df: pd.DataFrame, symbol: str, name: str) -> str | Non
         ax.plot(x, df["BB_Lower"].values, color="#45B7D1", linewidth=1.5, label="Lower BB (1.5σ)", linestyle="--", alpha=0.9)
         ax.fill_between(x, df["BB_Upper"].values, df["BB_Lower"].values, alpha=0.08, color="#4ECDC4")
 
+        # Emphasize large time gaps on chart directly
+        time_diffs = dates.to_series().diff()
+        gap_indices = time_diffs[time_diffs > pd.Timedelta(hours=4)].index
+        for gap_idx in gap_indices:
+            g_pos = df.index.get_loc(gap_idx)
+            if g_pos > 0 and g_pos < len(x):
+                mid_x = (x[g_pos-1] + x[g_pos]) / 2.0
+                ax.axvline(x=mid_x, color="#666666", linestyle=":", alpha=0.8, linewidth=1)
+                ax.text(mid_x, max(float(df["High"].max()), float(df["BB_Upper"].max() if not pd.isna(df["BB_Upper"].max()) else 0)), "Weekend/Holiday Gap", color="#888888", fontsize=8, rotation=90, va='top', ha='right', style='italic')
+
         # Current price horizontal line
         ax.axhline(y=close, color=pos_color, linewidth=1, linestyle=":", alpha=0.8)
         ax.text(x[-1] + 0.5, close, f"${close:,.2f}", color=pos_color, fontsize=10, fontweight="bold", va="center")
 
-        # ── Y-axis: Tight focus on candle price range ──
+        # ── Y-axis: Focus on candles but gracefully include BB ──
         price_min = float(df["Low"].min())
         price_max = float(df["High"].max())
         price_range = price_max - price_min
         if price_range < 0.001:
             price_range = price_max * 0.01
-        padding = price_range * 0.10
-        ax.set_ylim(price_min - padding, price_max + padding)
+
+        bb_min = float(df["BB_Lower"].min())
+        bb_max = float(df["BB_Upper"].max())
+
+        y_bottom = max(bb_min, price_min - (price_range * 1.5))
+        y_bottom = min(y_bottom, price_min)
+        
+        y_top = min(bb_max, price_max + (price_range * 1.5))
+        y_top = max(y_top, price_max)
+
+        padding = (y_top - y_bottom) * 0.10
+        ax.set_ylim(y_bottom - padding, y_top + padding)
 
         # Styling
         ax.set_title(f"{name} ({symbol}) — Live BB Status", fontsize=16, fontweight="bold", color="white", pad=15)
