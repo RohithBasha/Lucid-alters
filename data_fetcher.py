@@ -9,38 +9,6 @@ import time
 import config
 
 
-def _remove_time_gaps(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Handle large time gaps in OHLC data (weekends, session breaks, holidays).
-    
-    Strategy: Keep ONLY the most recent continuous trading block that has
-    enough candles for BB computation. This prevents the SMA from being
-    computed across a weekend/holiday gap that causes BB dislocation.
-    """
-    if len(df) < 5:
-        return df
-
-    time_diffs = df.index.to_series().diff()
-    
-    # Only catch SIGNIFICANT gaps: weekends (~49h), holidays, multi-hour outages.
-    # Daily CME maintenance break (~1h, 4-5 PM CT) is NOT a gap — prices barely move.
-    gap_threshold = pd.Timedelta(hours=4)
-    gap_indices = time_diffs[time_diffs > gap_threshold].index
-    
-    if len(gap_indices) == 0:
-        return df  # No gaps, data is continuous
-    
-    # Try each gap from most recent to oldest, looking for a block
-    # with enough candles for BB computation
-    for gap_idx in reversed(gap_indices):
-        gap_pos = df.index.get_loc(gap_idx)
-        candidate = df.iloc[gap_pos:]
-        if len(candidate) >= config.BB_PERIOD:
-            return candidate
-    
-    # If no single post-gap block is large enough, return all data
-    # (BB will still compute, just may include a gap)
-    return df
 
 
 def is_market_open() -> bool:
@@ -109,12 +77,7 @@ def fetch_candles(ticker: str, fallback_ticker: str | None = None) -> pd.DataFra
                             data = data.dropna(subset=["Open", "High", "Low", "Close"])
 
                         if len(data) >= config.BB_PERIOD:
-                            # Remove large time gaps (weekends/session breaks) that can
-                            # distort Bollinger Band calculations and cause chart artifacts
-                            data = _remove_time_gaps(data)
-                            if len(data) >= config.BB_PERIOD:
-                                return data
-                            print(f"[DataFetcher] {t}: Not enough data after gap-cleaning ({len(data)}/{config.BB_PERIOD})")
+                            return data
 
                         print(f"[DataFetcher] {t}: Not enough clean rows ({len(data)}/{config.BB_PERIOD})")
                     else:
@@ -166,10 +129,7 @@ def fetch_htf_candles(ticker: str, fallback_ticker: str | None = None) -> pd.Dat
                         data.columns = data.columns.get_level_values(0)
                     data = data.dropna(subset=["Open", "High", "Low", "Close"])
                     if len(data) >= config.BB_PERIOD:
-                        data = _remove_time_gaps(data)
-                        if len(data) >= config.BB_PERIOD:
-                            return data
-                        print(f"[DataFetcher] {t} (HTF): Not enough data after gap-cleaning ({len(data)}/{config.BB_PERIOD})")
+                        return data
                 else:
                     print(f"[DataFetcher] {t} (HTF): Empty or insufficient data (attempt {attempt}/3)")
             except Exception as e:

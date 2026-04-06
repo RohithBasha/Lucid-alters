@@ -15,11 +15,8 @@ import config
 def _clean_continuous_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Remove large time gaps from the data to prevent visual gaps in charts.
-    Keeps the most recent continuous block that has enough candles for BB.
-    Only catches significant gaps (weekends, holidays) — NOT daily maintenance.
-    
-    Mirrors data_fetcher._remove_time_gaps logic: walks backwards through gaps
-    to find a block with >= BB_PERIOD candles, so charts always have data.
+    We just keep the most recent continuous block. Does not require a minimum
+    candle count because BB has ALREADY been mathematically computed.
     """
     if len(df) < 5:
         return df
@@ -27,27 +24,15 @@ def _clean_continuous_data(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     time_diffs = df.index.to_series().diff()
     
-    # Only catch significant gaps (>4 hours): weekends, holidays.
-    # Daily CME maintenance break (~1h) is fine to compute BB across.
+    # Catch significant gaps (>4 hours): weekends, holidays.
     gap_threshold = pd.Timedelta(hours=4)
     gap_mask = time_diffs > gap_threshold
-    gap_indices = gap_mask[gap_mask].index
     
-    if len(gap_indices) == 0:
-        return df  # No gaps, data is continuous
-    
-    # Walk backwards through gaps, looking for a post-gap block
-    # large enough for BB computation + chart display
-    min_candles = max(config.BB_PERIOD, 30)  # Need at least 30 for a clean chart
-    
-    for gap_idx in reversed(gap_indices):
-        gap_pos = df.index.get_loc(gap_idx)
-        candidate = df.iloc[gap_pos:]
-        if len(candidate) >= min_candles:
-            return candidate
-    
-    # No single post-gap block is large enough — return all data
-    # (BB will still compute, charts may show a gap but won't fail)
+    if gap_mask.any():
+        last_gap_idx = gap_mask[gap_mask].index[-1]
+        last_gap_pos = df.index.get_loc(last_gap_idx)
+        df = df.iloc[last_gap_pos:]
+        
     return df
 
 
@@ -59,12 +44,12 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
     try:
         from bollinger import compute_bollinger_bands
 
-        # Step 1: Remove time gaps (weekends, session breaks) BEFORE computing BB
-        df = _clean_continuous_data(df)
-
-        # Step 2: Compute BB on clean, continuous data
+        # Step 1: Compute BB on the FULL history to guarantee mathematical accuracy
         df = compute_bollinger_bands(df)
         df = df.dropna(subset=["BB_Upper"])
+
+        # Step 2: Remove time gaps VISUALLY. Plots only the continuous post-gap block
+        df = _clean_continuous_data(df)
 
         # Last 30 candles for a clean chart
         df = df.tail(30).copy()
@@ -205,11 +190,12 @@ def generate_status_chart(df: pd.DataFrame, symbol: str, name: str) -> str | Non
     try:
         from bollinger import compute_bollinger_bands
 
-        # Remove time gaps before computing BB for clean charts
-        df = _clean_continuous_data(df)
-
+        # Compute first for math robustness
         df = compute_bollinger_bands(df)
         df = df.dropna(subset=["BB_Upper"])
+        
+        # Remove time gaps visually
+        df = _clean_continuous_data(df)
         df = df.tail(40).copy()
 
         if len(df) < 10:
