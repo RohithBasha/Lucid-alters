@@ -142,6 +142,12 @@ def main():
     print("\n🤖 Checking for bot commands...")
     bot_commands.process_commands()
 
+    # ── TEMPORARY PING TO VERIFY PIPELINE ──
+    # If the user receives this, we know the GitHub Actions are definitely executing main.py
+    # and the TELEGRAM_CHAT_ID matches exactly what is expected.
+    send_alert({"emoji": "👋", "label": "Diagnostic Ping", "type": "INFO", "close": 0, "high": 0, "low": 0, "upper_bb": 0, "lower_bb": 0, "timestamp": datetime.now(timezone.utc).isoformat()}, "SYSTEM")
+
+
     # Quiet hours: 1 AM - 6 AM IST — skip BB alerts (save GitHub minutes)
     from zoneinfo import ZoneInfo
     ist_hour = datetime.now(ZoneInfo("Asia/Kolkata")).hour
