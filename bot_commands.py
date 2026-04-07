@@ -55,21 +55,25 @@ def _build_list_message() -> str:
     return "\n".join(lines)
 
 def _parse_dynamic_target(text: str) -> str:
-    """Parse text like 'mgc 2000$' or 'mcl 500' and return the points needed."""
-    match = re.search(r'\b(mgc|sil|mcl|mnq)\s*\$?(\d+)(?:\$|\b)', text, re.IGNORECASE)
+    """Parse text like 'mgc 2000$', 'mcl 500 2 lots', or 'sil 1000 5' and return points needed."""
+    match = re.search(r'\b(mgc|sil|mcl|mnq)\s*\$?(\d+)(?:\$|\b)(?:\s*(\d+)\s*(?:lots?|l)?\b)?', text, re.IGNORECASE)
     if not match:
         return ""
     
     symbol = match.group(1).upper()
     target = int(match.group(2))
+    lots = int(match.group(3)) if match.group(3) else 1
     
-    if symbol not in CONTRACT_MULTIPLIERS:
+    if symbol not in CONTRACT_MULTIPLIERS or lots <= 0:
         return ""
         
     multiplier = CONTRACT_MULTIPLIERS[symbol]
-    points = target / multiplier
+    points = target / (multiplier * lots)
     
-    return f"🎯 To make *${target:,}* trading *{symbol}*, you need to capture *{points:,.2f}* points."
+    if lots > 1:
+        return f"🎯 To make *${target:,}* trading *{lots} lots* of *{symbol}*, you need to capture *{points:,.2f}* points."
+    
+    return f"🎯 To make *${target:,}* trading *{symbol}* (1 lot), you need to capture *{points:,.2f}* points."
 
 def _get_last_update_id() -> int:
 
