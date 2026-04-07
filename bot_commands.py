@@ -19,11 +19,60 @@ import chart_generator
 from telegram_notifier import send_photo
 import signal_tracker
 
+import re
+
 IST = ZoneInfo("Asia/Kolkata")
 LAST_UPDATE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "last_update_id.txt")
 
+CONTRACT_MULTIPLIERS = {
+    "MGC": 10,
+    "SIL": 1000,
+    "MCL": 100,
+    "MNQ": 2
+}
+
+def _build_list_message() -> str:
+    """Generate Markdown table for profit target points."""
+    targets = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000]
+    
+    lines = ["🎯 *Points Needed for Profit Targets*"]
+    lines.append("```text")
+    lines.append("Target | MGC   | SIL  | MCL   | MNQ   ")
+    lines.append("-------|-------|------|-------|-------")
+    
+    for t in targets:
+        mgc = t / CONTRACT_MULTIPLIERS["MGC"]
+        sil = t / CONTRACT_MULTIPLIERS["SIL"]
+        mcl = t / CONTRACT_MULTIPLIERS["MCL"]
+        mnq = t / CONTRACT_MULTIPLIERS["MNQ"]
+        
+        # Format neatly: $100 -> $100  | 10.0  | 0.10 | 1.0   | 50.0 
+        line = f"${t:<5}| {mgc:<5.1f} | {sil:<4.2f} | {mcl:<5.1f} | {mnq:<5.1f}"
+        lines.append(line)
+        
+    lines.append("```")
+    lines.append("_Note: Values represent full contract points, not minimum ticks._")
+    return "\n".join(lines)
+
+def _parse_dynamic_target(text: str) -> str:
+    """Parse text like 'mgc 2000$' or 'mcl 500' and return the points needed."""
+    match = re.search(r'\b(mgc|sil|mcl|mnq)\s*\$?(\d+)(?:\$|\b)', text, re.IGNORECASE)
+    if not match:
+        return ""
+    
+    symbol = match.group(1).upper()
+    target = int(match.group(2))
+    
+    if symbol not in CONTRACT_MULTIPLIERS:
+        return ""
+        
+    multiplier = CONTRACT_MULTIPLIERS[symbol]
+    points = target / multiplier
+    
+    return f"🎯 To make *${target:,}* trading *{symbol}*, you need to capture *{points:,.2f}* points."
 
 def _get_last_update_id() -> int:
+
     """Read the last processed Telegram update ID."""
     try:
         if os.path.exists(LAST_UPDATE_FILE):
@@ -365,6 +414,24 @@ def process_commands():
                     _send_reply(chat_id, "🔄 *System Reset Complete!*\n\nAll active trade triggers and recent alert deduplication history have been wiped. The bot will evaluate the market completely fresh on the next run.")
                 except Exception as e:
                     _send_reply(chat_id, f"❌ Failed to reset state: {str(e)}")
+
+            elif chat_id and text in ["/list", "list"]:
+                print(f"[BotCmd] 📩 /list command from chat {chat_id}")
+                commands_found += 1
+                try:
+                    msg = _build_list_message()
+                    _send_reply(chat_id, msg)
+                except Exception as e:
+                    print(f"[BotCmd] ❌ Error handling /list: {e}")
+                    _send_reply(chat_id, "⚠️ Error generating target list.")
+
+            else:
+                # Fallback: check if the user is asking for a dynamic target (e.g. mgc 2000$)
+                dynamic_resp = _parse_dynamic_target(text)
+                if dynamic_resp and chat_id:
+                    print(f"[BotCmd] 📩 Dynamic Target command from chat {chat_id} ('{text}')")
+                    commands_found += 1
+                    _send_reply(chat_id, dynamic_resp)
 
             # Always update the offset to acknowledge ALL messages
             if update_id > last_id:
