@@ -81,7 +81,12 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
         fig, ax = plt.subplots(figsize=(12, 8), facecolor="#1a1a2e")
         ax.set_facecolor("#1a1a2e")
         x = np.arange(len(df))
-        dates = df.index
+        
+        # Lock timezone to IST so it matches user's TradingView exactly
+        if df.index.tz is None:
+            dates = df.index.tz_localize('UTC').tz_convert('Asia/Kolkata')
+        else:
+            dates = df.index.tz_convert('Asia/Kolkata')
 
         # Candlesticks (thicker wicks + wider bodies for visibility)
         for i in range(len(df)):
@@ -223,7 +228,12 @@ def generate_status_chart(df: pd.DataFrame, symbol: str, name: str) -> str | Non
         fig, ax = plt.subplots(figsize=(12, 8), facecolor="#1a1a2e")
         ax.set_facecolor("#1a1a2e")
         x = np.arange(len(df))
-        dates = df.index
+
+        # Lock timezone to IST so it matches user's TradingView exactly
+        if df.index.tz is None:
+            dates = df.index.tz_localize('UTC').tz_convert('Asia/Kolkata')
+        else:
+            dates = df.index.tz_convert('Asia/Kolkata')
 
         # Candlesticks (thicker wicks + wider bodies for visibility)
         for i in range(len(df)):
