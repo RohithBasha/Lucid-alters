@@ -112,23 +112,22 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
         # Signal marker
         ax.scatter(x[-1], close, s=200, color=signal_color, zorder=10, edgecolors="white", linewidth=2)
 
-        # ── Y-axis: Focus on candles but gracefully include BB ──
+        # ── Y-axis: Focus on candles and RECENT BB (clip extreme past BB expansions) ──
         price_min = float(df["Low"].min())
         price_max = float(df["High"].max())
-        price_range = price_max - price_min
-        if price_range < 0.001:
-            price_range = price_max * 0.01
-
-        bb_min = float(df["BB_Lower"].min())
-        bb_max = float(df["BB_Upper"].max())
-
-        y_bottom = max(bb_min, price_min - (price_range * 1.5))
-        y_bottom = min(y_bottom, price_min)
         
-        y_top = min(bb_max, price_max + (price_range * 1.5))
-        y_top = max(y_top, price_max)
+        recent_bb = df.tail(15)
+        recent_bb_min = float(recent_bb["BB_Lower"].min()) if not pd.isna(recent_bb["BB_Lower"].min()) else price_min
+        recent_bb_max = float(recent_bb["BB_Upper"].max()) if not pd.isna(recent_bb["BB_Upper"].max()) else price_max
 
-        padding = (y_top - y_bottom) * 0.10
+        y_bottom = min(price_min, recent_bb_min)
+        y_top = max(price_max, recent_bb_max)
+
+        # Add 15% strict padding top and bottom
+        padding = (y_top - y_bottom) * 0.15
+        if padding < 0.001:
+            padding = price_max * 0.01
+
         ax.set_ylim(y_bottom - padding, y_top + padding)
 
         # Position annotation smartly using price range (not BB range)
@@ -256,23 +255,22 @@ def generate_status_chart(df: pd.DataFrame, symbol: str, name: str) -> str | Non
         ax.axhline(y=close, color=pos_color, linewidth=1, linestyle=":", alpha=0.8)
         ax.text(x[-1] + 0.5, close, f"${close:,.2f}", color=pos_color, fontsize=10, fontweight="bold", va="center")
 
-        # ── Y-axis: Focus on candles but gracefully include BB ──
+        # ── Y-axis: Focus on candles and RECENT BB (clip extreme past BB expansions) ──
         price_min = float(df["Low"].min())
         price_max = float(df["High"].max())
-        price_range = price_max - price_min
-        if price_range < 0.001:
-            price_range = price_max * 0.01
-
-        bb_min = float(df["BB_Lower"].min())
-        bb_max = float(df["BB_Upper"].max())
-
-        y_bottom = max(bb_min, price_min - (price_range * 1.5))
-        y_bottom = min(y_bottom, price_min)
         
-        y_top = min(bb_max, price_max + (price_range * 1.5))
-        y_top = max(y_top, price_max)
+        recent_bb = df.tail(15)
+        recent_bb_min = float(recent_bb["BB_Lower"].min()) if not pd.isna(recent_bb["BB_Lower"].min()) else price_min
+        recent_bb_max = float(recent_bb["BB_Upper"].max()) if not pd.isna(recent_bb["BB_Upper"].max()) else price_max
 
-        padding = (y_top - y_bottom) * 0.10
+        y_bottom = min(price_min, recent_bb_min)
+        y_top = max(price_max, recent_bb_max)
+
+        # Add 15% strict padding top and bottom
+        padding = (y_top - y_bottom) * 0.15
+        if padding < 0.001:
+            padding = price_max * 0.01
+
         ax.set_ylim(y_bottom - padding, y_top + padding)
 
         # Styling
