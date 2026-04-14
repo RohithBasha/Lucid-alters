@@ -136,6 +136,7 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
         ax.set_ylim(y_bottom - padding, y_top + padding)
 
         # Position annotation smartly using price range (not BB range)
+        price_range = max(price_max - price_min, 0.001)
         annotation_offset = price_range * 0.15
         if "LOWER" in sig_type:
             text_y = close - annotation_offset
