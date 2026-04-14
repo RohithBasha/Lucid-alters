@@ -73,10 +73,20 @@ def save_state(memory_state: dict):
         memory_state["price_alarms"] = mem_alarms
 
     try:
-        with open(config.STATE_FILE, "w") as f:
+        temp_file = config.STATE_FILE + ".tmp"
+        with open(temp_file, "w") as f:
             json.dump(memory_state, f, indent=2)
-    except IOError as e:
-        print(f"❌ Error saving state: {e}")
+        
+        import shutil
+        shutil.move(temp_file, config.STATE_FILE)
+    except Exception as e:
+        print(f"❌ Error atomically saving state: {e}")
+        # Secondary fallback
+        try:
+            with open(config.STATE_FILE, "w") as f:
+                json.dump(memory_state, f, indent=2)
+        except Exception:
+            pass
 
 
 def is_run_duplicate(state: dict) -> bool:
@@ -231,174 +241,181 @@ def main():
     alerts_sent = 0
 
     for symbol, df in data.items():
-        instrument_name = config.INSTRUMENTS[symbol]["name"]
-        print(f"\n🔍 Analyzing {instrument_name} ({symbol})...")
-
-        signals = []
-
-        # ── 1. Check for Reversal Confirmations on Active Triggers ──
-        if "trigger_candles" not in state:
-            state["trigger_candles"] = {}
-            
-        active_trigger = state["trigger_candles"].get(symbol)
-        if active_trigger:
-            reversal_signals, expired = check_reversal(df, active_trigger)
-            
-            if expired:
-                print(f"   ⏳ Trigger expired for {symbol} (4 candles passed).")
-                del state["trigger_candles"][symbol]
-            elif reversal_signals:
-                # We have a reversal break or close!
-                signals.extend(reversal_signals)
-                
-                # If a CLOSE confirmation happens, the setup has completed its lifecycle.
-                # Remove the trigger so we don't get duplicate 'Reversal Confirmed' spam 
-                # on the next 15-min candle if price stays below the trigger line.
-                if any("CLOSE" in s["type"] for s in reversal_signals):
-                    print(f"   ✅ Reversal Confirmed for {symbol}. Setup complete, removing trigger.")
-                    del state["trigger_candles"][symbol]
-
-        # ── 1.5 Check Custom Price Alarms ──
-        active_alarms = state.get("price_alarms", {}).get(symbol, [])
-        if active_alarms:
-            new_alarms = []
-            triggered_any = False
-            
-            for alarm_price in active_alarms:
-                c_low = float(df.iloc[-1]["Low"])
-                c_high = float(df.iloc[-1]["High"])
-                c_close = float(df.iloc[-1]["Close"])
-                
-                # If the alarm price is within this candle's High/Low range, it crossed!
-                if c_low <= alarm_price <= c_high:
-                    signals.append({
-                        "type": "ALARM",
-                        "emoji": "⏰",
-                        "label": f"PRICE ALARM TRIGGERED: ${alarm_price:,.2f}!",
-                        "close": c_close,
-                        "high": c_high,
-                        "low": c_low,
-                        "timestamp": str(df.index[-1]),
-                        "upper_bb": float(df.iloc[-1].get("BB_Upper", 0)) if not pd.isna(df.iloc[-1].get("BB_Upper")) else 0,
-                        "lower_bb": float(df.iloc[-1].get("BB_Lower", 0)) if not pd.isna(df.iloc[-1].get("BB_Lower")) else 0,
-                    })
-                    triggered_any = True
-                    print(f"   ⏰ Custom Alarm fired for {symbol} at {alarm_price}")
-                else:
-                    new_alarms.append(alarm_price)
-            
-            if triggered_any:
-                # Remove the triggered alarms from state so they don't fire again
-                state["price_alarms"][symbol] = new_alarms
-
-        # ── 2. Detect Standard Signals on Last Candle ──
         try:
-            standard_signals = detect_signals(df)
-            signals.extend(standard_signals)
-        except Exception as e:
-            print(f"   ❌ Signal detection error for {symbol}: {e}")
-            send_error_alert("SIGNAL ERROR", f"{symbol}: {str(e)}")
-            continue
+            instrument_name = config.INSTRUMENTS[symbol]["name"]
+            print(f"\n🔍 Analyzing {instrument_name} ({symbol})...")
+    
+            signals = []
 
-        # ── 3. Multi-Timeframe Confirmation ──
-        htf_df = htf_data.get(symbol)
-        htf_above_upper = False
-        htf_below_lower = False
-        if htf_df is not None and not htf_df.empty:
+            # ── 1. Check for Reversal Confirmations on Active Triggers ──
+            if "trigger_candles" not in state:
+                state["trigger_candles"] = {}
+            
+            active_trigger = state["trigger_candles"].get(symbol)
+            if active_trigger:
+                reversal_signals, expired = check_reversal(df, active_trigger)
+            
+                if expired:
+                    print(f"   ⏳ Trigger expired for {symbol} (4 candles passed).")
+                    del state["trigger_candles"][symbol]
+                elif reversal_signals:
+                    # We have a reversal break or close!
+                    signals.extend(reversal_signals)
+                
+                    # If a CLOSE confirmation happens, the setup has completed its lifecycle.
+                    # Remove the trigger so we don't get duplicate 'Reversal Confirmed' spam 
+                    # on the next 15-min candle if price stays below the trigger line.
+                    if any("CLOSE" in s["type"] for s in reversal_signals):
+                        print(f"   ✅ Reversal Confirmed for {symbol}. Setup complete, removing trigger.")
+                        del state["trigger_candles"][symbol]
+
+            # ── 1.5 Check Custom Price Alarms ──
+            active_alarms = state.get("price_alarms", {}).get(symbol, [])
+            if active_alarms:
+                new_alarms = []
+                triggered_any = False
+            
+                for alarm_price in active_alarms:
+                    c_low = float(df.iloc[-1]["Low"])
+                    c_high = float(df.iloc[-1]["High"])
+                    c_close = float(df.iloc[-1]["Close"])
+                
+                    # If the alarm price is within this candle's High/Low range, it crossed!
+                    if c_low <= alarm_price <= c_high:
+                        signals.append({
+                            "type": "ALARM",
+                            "emoji": "⏰",
+                            "label": f"PRICE ALARM TRIGGERED: ${alarm_price:,.2f}!",
+                            "close": c_close,
+                            "high": c_high,
+                            "low": c_low,
+                            "timestamp": str(df.index[-1]),
+                            "upper_bb": float(df.iloc[-1].get("BB_Upper", 0)) if not pd.isna(df.iloc[-1].get("BB_Upper")) else 0,
+                            "lower_bb": float(df.iloc[-1].get("BB_Lower", 0)) if not pd.isna(df.iloc[-1].get("BB_Lower")) else 0,
+                        })
+                        triggered_any = True
+                        print(f"   ⏰ Custom Alarm fired for {symbol} at {alarm_price}")
+                    else:
+                        new_alarms.append(alarm_price)
+            
+                if triggered_any:
+                    # Remove the triggered alarms from state so they don't fire again
+                    state["price_alarms"][symbol] = new_alarms
+
+            # ── 2. Detect Standard Signals on Last Candle ──
             try:
-                htf_bb = compute_bollinger_bands(htf_df)
-                htf_last = htf_bb.iloc[-1]
-                if not pd.isna(htf_last.get("BB_Upper")) and not pd.isna(htf_last.get("BB_Lower")):
-                    htf_close = float(htf_last["Close"])
-                    htf_upper = float(htf_last["BB_Upper"])
-                    htf_lower = float(htf_last["BB_Lower"])
-                    htf_above_upper = htf_close > htf_upper
-                    htf_below_lower = htf_close < htf_lower
+                standard_signals = detect_signals(df)
+                signals.extend(standard_signals)
             except Exception as e:
-                print(f"   ⚠️ HTF check error for {symbol}: {e}")
-
-        # Tag signals with multi-TF confirmation
-        for signal in signals:
-            sig_type = signal.get("type", "")
-            if "UPPER" in sig_type and htf_above_upper:
-                signal["multi_tf"] = True
-                signal["label"] = "🚨🚨 DOUBLE TIMEFRAME! " + signal["label"]
-                print(f"   🔥 Multi-TF CONFIRMED on 1h for {symbol} UPPER")
-            elif "LOWER" in sig_type and htf_below_lower:
-                signal["multi_tf"] = True
-                signal["label"] = "🚨🚨 DOUBLE TIMEFRAME! " + signal["label"]
-                print(f"   🔥 Multi-TF CONFIRMED on 1h for {symbol} LOWER")
-
-        if not signals:
-            print(f"   ✅ No signal — price within bands.")
-            continue
-
-        for signal in signals:
-            # Check dedup
-            if is_duplicate(state, symbol, signal["type"], signal["timestamp"]):
-                print(f"   ⏭️  Skipping duplicate: {signal['type']} at {signal['timestamp']}")
+                print(f"   ❌ Signal detection error for {symbol}: {e}")
+                send_error_alert("SIGNAL ERROR", f"{symbol}: {str(e)}")
                 continue
 
-            # Send alert
-            print(f"   🚨 Signal: {signal['label']}")
-            success = send_alert(signal, symbol)
+            # ── 3. Multi-Timeframe Confirmation ──
+            htf_df = htf_data.get(symbol)
+            htf_above_upper = False
+            htf_below_lower = False
+            if htf_df is not None and not htf_df.empty:
+                try:
+                    htf_bb = compute_bollinger_bands(htf_df)
+                    htf_last = htf_bb.iloc[-1]
+                    if not pd.isna(htf_last.get("BB_Upper")) and not pd.isna(htf_last.get("BB_Lower")):
+                        htf_close = float(htf_last["Close"])
+                        htf_upper = float(htf_last["BB_Upper"])
+                        htf_lower = float(htf_last["BB_Lower"])
+                        htf_above_upper = htf_close > htf_upper
+                        htf_below_lower = htf_close < htf_lower
+                except Exception as e:
+                    print(f"   ⚠️ HTF check error for {symbol}: {e}")
 
-            if success:
-                record_alert(state, symbol, signal["type"], signal["timestamp"])
-                journaler.log_alert(symbol, signal["type"], signal["close"], signal["upper_bb"], signal["lower_bb"], signal["timestamp"])
+            # Tag signals with multi-TF confirmation
+            for signal in signals:
+                sig_type = signal.get("type", "")
+                if "UPPER" in sig_type and htf_above_upper:
+                    signal["multi_tf"] = True
+                    signal["label"] = "🚨🚨 DOUBLE TIMEFRAME! " + signal["label"]
+                    print(f"   🔥 Multi-TF CONFIRMED on 1h for {symbol} UPPER")
+                elif "LOWER" in sig_type and htf_below_lower:
+                    signal["multi_tf"] = True
+                    signal["label"] = "🚨🚨 DOUBLE TIMEFRAME! " + signal["label"]
+                    print(f"   🔥 Multi-TF CONFIRMED on 1h for {symbol} LOWER")
 
-                # ── Record New Triggers ──
-                # If this was a PRIORITY signal, save it as an active trigger for reversal checks
-                sig_type = signal["type"]
-                if "PRIORITY" in sig_type:
-                    if "trigger_candles" not in state:
-                        state["trigger_candles"] = {}
+            if not signals:
+                print(f"   ✅ No signal — price within bands.")
+                continue
+
+            for signal in signals:
+                # Check dedup
+                if is_duplicate(state, symbol, signal["type"], signal["timestamp"]):
+                    print(f"   ⏭️  Skipping duplicate: {signal['type']} at {signal['timestamp']}")
+                    continue
+
+                # Send alert
+                print(f"   🚨 Signal: {signal['label']}")
+                success = send_alert(signal, symbol)
+
+                if success:
+                    record_alert(state, symbol, signal["type"], signal["timestamp"])
+                    journaler.log_alert(symbol, signal["type"], signal["close"], signal["upper_bb"], signal["lower_bb"], signal["timestamp"])
+
+                    # ── Record New Triggers ──
+                    # If this was a PRIORITY signal, save it as an active trigger for reversal checks
+                    sig_type = signal["type"]
+                    if "PRIORITY" in sig_type:
+                        if "trigger_candles" not in state:
+                            state["trigger_candles"] = {}
                     
-                    state["trigger_candles"][symbol] = {
-                        "type": sig_type,
-                        "trigger_timestamp": signal["timestamp"],
-                        "trigger_low": signal["low"],
-                        "trigger_high": signal["high"]
-                    }
-                    print(f"   🎯 Saved active trigger for {symbol}: {sig_type}")
+                        state["trigger_candles"][symbol] = {
+                            "type": sig_type,
+                            "trigger_timestamp": signal["timestamp"],
+                            "trigger_low": signal["low"],
+                            "trigger_high": signal["high"]
+                        }
+                        print(f"   🎯 Saved active trigger for {symbol}: {sig_type}")
 
-                    # ── Start Win/Loss Tracking ──
-                    signal_tracker.track_new_signal(state, symbol, signal)
+                        # ── Start Win/Loss Tracking ──
+                        signal_tracker.track_new_signal(state, symbol, signal)
 
-                # ── Generate Charts ──
-                # Only for PRIORITY (trigger), REVERSAL signals, and ALARMs
-                if "PRIORITY" in sig_type or "REVERSAL" in sig_type or "ALARM" in sig_type:
-                    circuit_breaker_expiry = state.get("circuit_breakers", {}).get("charts", 0)
-                    now_ts = datetime.now(timezone.utc).timestamp()
+                    # ── Generate Charts ──
+                    # Only for PRIORITY (trigger), REVERSAL signals, and ALARMs
+                    if "PRIORITY" in sig_type or "REVERSAL" in sig_type or "ALARM" in sig_type:
+                        circuit_breaker_expiry = state.get("circuit_breakers", {}).get("charts", 0)
+                        now_ts = datetime.now(timezone.utc).timestamp()
 
-                    if now_ts < circuit_breaker_expiry:
-                        mins_left = (circuit_breaker_expiry - now_ts) / 60
-                        print(f"   ⚠️ Chart generation skipped (Circuit Breaker active for {mins_left:.1f} mins)")
-                    else:
-                        try:
-                            chart_path = chart_generator.generate_chart(df, symbol, instrument_name, signal)
-                            if chart_path:
-                                send_photo(chart_path, f"📊 {instrument_name} ({symbol}) — {signal['label']}")
-                                # Reset error counter on success
-                                if "chart_errors" in state:
-                                    state["chart_errors"] = 0
-                        except Exception as e:
-                            print(f"   ❌ Chart generation error: {e}")
-                            send_error_alert("CHART ERROR", f"{symbol}: {str(e)}")
+                        if now_ts < circuit_breaker_expiry:
+                            mins_left = (circuit_breaker_expiry - now_ts) / 60
+                            print(f"   ⚠️ Chart generation skipped (Circuit Breaker active for {mins_left:.1f} mins)")
+                        else:
+                            try:
+                                chart_path = chart_generator.generate_chart(df, symbol, instrument_name, signal)
+                                if chart_path:
+                                    send_photo(chart_path, f"📊 {instrument_name} ({symbol}) — {signal['label']}")
+                                    # Reset error counter on success
+                                    if "chart_errors" in state:
+                                        state["chart_errors"] = 0
+                            except Exception as e:
+                                print(f"   ❌ Chart generation error: {e}")
+                                send_error_alert("CHART ERROR", f"{symbol}: {str(e)}")
                             
-                            # Increment error streak
-                            errors = state.get("chart_errors", 0) + 1
-                            state["chart_errors"] = errors
+                                # Increment error streak
+                                errors = state.get("chart_errors", 0) + 1
+                                state["chart_errors"] = errors
                             
-                            # Trip circuit breaker if failing repeatedly
-                            if errors >= 3:
-                                if "circuit_breakers" not in state:
-                                    state["circuit_breakers"] = {}
-                                state["circuit_breakers"]["charts"] = now_ts + (2 * 3600)  # 2 hours
-                                print(f"   🚨 Tripping circuit breaker for charts (2 hours).")
-                                send_error_alert("HEALING", "Chart module crashed 3 times. Circuit Breaker tripped for 2 hours to prevent spam.")
+                                # Trip circuit breaker if failing repeatedly
+                                if errors >= 3:
+                                    if "circuit_breakers" not in state:
+                                        state["circuit_breakers"] = {}
+                                    state["circuit_breakers"]["charts"] = now_ts + (2 * 3600)  # 2 hours
+                                    print(f"   🚨 Tripping circuit breaker for charts (2 hours).")
+                                    send_error_alert("HEALING", "Chart module crashed 3 times. Circuit Breaker tripped for 2 hours to prevent spam.")
 
-                alerts_sent += 1
+                    alerts_sent += 1
+                
+        except Exception as e:
+            print(f"   ❌ Catastrophic error analyzing {symbol}: {e}")
+            import traceback
+            traceback.print_exc()
+            send_error_alert("SYMBOL CRASH", f"Critical crash on {symbol}. Execution isolated. Err: {str(e)[:50]}")
 
     # Save state
     save_state(state)

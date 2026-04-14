@@ -99,8 +99,11 @@ def send_alert(signal: dict, symbol: str) -> bool:
         except requests.exceptions.ConnectionError:
             print(f"[Telegram] ⏳ Connection error (attempt {attempt}/3)")
             time.sleep(2)
+        except requests.exceptions.RequestException as e:
+            print(f"[Telegram] ⏳ Request exception (attempt {attempt}/3): {e}")
+            time.sleep(2)
         except Exception as e:
-            print(f"[Telegram] ❌ Error: {e}")
+            print(f"[Telegram] ❌ Fatal Error: {e}")
             return False
 
     print(f"[Telegram] ❌ Failed after 3 retries: {symbol} — {label}")
@@ -137,8 +140,14 @@ def send_photo(image_path: str, caption: str = "") -> bool:
         except requests.exceptions.Timeout:
             print(f"[Telegram] ⏳ Photo timeout (attempt {attempt}/3)")
             time.sleep(2)
+        except requests.exceptions.ConnectionError:
+            print(f"[Telegram] ⏳ Photo connection error (attempt {attempt}/3)")
+            time.sleep(2)
+        except requests.exceptions.RequestException as e:
+            print(f"[Telegram] ⏳ Photo request error (attempt {attempt}/3): {e}")
+            time.sleep(2)
         except Exception as e:
-            print(f"[Telegram] ❌ Photo error: {e}")
+            print(f"[Telegram] ❌ Fatal Photo error: {e}")
             return False
 
     return False

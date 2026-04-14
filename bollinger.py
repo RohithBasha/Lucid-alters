@@ -44,65 +44,69 @@ def detect_signals(df: pd.DataFrame) -> list[dict]:
         rows_to_check.append(df.iloc[-1])
 
     for last in rows_to_check:
-        if pd.isna(last.get("BB_Upper")) or pd.isna(last.get("BB_Lower")):
-            continue
-
-        close = float(last["Close"])
-        high = float(last["High"])
-        low = float(last["Low"])
-        upper = float(last["BB_Upper"])
-        lower = float(last["BB_Lower"])
-        mid = float(last["BB_Mid"])
-        timestamp = last.name
-
-        # ── BB Stability Gate ──
-        if close > 0:
-            mid_deviation_pct = abs(close - mid) / close * 100
-            if mid_deviation_pct > 2.0:
-                print(f"  ⚠️ BB unstable at {timestamp}: mid ${mid:.2f} is {mid_deviation_pct:.1f}% from close ${close:.2f}. Skipping.")
+        try:
+            if pd.isna(last.get("BB_Upper")) or pd.isna(last.get("BB_Lower")):
                 continue
-
-        candle_data = {
-            "close": close,
-            "high": high,
-            "low": low,
-            "upper_bb": round(upper, 2),
-            "lower_bb": round(lower, 2),
-            "mid_bb": round(mid, 2),
-            "timestamp": str(timestamp),
-        }
-
-        # ── Upper Band ──
-        if low > upper:
-            signals.append({
-                "type": "PRIORITY_UPPER",
-                "emoji": "🚨🔴",
-                "label": "⚠️ PRIORITY: Full candle ABOVE Upper Band!",
-                **candle_data,
-            })
-        elif close > upper:
-            signals.append({
-                "type": "CROSS_UPPER",
-                "emoji": "🔴",
-                "label": "Crossed Upper Band!",
-                **candle_data,
-            })
-
-        # ── Lower Band ──
-        if high < lower:
-            signals.append({
-                "type": "PRIORITY_LOWER",
-                "emoji": "🚨🟢",
-                "label": "⚠️ PRIORITY: Full candle BELOW Lower Band!",
-                **candle_data,
-            })
-        elif close < lower:
-            signals.append({
-                "type": "CROSS_LOWER",
-                "emoji": "🟢",
-                "label": "Crossed Lower Band!",
-                **candle_data,
-            })
+    
+            close = float(last["Close"])
+            high = float(last["High"])
+            low = float(last["Low"])
+            upper = float(last["BB_Upper"])
+            lower = float(last["BB_Lower"])
+            mid = float(last["BB_Mid"])
+            timestamp = last.name
+    
+            # ── BB Stability Gate ──
+            if close > 0:
+                mid_deviation_pct = abs(close - mid) / close * 100
+                if mid_deviation_pct > 2.0:
+                    print(f"  ⚠️ BB unstable at {timestamp}: mid ${mid:.2f} is {mid_deviation_pct:.1f}% from close ${close:.2f}. Skipping.")
+                    continue
+    
+            candle_data = {
+                "close": close,
+                "high": high,
+                "low": low,
+                "upper_bb": round(upper, 2),
+                "lower_bb": round(lower, 2),
+                "mid_bb": round(mid, 2),
+                "timestamp": str(timestamp),
+            }
+    
+            # ── Upper Band ──
+            if low > upper:
+                signals.append({
+                    "type": "PRIORITY_UPPER",
+                    "emoji": "🚨🔴",
+                    "label": "⚠️ PRIORITY: Full candle ABOVE Upper Band!",
+                    **candle_data,
+                })
+            elif close > upper:
+                signals.append({
+                    "type": "CROSS_UPPER",
+                    "emoji": "🔴",
+                    "label": "Crossed Upper Band!",
+                    **candle_data,
+                })
+    
+            # ── Lower Band ──
+            if high < lower:
+                signals.append({
+                    "type": "PRIORITY_LOWER",
+                    "emoji": "🚨🟢",
+                    "label": "⚠️ PRIORITY: Full candle BELOW Lower Band!",
+                    **candle_data,
+                })
+            elif close < lower:
+                signals.append({
+                    "type": "CROSS_LOWER",
+                    "emoji": "🟢",
+                    "label": "Crossed Lower Band!",
+                    **candle_data,
+                })
+        except Exception as e:
+            print(f"  ❌ Error evaluating specific candle in detect_signals: {e}")
+            continue
 
     return signals
 
@@ -148,71 +152,75 @@ def check_reversal(df: pd.DataFrame, trigger_info: dict) -> tuple[list[dict], bo
     except Exception:
         return [], True
 
-    # Compute BB for context in signal data
-    df_bb = compute_bollinger_bands(df)
-    last_bb = df_bb.iloc[-1]
-    upper_bb = float(last_bb["BB_Upper"]) if not pd.isna(last_bb.get("BB_Upper")) else 0
-    lower_bb = float(last_bb["BB_Lower"]) if not pd.isna(last_bb.get("BB_Lower")) else 0
-    mid_bb = float(last_bb["BB_Mid"]) if not pd.isna(last_bb.get("BB_Mid")) else 0
-
-    close = float(last["Close"])
-    high = float(last["High"])
-    low = float(last["Low"])
-
-    candle_data = {
-        "close": close,
-        "high": high,
-        "low": low,
-        "upper_bb": round(upper_bb, 2),
-        "lower_bb": round(lower_bb, 2),
-        "mid_bb": round(mid_bb, 2),
-        "timestamp": current_ts,
-        "trigger_timestamp": trigger_ts_str,
-    }
-
-    signals = []
-
-    if "UPPER" in trigger_type:
-        # Bearish reversal: Price must come BACK INTO the bands
-        # Conditions: (1) Low breaks below trigger Low AND (2) Low is below the Upper BB
-        # This prevents false signals from candle-to-candle noise when price is still above BB
-        if low < trigger_low and low < upper_bb:
-            signals.append({
-                "type": "REVERSAL_BREAK_UPPER",
-                "emoji": "🔻",
-                "label": "Reversal Break! Low broke below Trigger Low & Upper BB",
-                "trigger_level": trigger_low,
-                **candle_data,
-            })
-        # Close-based confirmation: Close must be below trigger Low AND below Upper BB
-        if close < trigger_low and close < upper_bb:
-            signals.append({
-                "type": "REVERSAL_CLOSE_UPPER",
-                "emoji": "✅🔻",
-                "label": "Reversal Confirmed! Close below Trigger Low & Upper BB",
-                "trigger_level": trigger_low,
-                **candle_data,
-            })
-
-    elif "LOWER" in trigger_type:
-        # Bullish reversal: Price must come BACK INTO the bands
-        # Conditions: (1) High breaks above trigger High AND (2) High is above the Lower BB
-        if high > trigger_high and high > lower_bb:
-            signals.append({
-                "type": "REVERSAL_BREAK_LOWER",
-                "emoji": "🔺",
-                "label": "Reversal Break! High broke above Trigger High & Lower BB",
-                "trigger_level": trigger_high,
-                **candle_data,
-            })
-        # Close-based confirmation: Close must be above trigger High AND above Lower BB
-        if close > trigger_high and close > lower_bb:
-            signals.append({
-                "type": "REVERSAL_CLOSE_LOWER",
-                "emoji": "✅🔺",
-                "label": "Reversal Confirmed! Close above Trigger High & Lower BB",
-                "trigger_level": trigger_high,
-                **candle_data,
-            })
-
-    return signals, False
+    try:
+        # Compute BB for context in signal data
+        df_bb = compute_bollinger_bands(df)
+        last_bb = df_bb.iloc[-1]
+        upper_bb = float(last_bb["BB_Upper"]) if not pd.isna(last_bb.get("BB_Upper")) else 0
+        lower_bb = float(last_bb["BB_Lower"]) if not pd.isna(last_bb.get("BB_Lower")) else 0
+        mid_bb = float(last_bb["BB_Mid"]) if not pd.isna(last_bb.get("BB_Mid")) else 0
+    
+        close = float(last["Close"])
+        high = float(last["High"])
+        low = float(last["Low"])
+    
+        candle_data = {
+            "close": close,
+            "high": high,
+            "low": low,
+            "upper_bb": round(upper_bb, 2),
+            "lower_bb": round(lower_bb, 2),
+            "mid_bb": round(mid_bb, 2),
+            "timestamp": current_ts,
+            "trigger_timestamp": trigger_ts_str,
+        }
+    
+        signals = []
+    
+        if "UPPER" in trigger_type:
+            # Bearish reversal: Price must come BACK INTO the bands
+            # Conditions: (1) Low breaks below trigger Low AND (2) Low is below the Upper BB
+            # This prevents false signals from candle-to-candle noise when price is still above BB
+            if low < trigger_low and low < upper_bb:
+                signals.append({
+                    "type": "REVERSAL_BREAK_UPPER",
+                    "emoji": "🔻",
+                    "label": "Reversal Break! Low broke below Trigger Low & Upper BB",
+                    "trigger_level": trigger_low,
+                    **candle_data,
+                })
+            # Close-based confirmation: Close must be below trigger Low AND below Upper BB
+            if close < trigger_low and close < upper_bb:
+                signals.append({
+                    "type": "REVERSAL_CLOSE_UPPER",
+                    "emoji": "✅🔻",
+                    "label": "Reversal Confirmed! Close below Trigger Low & Upper BB",
+                    "trigger_level": trigger_low,
+                    **candle_data,
+                })
+    
+        elif "LOWER" in trigger_type:
+            # Bullish reversal: Price must come BACK INTO the bands
+            # Conditions: (1) High breaks above trigger High AND (2) High is above the Lower BB
+            if high > trigger_high and high > lower_bb:
+                signals.append({
+                    "type": "REVERSAL_BREAK_LOWER",
+                    "emoji": "🔺",
+                    "label": "Reversal Break! High broke above Trigger High & Lower BB",
+                    "trigger_level": trigger_high,
+                    **candle_data,
+                })
+            # Close-based confirmation: Close must be above trigger High AND above Lower BB
+            if close > trigger_high and close > lower_bb:
+                signals.append({
+                    "type": "REVERSAL_CLOSE_LOWER",
+                    "emoji": "✅🔺",
+                    "label": "Reversal Confirmed! Close above Trigger High & Lower BB",
+                    "trigger_level": trigger_high,
+                    **candle_data,
+                })
+    
+        return signals, False
+    except Exception as e:
+        print(f"  ❌ Error evaluating check_reversal: {e}")
+        return [], False
