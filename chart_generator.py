@@ -31,6 +31,9 @@ def _clean_continuous_data(df: pd.DataFrame) -> pd.DataFrame:
     if gap_mask.any():
         last_gap_idx = gap_mask[gap_mask].index[-1]
         last_gap_pos = df.index.get_loc(last_gap_idx)
+        # get_loc can return a slice if duplicate timestamps exist
+        if isinstance(last_gap_pos, slice):
+            last_gap_pos = last_gap_pos.start
         df = df.iloc[last_gap_pos:]
         
     return df

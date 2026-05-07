@@ -143,6 +143,9 @@ def check_reversal(df: pd.DataFrame, trigger_info: dict) -> tuple[list[dict], bo
         trigger_dt = pd.Timestamp(trigger_ts_str)
         if trigger_dt in df.index:
             trigger_loc = df.index.get_loc(trigger_dt)
+            # get_loc can return a slice if duplicate timestamps exist
+            if isinstance(trigger_loc, slice):
+                trigger_loc = trigger_loc.start
             current_loc = len(df) - 1
             if current_loc - trigger_loc > 4:
                 return [], True  # Expired

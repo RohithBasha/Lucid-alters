@@ -7,9 +7,9 @@ Includes run-dedup to prevent double-firing when both triggers are active.
 """
 import json
 import os
-import sys
 import shutil
 from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
 
 import config
 import pandas as pd
@@ -152,7 +152,6 @@ def main():
     bot_commands.process_commands()
 
     # Quiet hours: 1 AM - 6 AM IST — skip BB alerts (save GitHub minutes)
-    from zoneinfo import ZoneInfo
     ist_hour = datetime.now(ZoneInfo("Asia/Kolkata")).hour
     if 1 <= ist_hour < 6:
         print("🌙 Quiet hours (1-6 AM IST). Skipping BB check. /status still active.")
@@ -307,20 +306,20 @@ def main():
                 new_alarms = []
                 triggered_any = False
             
+                # Compute BB once for all alarms on this symbol
+                try:
+                    df_alarm_bb = compute_bollinger_bands(df)
+                    alarm_last = df_alarm_bb.iloc[-1]
+                    alarm_upper = float(alarm_last["BB_Upper"]) if not pd.isna(alarm_last.get("BB_Upper")) else 0
+                    alarm_lower = float(alarm_last["BB_Lower"]) if not pd.isna(alarm_last.get("BB_Lower")) else 0
+                except Exception:
+                    alarm_upper = 0
+                    alarm_lower = 0
+
                 for alarm_price in active_alarms:
                     c_low = float(df.iloc[-1]["Low"])
                     c_high = float(df.iloc[-1]["High"])
                     c_close = float(df.iloc[-1]["Close"])
-                
-                    # Compute BB on df for alarm display values
-                    try:
-                        df_alarm_bb = compute_bollinger_bands(df)
-                        alarm_last = df_alarm_bb.iloc[-1]
-                        alarm_upper = float(alarm_last["BB_Upper"]) if not pd.isna(alarm_last.get("BB_Upper")) else 0
-                        alarm_lower = float(alarm_last["BB_Lower"]) if not pd.isna(alarm_last.get("BB_Lower")) else 0
-                    except Exception:
-                        alarm_upper = 0
-                        alarm_lower = 0
                 
                     # If the alarm price is within this candle's High/Low range, it crossed!
                     if c_low <= alarm_price <= c_high:
@@ -342,6 +341,8 @@ def main():
             
                 if triggered_any:
                     # Remove the triggered alarms from state so they don't fire again
+                    if "price_alarms" not in state:
+                        state["price_alarms"] = {}
                     state["price_alarms"][symbol] = new_alarms
 
             # ── 2. Detect Standard Signals on Last Candle ──

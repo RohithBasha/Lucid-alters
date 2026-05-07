@@ -52,6 +52,13 @@ jobs:
         run: python main.py
         timeout-minutes: 3
 
+      - name: Delete stale cache
+        if: always()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh cache delete bot-state-v1 || true
+
       - name: Save state files
         uses: actions/cache/save@v4
         if: always()

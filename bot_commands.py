@@ -128,8 +128,11 @@ def _add_alarm(symbol: str, price: float):
         alarms[symbol] = []
     if price not in alarms[symbol]:
         alarms[symbol].append(price)
-    with open(config.STATE_FILE, "w") as f:
-        json.dump(state, f, indent=2)
+    try:
+        with open(config.STATE_FILE, "w") as f:
+            json.dump(state, f, indent=2)
+    except Exception as e:
+        print(f"[BotCmd] ❌ Failed to save alarm: {e}")
 
 def _get_alarms() -> dict:
     if os.path.exists(config.STATE_FILE):
@@ -147,8 +150,11 @@ def _clear_alarms():
                 state = json.load(f)
         except Exception: pass
     state["price_alarms"] = {}
-    with open(config.STATE_FILE, "w") as f:
-        json.dump(state, f, indent=2)
+    try:
+        with open(config.STATE_FILE, "w") as f:
+            json.dump(state, f, indent=2)
+    except Exception as e:
+        print(f"[BotCmd] ❌ Failed to clear alarms: {e}")
 
 
 def _build_status_message() -> str:
