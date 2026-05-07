@@ -31,6 +31,27 @@ CONTRACT_MULTIPLIERS = {
     "MNQ": 2
 }
 
+# ── Symbol aliases: natural names → canonical symbols ──
+SYMBOL_ALIASES = {
+    "mgc": "MGC",
+    "gold": "MGC",
+    "micro gold": "MGC",
+    "xauusd": "MGC",
+    "sil": "SIL",
+    "silver": "SIL",
+    "micro silver": "SIL",
+    "xagusd": "SIL",
+    "mcl": "MCL",
+    "crude": "MCL",
+    "oil": "MCL",
+    "micro crude": "MCL",
+    "wti": "MCL",
+    "mnq": "MNQ",
+    "nasdaq": "MNQ",
+    "micro nasdaq": "MNQ",
+    "nq": "MNQ",
+}
+
 def _build_list_message() -> str:
     """Generate Markdown table for profit target points."""
     targets = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1500, 2000, 2500, 3000]
@@ -54,26 +75,86 @@ def _build_list_message() -> str:
     lines.append("_Note: Values represent full contract points, not minimum ticks._")
     return "\n".join(lines)
 
+def _resolve_symbol(text: str) -> str | None:
+    """Resolve a canonical symbol from text containing aliases.
+    Checks multi-word aliases first (longest match wins)."""
+    text_lower = text.lower()
+    for alias in sorted(SYMBOL_ALIASES.keys(), key=len, reverse=True):
+        if re.search(r'\b' + re.escape(alias) + r'\b', text_lower):
+            return SYMBOL_ALIASES[alias]
+    return None
+
 def _parse_dynamic_target(text: str) -> str:
-    """Parse text like 'mgc 2000$', 'mcl 500 2 lots', or 'sil 1000 5' and return points needed."""
-    match = re.search(r'\b(mgc|sil|mcl|mnq)\s*\$?(\d+)(?:\$|\b)(?:\s*(\d+)\s*(?:lots?|l)?\b)?', text, re.IGNORECASE)
-    if not match:
+    """Parse natural language profit target queries. Supports flexible input:
+
+    Formats:
+      'mgc 2000'        → standard
+      'mgc 2000$'       → trailing $
+      'mgc $2000'       → leading $
+      '$2000 mgc'       → reversed with $
+      '2000 mgc'        → reversed
+      'gold 2000'       → alias
+      'silver 500 2 lots' → with lots
+      'crude $300 3l'   → shorthand lots
+      'mgc 1500.50'     → decimal amount
+      '$2,000 gold'     → comma-separated
+    """
+    text_lower = text.strip().lower()
+
+    # Step 1: Resolve symbol from aliases
+    symbol = _resolve_symbol(text_lower)
+    if not symbol or symbol not in CONTRACT_MULTIPLIERS:
         return ""
-    
-    symbol = match.group(1).upper()
-    target = int(match.group(2))
-    lots = int(match.group(3)) if match.group(3) else 1
-    
-    if symbol not in CONTRACT_MULTIPLIERS or lots <= 0:
+
+    # Step 2: Extract dollar amount
+    # Supports: $2000, $2,000, 2000$, 2000, 1500.50, $1,500.50
+    # Remove the symbol/alias text first so its characters don't interfere
+    text_for_numbers = text_lower
+    for alias in sorted(SYMBOL_ALIASES.keys(), key=len, reverse=True):
+        text_for_numbers = re.sub(r'\b' + re.escape(alias) + r'\b', ' ', text_for_numbers)
+
+    # Find all number-like tokens (with optional commas and decimals)
+    raw_numbers = re.findall(r'[\d,]+(?:\.\d+)?', text_for_numbers)
+    if not raw_numbers:
         return ""
-        
+
+    # Clean: remove commas, convert to float
+    numbers = []
+    for n in raw_numbers:
+        try:
+            numbers.append(float(n.replace(',', '')))
+        except ValueError:
+            continue
+
+    if not numbers:
+        return ""
+
+    target = numbers[0]
+    if target <= 0:
+        return ""
+
+    # Step 3: Detect lots
+    lots = 1
+    lots_match = re.search(r'(\d+)\s*(?:lots?|l)\b', text_lower)
+    if lots_match:
+        lots = int(lots_match.group(1))
+    elif len(numbers) >= 2 and numbers[1] < 100:
+        # Second number treated as lots if it's small
+        lots = int(numbers[1])
+
+    if lots <= 0:
+        lots = 1
+
     multiplier = CONTRACT_MULTIPLIERS[symbol]
     points = target / (multiplier * lots)
-    
+
+    # Format output: use integer display if target is whole, decimal otherwise
+    target_str = f"${target:,.0f}" if target == int(target) else f"${target:,.2f}"
+
     if lots > 1:
-        return f"🎯 To make *${target:,}* trading *{lots} lots* of *{symbol}*, you need to capture *{points:,.2f}* points."
-    
-    return f"🎯 To make *${target:,}* trading *{symbol}* (1 lot), you need to capture *{points:,.2f}* points."
+        return f"🎯 To make *{target_str}* trading *{lots} lots* of *{symbol}*, you need to capture *{points:,.2f}* points."
+
+    return f"🎯 To make *{target_str}* trading *{symbol}* (1 lot), you need to capture *{points:,.2f}* points."
 
 def _get_last_update_id() -> int:
     """Read the last processed Telegram update ID."""
