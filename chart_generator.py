@@ -109,6 +109,9 @@ def generate_chart(df: pd.DataFrame, symbol: str, name: str, signal: dict) -> st
         gap_indices = time_diffs[time_diffs > pd.Timedelta(hours=4)].index
         for gap_idx in gap_indices:
             g_pos = df.index.get_loc(gap_idx)
+            # get_loc can return a slice if duplicate timestamps exist
+            if isinstance(g_pos, slice):
+                g_pos = g_pos.start
             if g_pos > 0 and g_pos < len(x):
                 mid_x = (x[g_pos-1] + x[g_pos]) / 2.0
                 ax.axvline(x=mid_x, color="#666666", linestyle=":", alpha=0.8, linewidth=1)
@@ -257,6 +260,9 @@ def generate_status_chart(df: pd.DataFrame, symbol: str, name: str) -> str | Non
         gap_indices = time_diffs[time_diffs > pd.Timedelta(hours=4)].index
         for gap_idx in gap_indices:
             g_pos = df.index.get_loc(gap_idx)
+            # get_loc can return a slice if duplicate timestamps exist
+            if isinstance(g_pos, slice):
+                g_pos = g_pos.start
             if g_pos > 0 and g_pos < len(x):
                 mid_x = (x[g_pos-1] + x[g_pos]) / 2.0
                 ax.axvline(x=mid_x, color="#666666", linestyle=":", alpha=0.8, linewidth=1)

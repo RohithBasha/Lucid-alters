@@ -76,7 +76,6 @@ def _parse_dynamic_target(text: str) -> str:
     return f"🎯 To make *${target:,}* trading *{symbol}* (1 lot), you need to capture *{points:,.2f}* points."
 
 def _get_last_update_id() -> int:
-
     """Read the last processed Telegram update ID."""
     try:
         if os.path.exists(LAST_UPDATE_FILE):
@@ -352,7 +351,7 @@ def process_commands():
                 _clear_alarms()
                 _send_reply(chat_id, "🗑️ All custom price alarms have been cleared.")
 
-            elif chat_id and (text.startswith("/chart") or text.startswith("/c ") or text == "/c"):
+            elif chat_id and (text == "/chart" or text.startswith("/chart ") or text.startswith("/c ") or text == "/c"):
                 print(f"[BotCmd] 📩 /chart command from chat {chat_id}")
                 commands_found += 1
                 parts = text.split()

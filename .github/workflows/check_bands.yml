@@ -32,7 +32,7 @@ jobs:
             last_update_id.txt
             trade_journal.csv
             signal_results.csv
-          key: bot-state-${{ github.run_id }}
+          key: bot-state-v1
           restore-keys: |
             bot-state-
 
@@ -61,4 +61,4 @@ jobs:
             last_update_id.txt
             trade_journal.csv
             signal_results.csv
-          key: bot-state-${{ github.run_id }}
+          key: bot-state-v1

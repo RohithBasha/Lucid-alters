@@ -39,8 +39,8 @@ def send_alert(signal: dict, symbol: str) -> bool:
     # Build price line based on signal type
     if "PRIORITY" in signal.get("type", ""):
         price_line = (
-            f"💰 Open: ${signal.get('close', 0):,.2f} | High: ${signal.get('high', 0):,.2f}\n"
-            f"💰 Low: ${signal.get('low', 0):,.2f} | Close: ${signal.get('close', 0):,.2f}"
+            f"💰 High: ${signal.get('high', 0):,.2f} | Low: ${signal.get('low', 0):,.2f}\n"
+            f"💰 Close: ${signal.get('close', 0):,.2f}"
         )
     elif "REVERSAL" in signal.get("type", ""):
         trigger_level = signal.get("trigger_level", 0)

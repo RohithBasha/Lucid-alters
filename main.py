@@ -77,7 +77,6 @@ def save_state(memory_state: dict):
         with open(temp_file, "w") as f:
             json.dump(memory_state, f, indent=2)
         
-        import shutil
         shutil.move(temp_file, config.STATE_FILE)
     except Exception as e:
         print(f"❌ Error atomically saving state: {e}")
@@ -151,8 +150,6 @@ def main():
     # Check for interactive commands (/status, /s) — ALWAYS runs
     print("\n🤖 Checking for bot commands...")
     bot_commands.process_commands()
-
-
 
     # Quiet hours: 1 AM - 6 AM IST — skip BB alerts (save GitHub minutes)
     from zoneinfo import ZoneInfo
@@ -253,6 +250,41 @@ def main():
             
             active_trigger = state["trigger_candles"].get(symbol)
             if active_trigger:
+                # ── Re-validate trigger against CURRENT BB values ──
+                # The original trigger may have been set on an incomplete candle
+                # or when BB values were different. Verify it still qualifies.
+                trigger_still_valid = False
+                try:
+                    trigger_ts = pd.Timestamp(active_trigger["trigger_timestamp"])
+                    df_bb = compute_bollinger_bands(df)
+                    if trigger_ts in df_bb.index:
+                        trig_row = df_bb.loc[trigger_ts]
+                        t_low = float(trig_row["Low"])
+                        t_high = float(trig_row["High"])
+                        t_upper = float(trig_row["BB_Upper"]) if not pd.isna(trig_row.get("BB_Upper")) else None
+                        t_lower = float(trig_row["BB_Lower"]) if not pd.isna(trig_row.get("BB_Lower")) else None
+                        
+                        if t_upper is not None and t_lower is not None:
+                            if "UPPER" in active_trigger["type"] and t_low > t_upper:
+                                trigger_still_valid = True  # Full candle still above upper BB
+                            elif "LOWER" in active_trigger["type"] and t_high < t_lower:
+                                trigger_still_valid = True  # Full candle still below lower BB
+                        
+                        if not trigger_still_valid:
+                            print(f"   🗑️ Discarding phantom trigger for {symbol}: trigger candle no longer outside BB on current data.")
+                            del state["trigger_candles"][symbol]
+                    else:
+                        # Trigger candle no longer in data window — expired
+                        print(f"   🗑️ Trigger candle for {symbol} no longer in data window. Discarding.")
+                        del state["trigger_candles"][symbol]
+                except Exception as e:
+                    print(f"   ⚠️ Trigger re-validation error for {symbol}: {e}")
+                    trigger_still_valid = True  # On error, don't discard (conservative)
+
+                # Only check reversals if trigger is still valid
+                active_trigger = state["trigger_candles"].get(symbol)  # Re-fetch (may have been deleted)
+
+            if active_trigger:
                 reversal_signals, expired = check_reversal(df, active_trigger)
             
                 if expired:
@@ -280,6 +312,16 @@ def main():
                     c_high = float(df.iloc[-1]["High"])
                     c_close = float(df.iloc[-1]["Close"])
                 
+                    # Compute BB on df for alarm display values
+                    try:
+                        df_alarm_bb = compute_bollinger_bands(df)
+                        alarm_last = df_alarm_bb.iloc[-1]
+                        alarm_upper = float(alarm_last["BB_Upper"]) if not pd.isna(alarm_last.get("BB_Upper")) else 0
+                        alarm_lower = float(alarm_last["BB_Lower"]) if not pd.isna(alarm_last.get("BB_Lower")) else 0
+                    except Exception:
+                        alarm_upper = 0
+                        alarm_lower = 0
+                
                     # If the alarm price is within this candle's High/Low range, it crossed!
                     if c_low <= alarm_price <= c_high:
                         signals.append({
@@ -290,8 +332,8 @@ def main():
                             "high": c_high,
                             "low": c_low,
                             "timestamp": str(df.index[-1]),
-                            "upper_bb": float(df.iloc[-1].get("BB_Upper", 0)) if not pd.isna(df.iloc[-1].get("BB_Upper")) else 0,
-                            "lower_bb": float(df.iloc[-1].get("BB_Lower", 0)) if not pd.isna(df.iloc[-1].get("BB_Lower")) else 0,
+                            "upper_bb": alarm_upper,
+                            "lower_bb": alarm_lower,
                         })
                         triggered_any = True
                         print(f"   ⏰ Custom Alarm fired for {symbol} at {alarm_price}")
@@ -413,7 +455,6 @@ def main():
                 
         except Exception as e:
             print(f"   ❌ Catastrophic error analyzing {symbol}: {e}")
-            import traceback
             traceback.print_exc()
             send_error_alert("SYMBOL CRASH", f"Critical crash on {symbol}. Execution isolated. Err: {str(e)[:50]}")
 
