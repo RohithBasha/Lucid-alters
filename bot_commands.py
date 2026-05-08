@@ -391,14 +391,36 @@ def process_commands():
             elif chat_id and text in ["/sleep", "sleep"]:
                 print(f"[BotCmd] 📩 /sleep command from chat {chat_id}")
                 commands_found += 1
+                # Only send reply if state actually changes (prevents spam on re-processed commands)
+                already_sleeping = False
+                try:
+                    if os.path.exists(config.STATE_FILE):
+                        with open(config.STATE_FILE, "r") as f:
+                            already_sleeping = json.load(f).get("is_sleeping", False)
+                except Exception:
+                    pass
                 _set_sleep_state(True)
-                _send_reply(chat_id, "💤 *Bot is now SLEEPING.*\n\nI will continue tracking prices in the background, but I will **NOT** send any signal alerts. \n\nSend `/wakeup` to resume alerts.")
+                if not already_sleeping:
+                    _send_reply(chat_id, "💤 *Bot is now SLEEPING.*\n\nI will continue tracking prices in the background, but I will **NOT** send any signal alerts. \n\nSend `/wakeup` to resume alerts.")
+                else:
+                    print(f"[BotCmd] Already sleeping — skipping duplicate reply.")
 
             elif chat_id and text in ["/wakeup", "wakeup"]:
                 print(f"[BotCmd] 📩 /wakeup command from chat {chat_id}")
                 commands_found += 1
+                # Only send reply if state actually changes
+                already_awake = False
+                try:
+                    if os.path.exists(config.STATE_FILE):
+                        with open(config.STATE_FILE, "r") as f:
+                            already_awake = not json.load(f).get("is_sleeping", False)
+                except Exception:
+                    pass
                 _set_sleep_state(False)
-                _send_reply(chat_id, "☀️ *Bot is AWAKE!*\n\nI will now resume sending signal alerts for all instruments.")
+                if not already_awake:
+                    _send_reply(chat_id, "☀️ *Bot is AWAKE!*\n\nI will now resume sending signal alerts for all instruments.")
+                else:
+                    print(f"[BotCmd] Already awake — skipping duplicate reply.")
 
             elif chat_id and (text.startswith("/alarm ") or text.startswith("alarm ")):
                 print(f"[BotCmd] 📩 /alarm command from chat {chat_id}")
