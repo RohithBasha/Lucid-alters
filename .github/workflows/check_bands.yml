@@ -24,6 +24,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Pull latest state
+        run: git pull origin main --rebase || true
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
