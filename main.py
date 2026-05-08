@@ -167,6 +167,12 @@ def main():
     # Mark this run's timestamp (save immediately for dedup)
     state["last_run_time"] = datetime.now(timezone.utc).isoformat()
 
+    # Check if bot is asleep from Telegram command — BEFORE any alerts
+    if state.get("is_sleeping", False):
+        print("💤 Bot is sleeping (/sleep). Skipping all checks.")
+        save_state(state)  # Save run timestamp for dedup even when sleeping
+        return
+
     # Market open/close state tracking
     currently_open = is_market_open()
     last_status = state.get("last_market_status", None)
@@ -181,11 +187,6 @@ def main():
     # Update last known status
     state["last_market_status"] = "OPEN" if currently_open else "CLOSED"
     save_state(state)  # Save early in case of later errors
-
-    # Check if bot is asleep from Telegram command
-    if state.get("is_sleeping", False):
-        print("💤 Bot is sleeping (/sleep). Skipping all checks.")
-        return
 
     # Check if market is open
     if not currently_open:
