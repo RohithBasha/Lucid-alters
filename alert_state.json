@@ -1,20 +1,6 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [
-    {
-      "symbol": "SIL",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 81.71,
-      "sl": 81.82,
-      "target": 81.54,
-      "risk": 0.11,
-      "reward": 0.17,
-      "entry_timestamp": "2026-05-08 12:45:00+00:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -141,6 +127,20 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-05-08 12:15:00+00:00",
       "resolved_at": "2026-05-08T12:30:54.226896+00:00"
+    },
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 81.71,
+      "sl": 81.82,
+      "target": 81.54,
+      "exit_price": 81.82,
+      "result": "LOSS",
+      "pnl_points": -0.11,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-05-08 12:45:00+00:00",
+      "resolved_at": "2026-05-08T13:01:17.172791+00:00"
     }
   ],
   "trigger_candles": {
@@ -151,7 +151,7 @@
       "trigger_high": 81.81500244140625
     }
   },
-  "last_run_time": "2026-05-08T12:55:39.504242+00:00",
+  "last_run_time": "2026-05-08T13:01:16.216091+00:00",
   "sent_alerts": {
     "MGC_CROSS_UPPER_2026-05-08 01:45:00+00:00": "2026-05-08T04:05:42.762395+00:00",
     "MGC_PRIORITY_UPPER_2026-05-08 03:45:00+00:00": "2026-05-08T04:05:43.249618+00:00",
