@@ -24,18 +24,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Restore state files
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            alert_state.json
-            last_update_id.txt
-            trade_journal.csv
-            signal_results.csv
-          key: bot-state-v1
-          restore-keys: |
-            bot-state-
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -52,20 +40,13 @@ jobs:
         run: python main.py
         timeout-minutes: 3
 
-      - name: Delete stale cache
+      - name: Persist state to repo
         if: always()
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh cache delete bot-state-v1 || true
-
-      - name: Save state files
-        uses: actions/cache/save@v4
-        if: always()
-        with:
-          path: |
-            alert_state.json
-            last_update_id.txt
-            trade_journal.csv
-            signal_results.csv
-          key: bot-state-v1
+        run: |
+          git config user.name "Lucid Bot"
+          git config user.email "bot@lucid-alerts.local"
+          git add -f alert_state.json last_update_id.txt trade_journal.csv signal_results.csv 2>/dev/null || true
+          git diff --cached --quiet && echo "No state changes to commit" || {
+            git commit -m "bot: persist state [skip ci]"
+            git push
+          }

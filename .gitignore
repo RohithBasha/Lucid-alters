@@ -6,11 +6,8 @@ push.bat
 gen_chart.py
 run_chart.ps1
 
-# Sensitive runtime state — don't expose in public repo
-trade_journal.csv
-alert_state.json
-last_update_id.txt
-signal_results.csv
+# Note: alert_state.json, last_update_id.txt, trade_journal.csv, signal_results.csv
+# are intentionally tracked — the bot commits them back to the repo for state persistence.
 
 # Test/debug scripts
 test_diagnostic.py
