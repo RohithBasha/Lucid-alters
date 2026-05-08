@@ -45,8 +45,22 @@ jobs:
         run: |
           git config user.name "Lucid Bot"
           git config user.email "bot@lucid-alerts.local"
-          git add -f alert_state.json last_update_id.txt trade_journal.csv signal_results.csv 2>/dev/null || true
-          git diff --cached --quiet && echo "No state changes to commit" || {
+          
+          # Add each file individually (some may not exist yet)
+          for f in alert_state.json last_update_id.txt trade_journal.csv signal_results.csv; do
+            if [ -f "$f" ]; then
+              git add -f "$f"
+              echo "Added: $f"
+            else
+              echo "Skipped (not found): $f"
+            fi
+          done
+          
+          if git diff --cached --quiet; then
+            echo "No state changes to commit"
+          else
             git commit -m "bot: persist state [skip ci]"
+            git pull --rebase origin main || true
             git push
-          }
+            echo "State committed and pushed successfully"
+          fi
