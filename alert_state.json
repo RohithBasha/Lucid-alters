@@ -1,20 +1,6 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [
-    {
-      "symbol": "SIL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 86.75,
-      "sl": 86.67,
-      "target": 86.87,
-      "risk": 0.08,
-      "reward": 0.12,
-      "entry_timestamp": "2026-05-14 12:45:00+00:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -351,17 +337,24 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-05-14 12:15:00+00:00",
       "resolved_at": "2026-05-14T12:31:00.900041+00:00"
+    },
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 86.75,
+      "sl": 86.67,
+      "target": 86.87,
+      "exit_price": 86.67,
+      "result": "LOSS",
+      "pnl_points": -0.08,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-05-14 12:45:00+00:00",
+      "resolved_at": "2026-05-14T13:01:11.170025+00:00"
     }
   ],
-  "trigger_candles": {
-    "SIL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-05-14 12:45:00+00:00",
-      "trigger_low": 86.66999816894531,
-      "trigger_high": 86.8499984741211
-    }
-  },
-  "last_run_time": "2026-05-14T12:55:33.722248+00:00",
+  "trigger_candles": {},
+  "last_run_time": "2026-05-14T13:01:09.587174+00:00",
   "sent_alerts": {
     "MGC_CROSS_UPPER_2026-05-08 01:45:00+00:00": "2026-05-08T04:05:42.762395+00:00",
     "MGC_PRIORITY_UPPER_2026-05-08 03:45:00+00:00": "2026-05-08T04:05:43.249618+00:00",
@@ -476,7 +469,8 @@
     "MGC_CROSS_UPPER_2026-05-14 12:30:00+00:00": "2026-05-14T12:40:43.547917+00:00",
     "SIL_CROSS_LOWER_2026-05-14 12:15:00+00:00": "2026-05-14T12:40:44.198949+00:00",
     "SIL_CROSS_LOWER_2026-05-14 12:30:00+00:00": "2026-05-14T12:45:43.966855+00:00",
-    "SIL_PRIORITY_LOWER_2026-05-14 12:45:00+00:00": "2026-05-14T12:55:35.784391+00:00"
+    "SIL_PRIORITY_LOWER_2026-05-14 12:45:00+00:00": "2026-05-14T12:55:35.784391+00:00",
+    "MGC_CROSS_UPPER_2026-05-14 12:45:00+00:00": "2026-05-14T13:01:11.733368+00:00"
   },
   "is_sleeping": false
 }
