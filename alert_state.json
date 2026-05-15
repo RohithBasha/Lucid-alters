@@ -1,33 +1,6 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 4572.0,
-      "sl": 4569.1,
-      "target": 4576.35,
-      "risk": 2.9,
-      "reward": 4.35,
-      "entry_timestamp": "2026-05-15 05:45:00+00:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 103.17,
-      "sl": 103.18,
-      "target": 103.15,
-      "risk": 0.01,
-      "reward": 0.02,
-      "entry_timestamp": "2026-05-15 05:45:00+00:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -448,6 +421,34 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-05-14 14:15:00+00:00",
       "resolved_at": "2026-05-14T14:31:01.894091+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4572.0,
+      "sl": 4569.1,
+      "target": 4576.35,
+      "exit_price": 4569.1,
+      "result": "LOSS",
+      "pnl_points": -2.9,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-05-15 05:45:00+00:00",
+      "resolved_at": "2026-05-15T06:01:14.175802+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 103.17,
+      "sl": 103.18,
+      "target": 103.15,
+      "exit_price": 103.18,
+      "result": "LOSS",
+      "pnl_points": -0.01,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-05-15 05:45:00+00:00",
+      "resolved_at": "2026-05-15T06:01:14.175914+00:00"
     }
   ],
   "trigger_candles": {
@@ -464,7 +465,7 @@
       "trigger_high": 103.18000030517578
     }
   },
-  "last_run_time": "2026-05-15T05:55:36.812863+00:00",
+  "last_run_time": "2026-05-15T06:01:12.660890+00:00",
   "sent_alerts": {
     "MGC_CROSS_UPPER_2026-05-08 01:45:00+00:00": "2026-05-08T04:05:42.762395+00:00",
     "MGC_PRIORITY_UPPER_2026-05-08 03:45:00+00:00": "2026-05-08T04:05:43.249618+00:00",
