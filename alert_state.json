@@ -1,20 +1,6 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 100.89,
-      "sl": 100.84,
-      "target": 100.97,
-      "risk": 0.05,
-      "reward": 0.08,
-      "entry_timestamp": "2026-05-18 12:00:00+00:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -631,6 +617,20 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-05-18 11:45:00+00:00",
       "resolved_at": "2026-05-18T12:01:05.953111+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 100.89,
+      "sl": 100.84,
+      "target": 100.97,
+      "exit_price": 100.84,
+      "result": "LOSS",
+      "pnl_points": -0.05,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-05-18 12:00:00+00:00",
+      "resolved_at": "2026-05-18T12:15:43.884136+00:00"
     }
   ],
   "trigger_candles": {
@@ -641,7 +641,7 @@
       "trigger_high": 101.0199966430664
     }
   },
-  "last_run_time": "2026-05-18T12:10:49.803654+00:00",
+  "last_run_time": "2026-05-18T12:15:41.873094+00:00",
   "sent_alerts": {
     "MGC_CROSS_UPPER_2026-05-08 01:45:00+00:00": "2026-05-08T04:05:42.762395+00:00",
     "MGC_PRIORITY_UPPER_2026-05-08 03:45:00+00:00": "2026-05-08T04:05:43.249618+00:00",
@@ -829,7 +829,8 @@
     "MCL_PRIORITY_LOWER_2026-05-18 11:45:00+00:00": "2026-05-18T11:55:46.681458+00:00",
     "SIL_REVERSAL_BREAK_UPPER_2026-05-18 12:00:00+00:00": "2026-05-18T12:10:51.900932+00:00",
     "SIL_REVERSAL_CLOSE_UPPER_2026-05-18 12:00:00+00:00": "2026-05-18T12:10:54.557885+00:00",
-    "MCL_PRIORITY_LOWER_2026-05-18 12:00:00+00:00": "2026-05-18T12:10:57.005397+00:00"
+    "MCL_PRIORITY_LOWER_2026-05-18 12:00:00+00:00": "2026-05-18T12:10:57.005397+00:00",
+    "SIL_CROSS_UPPER_2026-05-18 12:00:00+00:00": "2026-05-18T12:15:44.382160+00:00"
   },
   "is_sleeping": false
 }
