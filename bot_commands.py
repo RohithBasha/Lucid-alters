@@ -129,32 +129,58 @@ def _parse_dynamic_target(text: str) -> str:
     if not numbers:
         return ""
 
+    # Step 3: Detect explicit lots or points
+    lots = None
+    points = None
+
+    points_match = re.search(r'(\d+(?:\.\d+)?)\s*(?:points?|pts?|p)\b', text_lower)
+    if points_match:
+        points = float(points_match.group(1))
+
+    lots_match = re.search(r'(\d+(?:\.\d+)?)\s*(?:lots?|l)\b', text_lower)
+    if lots_match:
+        lots = float(lots_match.group(1))
+
+    # The target is the first number that isn't the points or lots, if possible.
     target = numbers[0]
+    if len(numbers) >= 2:
+        if (points and target == points) or (lots and target == lots):
+            target = numbers[1]
+
     if target <= 0:
         return ""
 
-    # Step 3: Detect lots
-    lots = 1
-    lots_match = re.search(r'(\d+)\s*(?:lots?|l)\b', text_lower)
-    if lots_match:
-        lots = int(lots_match.group(1))
-    elif len(numbers) >= 2 and numbers[1] < 100:
-        # Second number treated as lots if it's small
-        lots = int(numbers[1])
-
-    if lots <= 0:
-        lots = 1
+    # If neither explicit points nor explicit lots are found, fallback to looking at the second number
+    if lots is None and points is None:
+        if len(numbers) >= 2 and numbers[1] < 100:
+            lots = float(numbers[1])
+        if lots is None:
+            lots = 1.0
 
     multiplier = CONTRACT_MULTIPLIERS[symbol]
-    points = target / (multiplier * lots)
-
-    # Format output: use integer display if target is whole, decimal otherwise
     target_str = f"${target:,.0f}" if target == int(target) else f"${target:,.2f}"
 
-    if lots > 1:
-        return f"🎯 To make *{target_str}* trading *{lots} lots* of *{symbol}*, you need to capture *{points:,.2f}* points."
-
-    return f"🎯 To make *{target_str}* trading *{symbol}* (1 lot), you need to capture *{points:,.2f}* points."
+    if points is not None:
+        if points <= 0:
+            return ""
+        # Calculate lots needed
+        calc_lots = target / (multiplier * points)
+        
+        # Format points output: int if whole
+        points_str = f"{int(points)}" if points == int(points) else f"{points:,.2f}"
+        return f"🎯 To make *{target_str}* capturing *{points_str} points* of *{symbol}*, you need to trade *{calc_lots:,.2f}* lots."
+    else:
+        if lots <= 0:
+            lots = 1.0
+        # Calculate points needed
+        calc_points = target / (multiplier * lots)
+        
+        # Format lots output: int if whole
+        lots_str = f"{int(lots)}" if lots == int(lots) else f"{lots:,.2f}"
+        if lots == 1:
+            return f"🎯 To make *{target_str}* trading *{symbol}* (1 lot), you need to capture *{calc_points:,.2f}* points."
+        else:
+            return f"🎯 To make *{target_str}* trading *{lots_str} lots* of *{symbol}*, you need to capture *{calc_points:,.2f}* points."
 
 def _get_last_update_id() -> int:
     """Read the last processed Telegram update ID."""
