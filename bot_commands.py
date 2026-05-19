@@ -20,6 +20,7 @@ from telegram_notifier import send_photo
 import signal_tracker
 
 import re
+import math
 
 IST = ZoneInfo("Asia/Kolkata")
 LAST_UPDATE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "last_update_id.txt")
@@ -163,12 +164,13 @@ def _parse_dynamic_target(text: str) -> str:
     if points is not None:
         if points <= 0:
             return ""
-        # Calculate lots needed
-        calc_lots = target / (multiplier * points)
+        # Calculate lots needed (round up to next whole lot since we can't trade fractions)
+        calc_lots = math.ceil(target / (multiplier * points))
         
         # Format points output: int if whole
         points_str = f"{int(points)}" if points == int(points) else f"{points:,.2f}"
-        return f"🎯 To make *{target_str}* capturing *{points_str} points* of *{symbol}*, you need to trade *{calc_lots:,.2f}* lots."
+        lots_word = "lot" if calc_lots == 1 else "lots"
+        return f"🎯 To make *{target_str}* capturing *{points_str} points* of *{symbol}*, you need to trade *{calc_lots}* {lots_word}."
     else:
         if lots <= 0:
             lots = 1.0
