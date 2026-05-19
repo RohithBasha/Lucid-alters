@@ -11,7 +11,7 @@
       "risk": 0.68,
       "reward": 1.01,
       "entry_timestamp": "2026-05-19 13:45:00+00:00",
-      "candles_elapsed": 0,
+      "candles_elapsed": 1,
       "status": "TRACKING"
     }
   ],
@@ -885,21 +885,8 @@
       "resolved_at": "2026-05-19T14:01:13.092379+00:00"
     }
   ],
-  "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-05-19 13:45:00+00:00",
-      "trigger_low": 4477.89990234375,
-      "trigger_high": 4484.7998046875
-    },
-    "SIL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-05-19 13:45:00+00:00",
-      "trigger_low": 73.76499938964844,
-      "trigger_high": 74.5250015258789
-    }
-  },
-  "last_run_time": "2026-05-19T14:01:11.418788+00:00",
+  "trigger_candles": {},
+  "last_run_time": "2026-05-19T14:05:41.744444+00:00",
   "sent_alerts": {
     "MCL_CROSS_LOWER_2026-05-14 10:15:00+00:00": "2026-05-14T10:31:01.932694+00:00",
     "SIL_CROSS_LOWER_2026-05-14 11:00:00+00:00": "2026-05-14T11:15:45.699102+00:00",
