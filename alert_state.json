@@ -1,20 +1,6 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [
-    {
-      "symbol": "SIL",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 75.43,
-      "sl": 75.46,
-      "target": 75.39,
-      "risk": 0.03,
-      "reward": 0.04,
-      "entry_timestamp": "2026-05-20 07:15:00+00:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -967,6 +953,20 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-05-20 07:00:00+00:00",
       "resolved_at": "2026-05-20T07:15:44.786338+00:00"
+    },
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 75.43,
+      "sl": 75.46,
+      "target": 75.39,
+      "exit_price": 75.46,
+      "result": "LOSS",
+      "pnl_points": -0.03,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-05-20 07:15:00+00:00",
+      "resolved_at": "2026-05-20T07:31:04.549749+00:00"
     }
   ],
   "trigger_candles": {
@@ -977,7 +977,7 @@
       "trigger_high": 75.45999908447266
     }
   },
-  "last_run_time": "2026-05-20T07:25:41.749025+00:00",
+  "last_run_time": "2026-05-20T07:31:02.396540+00:00",
   "sent_alerts": {
     "MCL_CROSS_LOWER_2026-05-14 10:15:00+00:00": "2026-05-14T10:31:01.932694+00:00",
     "SIL_CROSS_LOWER_2026-05-14 11:00:00+00:00": "2026-05-14T11:15:45.699102+00:00",
@@ -1139,7 +1139,8 @@
     "MCL_PRIORITY_LOWER_2026-05-20 07:00:00+00:00": "2026-05-20T07:10:48.803445+00:00",
     "MGC_CROSS_UPPER_2026-05-20 07:00:00+00:00": "2026-05-20T07:20:44.065300+00:00",
     "MCL_CROSS_LOWER_2026-05-20 07:00:00+00:00": "2026-05-20T07:20:44.561014+00:00",
-    "SIL_PRIORITY_UPPER_2026-05-20 07:15:00+00:00": "2026-05-20T07:25:43.912586+00:00"
+    "SIL_PRIORITY_UPPER_2026-05-20 07:15:00+00:00": "2026-05-20T07:25:43.912586+00:00",
+    "MGC_CROSS_UPPER_2026-05-20 07:15:00+00:00": "2026-05-20T07:31:05.183368+00:00"
   },
   "is_sleeping": false
 }
