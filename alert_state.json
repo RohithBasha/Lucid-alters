@@ -11,20 +11,7 @@
       "risk": 0.96,
       "reward": 1.44,
       "entry_timestamp": "2026-05-22 12:15:00+00:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 96.55,
-      "sl": 96.5,
-      "target": 96.63,
-      "risk": 0.05,
-      "reward": 0.08,
-      "entry_timestamp": "2026-05-22 12:30:00+00:00",
-      "candles_elapsed": 0,
+      "candles_elapsed": 1,
       "status": "TRACKING"
     }
   ],
@@ -1540,6 +1527,20 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-05-22 12:15:00+00:00",
       "resolved_at": "2026-05-22T12:31:25.237037+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 96.55,
+      "sl": 96.5,
+      "target": 96.63,
+      "exit_price": 96.5,
+      "result": "LOSS",
+      "pnl_points": -0.05,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-05-22 12:30:00+00:00",
+      "resolved_at": "2026-05-22T12:46:00.132383+00:00"
     }
   ],
   "trigger_candles": {
@@ -1550,7 +1551,7 @@
       "trigger_high": 96.66000366210938
     }
   },
-  "last_run_time": "2026-05-22T12:40:43.128364+00:00",
+  "last_run_time": "2026-05-22T12:45:58.304117+00:00",
   "sent_alerts": {
     "SIL_CROSS_UPPER_2026-05-20 13:00:00+00:00": "2026-05-20T13:10:49.775320+00:00",
     "MGC_CROSS_UPPER_2026-05-20 13:00:00+00:00": "2026-05-20T13:25:44.961116+00:00",
@@ -1664,7 +1665,8 @@
     "MCL_CROSS_LOWER_2026-05-22 12:00:00+00:00": "2026-05-22T12:15:52.395462+00:00",
     "SIL_PRIORITY_UPPER_2026-05-22 12:15:00+00:00": "2026-05-22T12:25:37.546787+00:00",
     "MCL_PRIORITY_LOWER_2026-05-22 12:15:00+00:00": "2026-05-22T12:40:44.482764+00:00",
-    "MCL_PRIORITY_LOWER_2026-05-22 12:30:00+00:00": "2026-05-22T12:40:47.198920+00:00"
+    "MCL_PRIORITY_LOWER_2026-05-22 12:30:00+00:00": "2026-05-22T12:40:47.198920+00:00",
+    "SIL_CROSS_LOWER_2026-05-22 12:30:00+00:00": "2026-05-22T12:46:00.772773+00:00"
   },
   "is_sleeping": false
 }
