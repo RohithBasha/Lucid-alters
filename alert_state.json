@@ -2,15 +2,15 @@
   "last_market_status": "OPEN",
   "tracked_signals": [
     {
-      "symbol": "SIL",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 76.19,
-      "sl": 76.24,
-      "target": 76.12,
-      "risk": 0.04,
-      "reward": 0.07,
-      "entry_timestamp": "2026-05-21 16:00:00+00:00",
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 97.26,
+      "sl": 97.2,
+      "target": 97.35,
+      "risk": 0.06,
+      "reward": 0.09,
+      "entry_timestamp": "2026-05-22 04:15:00+00:00",
       "candles_elapsed": 0,
       "status": "TRACKING"
     }
@@ -1345,17 +1345,31 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-05-21 15:15:00+00:00",
       "resolved_at": "2026-05-21T15:31:08.012341+00:00"
+    },
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 76.19,
+      "sl": 76.24,
+      "target": 76.12,
+      "exit_price": 76.24,
+      "result": "LOSS",
+      "pnl_points": -0.04,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-05-21 16:00:00+00:00",
+      "resolved_at": "2026-05-22T04:25:40.995887+00:00"
     }
   ],
   "trigger_candles": {
-    "SIL": {
-      "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-05-21 16:00:00+00:00",
-      "trigger_low": 75.91000366210938,
-      "trigger_high": 76.23500061035156
+    "MCL": {
+      "type": "PRIORITY_LOWER",
+      "trigger_timestamp": "2026-05-22 04:15:00+00:00",
+      "trigger_low": 97.19999694824219,
+      "trigger_high": 97.26000213623047
     }
   },
-  "last_run_time": "2026-05-22T04:20:41.197318+00:00",
+  "last_run_time": "2026-05-22T04:25:38.925599+00:00",
   "sent_alerts": {
     "SIL_PRIORITY_UPPER_2026-05-18 13:15:00+00:00": "2026-05-18T13:25:40.063197+00:00",
     "MCL_CROSS_LOWER_2026-05-18 13:15:00+00:00": "2026-05-18T13:25:42.833633+00:00",
@@ -1526,7 +1540,9 @@
     "SIL_CROSS_UPPER_2026-05-21 15:30:00+00:00": "2026-05-21T15:45:48.839650+00:00",
     "SIL_CROSS_UPPER_2026-05-21 15:45:00+00:00": "2026-05-21T15:55:44.727543+00:00",
     "MGC_CROSS_UPPER_2026-05-21 16:00:00+00:00": "2026-05-21T16:10:46.016349+00:00",
-    "SIL_PRIORITY_UPPER_2026-05-21 16:00:00+00:00": "2026-05-21T16:10:46.508005+00:00"
+    "SIL_PRIORITY_UPPER_2026-05-21 16:00:00+00:00": "2026-05-21T16:10:46.508005+00:00",
+    "MCL_CROSS_LOWER_2026-05-22 04:00:00+00:00": "2026-05-22T04:25:41.675316+00:00",
+    "MCL_PRIORITY_LOWER_2026-05-22 04:15:00+00:00": "2026-05-22T04:25:42.370998+00:00"
   },
-  "is_sleeping": true
+  "is_sleeping": false
 }
