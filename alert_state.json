@@ -1,6 +1,33 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [],
+  "tracked_signals": [
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4499.0,
+      "sl": 4497.8,
+      "target": 4500.8,
+      "risk": 1.2,
+      "reward": 1.8,
+      "entry_timestamp": "2026-05-22 14:30:00+00:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    },
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 75.57,
+      "sl": 75.49,
+      "target": 75.68,
+      "risk": 0.08,
+      "reward": 0.11,
+      "entry_timestamp": "2026-05-22 14:30:00+00:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -1602,12 +1629,18 @@
   "trigger_candles": {
     "MGC": {
       "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-05-22 14:15:00+00:00",
-      "trigger_low": 4495.7998046875,
-      "trigger_high": 4501.39990234375
+      "trigger_timestamp": "2026-05-22 14:30:00+00:00",
+      "trigger_low": 4497.7998046875,
+      "trigger_high": 4500.2001953125
+    },
+    "SIL": {
+      "type": "PRIORITY_LOWER",
+      "trigger_timestamp": "2026-05-22 14:30:00+00:00",
+      "trigger_low": 75.48999786376953,
+      "trigger_high": 75.59500122070312
     }
   },
-  "last_run_time": "2026-05-22T14:35:37.641580+00:00",
+  "last_run_time": "2026-05-22T14:40:42.465022+00:00",
   "sent_alerts": {
     "SIL_CROSS_UPPER_2026-05-20 13:00:00+00:00": "2026-05-20T13:10:49.775320+00:00",
     "MGC_CROSS_UPPER_2026-05-20 13:00:00+00:00": "2026-05-20T13:25:44.961116+00:00",
@@ -1735,7 +1768,9 @@
     "MGC_PRIORITY_LOWER_2026-05-22 14:15:00+00:00": "2026-05-22T14:25:40.830236+00:00",
     "SIL_CROSS_LOWER_2026-05-22 14:00:00+00:00": "2026-05-22T14:25:43.382120+00:00",
     "SIL_PRIORITY_LOWER_2026-05-22 14:15:00+00:00": "2026-05-22T14:25:43.872398+00:00",
-    "SIL_CROSS_LOWER_2026-05-22 14:15:00+00:00": "2026-05-22T14:30:57.554246+00:00"
+    "SIL_CROSS_LOWER_2026-05-22 14:15:00+00:00": "2026-05-22T14:30:57.554246+00:00",
+    "MGC_PRIORITY_LOWER_2026-05-22 14:30:00+00:00": "2026-05-22T14:40:44.524348+00:00",
+    "SIL_PRIORITY_LOWER_2026-05-22 14:30:00+00:00": "2026-05-22T14:40:48.518464+00:00"
   },
   "is_sleeping": false
 }
