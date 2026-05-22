@@ -1,20 +1,6 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 97.62,
-      "sl": 97.48,
-      "target": 97.83,
-      "risk": 0.14,
-      "reward": 0.21,
-      "entry_timestamp": "2026-05-22 12:00:00+00:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -1499,17 +1485,24 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-05-22 11:45:00+00:00",
       "resolved_at": "2026-05-22T12:01:07.877771+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 97.62,
+      "sl": 97.48,
+      "target": 97.83,
+      "exit_price": 97.48,
+      "result": "LOSS",
+      "pnl_points": -0.14,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-05-22 12:00:00+00:00",
+      "resolved_at": "2026-05-22T12:15:51.726448+00:00"
     }
   ],
-  "trigger_candles": {
-    "MCL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-05-22 12:00:00+00:00",
-      "trigger_low": 97.4800033569336,
-      "trigger_high": 97.69000244140625
-    }
-  },
-  "last_run_time": "2026-05-22T12:10:40.757964+00:00",
+  "trigger_candles": {},
+  "last_run_time": "2026-05-22T12:15:50.337585+00:00",
   "sent_alerts": {
     "SIL_CROSS_UPPER_2026-05-20 13:00:00+00:00": "2026-05-20T13:10:49.775320+00:00",
     "MGC_CROSS_UPPER_2026-05-20 13:00:00+00:00": "2026-05-20T13:25:44.961116+00:00",
@@ -1619,7 +1612,8 @@
     "MCL_CROSS_LOWER_2026-05-22 11:30:00+00:00": "2026-05-22T11:55:35.185293+00:00",
     "MCL_PRIORITY_LOWER_2026-05-22 11:45:00+00:00": "2026-05-22T11:55:35.680690+00:00",
     "MCL_CROSS_LOWER_2026-05-22 11:45:00+00:00": "2026-05-22T12:10:42.047609+00:00",
-    "MCL_PRIORITY_LOWER_2026-05-22 12:00:00+00:00": "2026-05-22T12:10:42.533555+00:00"
+    "MCL_PRIORITY_LOWER_2026-05-22 12:00:00+00:00": "2026-05-22T12:10:42.533555+00:00",
+    "MCL_CROSS_LOWER_2026-05-22 12:00:00+00:00": "2026-05-22T12:15:52.395462+00:00"
   },
   "is_sleeping": false
 }
