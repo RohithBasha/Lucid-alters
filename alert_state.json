@@ -2,16 +2,16 @@
   "last_market_status": "OPEN",
   "tracked_signals": [
     {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 4521.9,
-      "sl": 4520.2,
-      "target": 4524.45,
-      "risk": 1.7,
-      "reward": 2.55,
-      "entry_timestamp": "2026-05-26 04:30:00-04:00",
-      "candles_elapsed": 2,
+      "symbol": "MCL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 93.37,
+      "sl": 93.4,
+      "target": 93.33,
+      "risk": 0.03,
+      "reward": 0.04,
+      "entry_timestamp": "2026-05-26 04:45:00-04:00",
+      "candles_elapsed": 0,
       "status": "TRACKING"
     }
   ],
@@ -1709,10 +1709,31 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-05-26 00:15:00-04:00",
       "resolved_at": "2026-05-26T04:35:31.480325+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4521.9,
+      "sl": 4520.2,
+      "target": 4524.45,
+      "exit_price": 4524.45,
+      "result": "WIN",
+      "pnl_points": 2.55,
+      "candles_to_resolve": 3,
+      "entry_timestamp": "2026-05-26 04:30:00-04:00",
+      "resolved_at": "2026-05-26T08:55:43.636494+00:00"
     }
   ],
-  "trigger_candles": {},
-  "last_run_time": "2026-05-26T08:50:50.588590+00:00",
+  "trigger_candles": {
+    "MCL": {
+      "type": "PRIORITY_UPPER",
+      "trigger_timestamp": "2026-05-26 04:45:00-04:00",
+      "trigger_low": 93.29000091552734,
+      "trigger_high": 93.4000015258789
+    }
+  },
+  "last_run_time": "2026-05-26T08:55:42.908739+00:00",
   "sent_alerts": {
     "SIL_CROSS_UPPER_2026-05-20 13:00:00+00:00": "2026-05-20T13:10:49.775320+00:00",
     "MGC_CROSS_UPPER_2026-05-20 13:00:00+00:00": "2026-05-20T13:25:44.961116+00:00",
@@ -1865,7 +1886,8 @@
     "SIL_CROSS_UPPER_2026-05-26 01:30:00-04:00": "2026-05-26T05:40:44.641504+00:00",
     "MGC_PRIORITY_LOWER_2026-05-26 04:30:00-04:00": "2026-05-26T08:40:51.832287+00:00",
     "MGC_CROSS_LOWER_2026-05-26 04:30:00-04:00": "2026-05-26T08:45:50.815573+00:00",
-    "SIL_CROSS_LOWER_2026-05-26 04:30:00-04:00": "2026-05-26T08:45:51.529951+00:00"
+    "SIL_CROSS_LOWER_2026-05-26 04:30:00-04:00": "2026-05-26T08:45:51.529951+00:00",
+    "MCL_PRIORITY_UPPER_2026-05-26 04:45:00-04:00": "2026-05-26T08:55:44.147148+00:00"
   },
   "is_sleeping": false
 }
