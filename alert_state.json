@@ -11,7 +11,7 @@
       "risk": 1.7,
       "reward": 2.55,
       "entry_timestamp": "2026-05-26 04:30:00-04:00",
-      "candles_elapsed": 1,
+      "candles_elapsed": 2,
       "status": "TRACKING"
     }
   ],
@@ -1712,7 +1712,7 @@
     }
   ],
   "trigger_candles": {},
-  "last_run_time": "2026-05-26T08:45:49.257993+00:00",
+  "last_run_time": "2026-05-26T08:50:50.588590+00:00",
   "sent_alerts": {
     "SIL_CROSS_UPPER_2026-05-20 13:00:00+00:00": "2026-05-20T13:10:49.775320+00:00",
     "MGC_CROSS_UPPER_2026-05-20 13:00:00+00:00": "2026-05-20T13:25:44.961116+00:00",
