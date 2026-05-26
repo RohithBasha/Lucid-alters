@@ -1,20 +1,6 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 93.37,
-      "sl": 93.4,
-      "target": 93.33,
-      "risk": 0.03,
-      "reward": 0.04,
-      "entry_timestamp": "2026-05-26 04:45:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -1723,6 +1709,20 @@
       "candles_to_resolve": 3,
       "entry_timestamp": "2026-05-26 04:30:00-04:00",
       "resolved_at": "2026-05-26T08:55:43.636494+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 93.37,
+      "sl": 93.4,
+      "target": 93.33,
+      "exit_price": 93.4,
+      "result": "LOSS",
+      "pnl_points": -0.03,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-05-26 04:45:00-04:00",
+      "resolved_at": "2026-05-26T09:01:09.291551+00:00"
     }
   ],
   "trigger_candles": {
@@ -1733,7 +1733,7 @@
       "trigger_high": 93.4000015258789
     }
   },
-  "last_run_time": "2026-05-26T08:55:42.908739+00:00",
+  "last_run_time": "2026-05-26T09:01:08.015963+00:00",
   "sent_alerts": {
     "SIL_CROSS_UPPER_2026-05-20 13:00:00+00:00": "2026-05-20T13:10:49.775320+00:00",
     "MGC_CROSS_UPPER_2026-05-20 13:00:00+00:00": "2026-05-20T13:25:44.961116+00:00",
@@ -1887,7 +1887,9 @@
     "MGC_PRIORITY_LOWER_2026-05-26 04:30:00-04:00": "2026-05-26T08:40:51.832287+00:00",
     "MGC_CROSS_LOWER_2026-05-26 04:30:00-04:00": "2026-05-26T08:45:50.815573+00:00",
     "SIL_CROSS_LOWER_2026-05-26 04:30:00-04:00": "2026-05-26T08:45:51.529951+00:00",
-    "MCL_PRIORITY_UPPER_2026-05-26 04:45:00-04:00": "2026-05-26T08:55:44.147148+00:00"
+    "MCL_PRIORITY_UPPER_2026-05-26 04:45:00-04:00": "2026-05-26T08:55:44.147148+00:00",
+    "MGC_CROSS_LOWER_2026-05-26 04:45:00-04:00": "2026-05-26T09:01:09.785944+00:00",
+    "SIL_CROSS_LOWER_2026-05-26 04:45:00-04:00": "2026-05-26T09:01:10.275224+00:00"
   },
   "is_sleeping": false
 }
