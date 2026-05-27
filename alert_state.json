@@ -11,7 +11,7 @@
       "risk": 8.1,
       "reward": 12.15,
       "entry_timestamp": "2026-05-27 02:30:00-04:00",
-      "candles_elapsed": 8,
+      "candles_elapsed": 9,
       "status": "TRACKING"
     },
     {
@@ -24,7 +24,20 @@
       "risk": 0.49,
       "reward": 0.73,
       "entry_timestamp": "2026-05-27 02:30:00-04:00",
-      "candles_elapsed": 8,
+      "candles_elapsed": 9,
+      "status": "TRACKING"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 91.12,
+      "sl": 91.08,
+      "target": 91.18,
+      "risk": 0.04,
+      "reward": 0.06,
+      "entry_timestamp": "2026-05-27 03:30:00-04:00",
+      "candles_elapsed": 0,
       "status": "TRACKING"
     }
   ],
@@ -1920,8 +1933,15 @@
       "resolved_at": "2026-05-27T07:30:52.730162+00:00"
     }
   ],
-  "trigger_candles": {},
-  "last_run_time": "2026-05-27T07:35:41.376359+00:00",
+  "trigger_candles": {
+    "MCL": {
+      "type": "PRIORITY_LOWER",
+      "trigger_timestamp": "2026-05-27 03:30:00-04:00",
+      "trigger_low": 91.08000183105469,
+      "trigger_high": 91.16000366210938
+    }
+  },
+  "last_run_time": "2026-05-27T07:40:38.708555+00:00",
   "sent_alerts": {
     "SIL_CROSS_UPPER_2026-05-20 13:00:00+00:00": "2026-05-20T13:10:49.775320+00:00",
     "MGC_CROSS_UPPER_2026-05-20 13:00:00+00:00": "2026-05-20T13:25:44.961116+00:00",
@@ -2117,7 +2137,8 @@
     "MGC_PRIORITY_LOWER_2026-05-27 03:15:00-04:00": "2026-05-27T07:25:37.375985+00:00",
     "SIL_CROSS_LOWER_2026-05-27 03:15:00-04:00": "2026-05-27T07:25:40.077064+00:00",
     "MCL_PRIORITY_LOWER_2026-05-27 03:15:00-04:00": "2026-05-27T07:25:40.604774+00:00",
-    "MCL_CROSS_LOWER_2026-05-27 03:15:00-04:00": "2026-05-27T07:35:43.873004+00:00"
+    "MCL_CROSS_LOWER_2026-05-27 03:15:00-04:00": "2026-05-27T07:35:43.873004+00:00",
+    "MCL_PRIORITY_LOWER_2026-05-27 03:30:00-04:00": "2026-05-27T07:40:39.892599+00:00"
   },
   "is_sleeping": false
 }
