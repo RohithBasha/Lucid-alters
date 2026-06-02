@@ -1,20 +1,6 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 92.86,
-      "sl": 92.91,
-      "target": 92.78,
-      "risk": 0.05,
-      "reward": 0.08,
-      "entry_timestamp": "2026-06-02 12:00:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -2451,6 +2437,20 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-06-02 10:30:00-04:00",
       "resolved_at": "2026-06-02T14:45:54.343344+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 92.86,
+      "sl": 92.91,
+      "target": 92.78,
+      "exit_price": 92.91,
+      "result": "LOSS",
+      "pnl_points": -0.05,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-06-02 12:00:00-04:00",
+      "resolved_at": "2026-06-02T16:15:49.383878+00:00"
     }
   ],
   "trigger_candles": {
@@ -2461,7 +2461,7 @@
       "trigger_high": 92.91000366210938
     }
   },
-  "last_run_time": "2026-06-02T16:10:47.191480+00:00",
+  "last_run_time": "2026-06-02T16:15:48.586201+00:00",
   "sent_alerts": {
     "MGC_CROSS_LOWER_2026-05-22 10:30:00+00:00": "2026-05-22T10:55:35.135386+00:00",
     "MGC_PRIORITY_LOWER_2026-05-22 10:45:00+00:00": "2026-05-22T10:55:35.608204+00:00",
