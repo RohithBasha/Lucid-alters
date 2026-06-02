@@ -1,33 +1,6 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 4554.4,
-      "sl": 4556.4,
-      "target": 4551.4,
-      "risk": 2.0,
-      "reward": 3.0,
-      "entry_timestamp": "2026-06-02 01:45:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "SIL",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 77.01,
-      "sl": 77.04,
-      "target": 76.97,
-      "risk": 0.03,
-      "reward": 0.04,
-      "entry_timestamp": "2026-06-02 01:45:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -2142,15 +2115,37 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-06-02 01:30:00-04:00",
       "resolved_at": "2026-06-02T05:45:47.841123+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 4554.4,
+      "sl": 4556.4,
+      "target": 4551.4,
+      "exit_price": 4551.4,
+      "result": "WIN",
+      "pnl_points": 3.0,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-06-02 01:45:00-04:00",
+      "resolved_at": "2026-06-02T06:01:12.116653+00:00"
+    },
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 77.01,
+      "sl": 77.04,
+      "target": 76.97,
+      "exit_price": 77.04,
+      "result": "LOSS",
+      "pnl_points": -0.03,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-06-02 01:45:00-04:00",
+      "resolved_at": "2026-06-02T06:01:12.116772+00:00"
     }
   ],
   "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-06-02 01:45:00-04:00",
-      "trigger_low": 4554.0,
-      "trigger_high": 4556.39990234375
-    },
     "SIL": {
       "type": "PRIORITY_UPPER",
       "trigger_timestamp": "2026-06-02 01:45:00-04:00",
@@ -2158,7 +2153,7 @@
       "trigger_high": 77.04000091552734
     }
   },
-  "last_run_time": "2026-06-02T05:55:49.023797+00:00",
+  "last_run_time": "2026-06-02T06:01:11.149420+00:00",
   "sent_alerts": {
     "MGC_CROSS_LOWER_2026-05-22 10:30:00+00:00": "2026-05-22T10:55:35.135386+00:00",
     "MGC_PRIORITY_LOWER_2026-05-22 10:45:00+00:00": "2026-05-22T10:55:35.608204+00:00",
