@@ -1,6 +1,20 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [],
+  "tracked_signals": [
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 4548.1,
+      "sl": 4549.5,
+      "target": 4546.0,
+      "risk": 1.4,
+      "reward": 2.1,
+      "entry_timestamp": "2026-06-02 01:15:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -2092,12 +2106,12 @@
   "trigger_candles": {
     "MGC": {
       "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-06-02 01:00:00-04:00",
-      "trigger_low": 4546.39990234375,
-      "trigger_high": 4548.10009765625
+      "trigger_timestamp": "2026-06-02 01:15:00-04:00",
+      "trigger_low": 4547.7001953125,
+      "trigger_high": 4549.5
     }
   },
-  "last_run_time": "2026-06-02T05:20:44.787774+00:00",
+  "last_run_time": "2026-06-02T05:25:39.353449+00:00",
   "sent_alerts": {
     "MGC_CROSS_LOWER_2026-05-22 10:30:00+00:00": "2026-05-22T10:55:35.135386+00:00",
     "MGC_PRIORITY_LOWER_2026-05-22 10:45:00+00:00": "2026-05-22T10:55:35.608204+00:00",
@@ -2217,7 +2231,8 @@
     "MCL_PRIORITY_LOWER_2026-06-02 00:45:00-04:00": "2026-06-02T05:01:13.410681+00:00",
     "MGC_PRIORITY_UPPER_2026-06-02 01:00:00-04:00": "2026-06-02T05:10:52.167446+00:00",
     "MCL_PRIORITY_LOWER_2026-06-02 01:00:00-04:00": "2026-06-02T05:10:55.366631+00:00",
-    "SIL_CROSS_UPPER_2026-06-02 01:00:00-04:00": "2026-06-02T05:15:50.718834+00:00"
+    "SIL_CROSS_UPPER_2026-06-02 01:00:00-04:00": "2026-06-02T05:15:50.718834+00:00",
+    "MGC_PRIORITY_UPPER_2026-06-02 01:15:00-04:00": "2026-06-02T05:25:40.807406+00:00"
   },
   "is_sleeping": false
 }
