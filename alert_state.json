@@ -1,33 +1,6 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 4543.7,
-      "sl": 4543.2,
-      "target": 4544.45,
-      "risk": 0.5,
-      "reward": 0.75,
-      "entry_timestamp": "2026-06-02 09:15:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 91.85,
-      "sl": 91.88,
-      "target": 91.81,
-      "risk": 0.03,
-      "reward": 0.04,
-      "entry_timestamp": "2026-06-02 09:15:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -2268,6 +2241,34 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-06-02 09:00:00-04:00",
       "resolved_at": "2026-06-02T13:16:04.484225+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4543.7,
+      "sl": 4543.2,
+      "target": 4544.45,
+      "exit_price": 4543.2,
+      "result": "LOSS",
+      "pnl_points": -0.5,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-06-02 09:15:00-04:00",
+      "resolved_at": "2026-06-02T13:31:13.726483+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 91.85,
+      "sl": 91.88,
+      "target": 91.81,
+      "exit_price": 91.88,
+      "result": "LOSS",
+      "pnl_points": -0.03,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-06-02 09:15:00-04:00",
+      "resolved_at": "2026-06-02T13:31:13.726604+00:00"
     }
   ],
   "trigger_candles": {
@@ -2284,7 +2285,7 @@
       "trigger_high": 91.87999725341797
     }
   },
-  "last_run_time": "2026-06-02T13:25:57.880667+00:00",
+  "last_run_time": "2026-06-02T13:31:12.895660+00:00",
   "sent_alerts": {
     "MGC_CROSS_LOWER_2026-05-22 10:30:00+00:00": "2026-05-22T10:55:35.135386+00:00",
     "MGC_PRIORITY_LOWER_2026-05-22 10:45:00+00:00": "2026-05-22T10:55:35.608204+00:00",
