@@ -1,20 +1,6 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 92.29,
-      "sl": 92.27,
-      "target": 92.32,
-      "risk": 0.02,
-      "reward": 0.03,
-      "entry_timestamp": "2026-06-04 13:15:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -2675,17 +2661,24 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-06-04 09:15:00-04:00",
       "resolved_at": "2026-06-04T13:31:12.553876+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 92.29,
+      "sl": 92.27,
+      "target": 92.32,
+      "exit_price": 92.32,
+      "result": "WIN",
+      "pnl_points": 0.03,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-06-04 13:15:00-04:00",
+      "resolved_at": "2026-06-05T03:50:38.800057+00:00"
     }
   ],
-  "trigger_candles": {
-    "MCL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-06-04 13:15:00-04:00",
-      "trigger_low": 92.2699966430664,
-      "trigger_high": 92.30999755859375
-    }
-  },
-  "last_run_time": "2026-06-05T03:45:42.686175+00:00",
+  "trigger_candles": {},
+  "last_run_time": "2026-06-05T03:50:38.018784+00:00",
   "sent_alerts": {
     "MGC_PRIORITY_UPPER_2026-06-02 00:00:00-04:00": "2026-06-02T04:20:46.666850+00:00",
     "MCL_CROSS_LOWER_2026-06-01 21:45:00-04:00": "2026-06-02T04:20:49.780303+00:00",
@@ -2832,7 +2825,8 @@
     "MGC_CROSS_LOWER_2026-06-04 11:00:00-04:00": "2026-06-04T15:10:48.966957+00:00",
     "MCL_CROSS_LOWER_2026-06-04 12:45:00-04:00": "2026-06-04T17:10:46.006080+00:00",
     "MCL_CROSS_LOWER_2026-06-04 13:00:00-04:00": "2026-06-04T17:15:50.913870+00:00",
-    "MCL_PRIORITY_LOWER_2026-06-04 13:15:00-04:00": "2026-06-04T17:25:39.600727+00:00"
+    "MCL_PRIORITY_LOWER_2026-06-04 13:15:00-04:00": "2026-06-04T17:25:39.600727+00:00",
+    "MGC_CROSS_LOWER_2026-06-04 23:15:00-04:00": "2026-06-05T03:50:39.278027+00:00"
   },
-  "is_sleeping": true
+  "is_sleeping": false
 }
