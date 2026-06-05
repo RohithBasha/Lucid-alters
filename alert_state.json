@@ -1,6 +1,33 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [],
+  "tracked_signals": [
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4413.4,
+      "sl": 4410.1,
+      "target": 4418.35,
+      "risk": 3.3,
+      "reward": 4.95,
+      "entry_timestamp": "2026-06-05 09:45:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 91.46,
+      "sl": 91.41,
+      "target": 91.53,
+      "risk": 0.05,
+      "reward": 0.07,
+      "entry_timestamp": "2026-06-05 09:45:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2232,9 +2259,9 @@
   "trigger_candles": {
     "MGC": {
       "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-06-05 09:30:00-04:00",
-      "trigger_low": 4423.5,
-      "trigger_high": 4433.89990234375
+      "trigger_timestamp": "2026-06-05 09:45:00-04:00",
+      "trigger_low": 4410.10009765625,
+      "trigger_high": 4416.2998046875
     },
     "SIL": {
       "type": "PRIORITY_LOWER",
@@ -2244,12 +2271,12 @@
     },
     "MCL": {
       "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-06-05 09:30:00-04:00",
-      "trigger_low": 91.61000061035156,
-      "trigger_high": 91.94000244140625
+      "trigger_timestamp": "2026-06-05 09:45:00-04:00",
+      "trigger_low": 91.41000366210938,
+      "trigger_high": 91.52999877929688
     }
   },
-  "last_run_time": "2026-06-05T13:50:47.236188+00:00",
+  "last_run_time": "2026-06-05T13:55:42.241114+00:00",
   "sent_alerts": {
     "MGC_PRIORITY_UPPER_2026-06-02 00:00:00-04:00": "2026-06-02T04:20:46.666850+00:00",
     "MCL_CROSS_LOWER_2026-06-01 21:45:00-04:00": "2026-06-02T04:20:49.780303+00:00",
@@ -2443,7 +2470,9 @@
     "MCL_PRIORITY_LOWER_2026-06-05 09:15:00-04:00": "2026-06-05T13:25:52.210753+00:00",
     "MCL_CROSS_LOWER_2026-06-05 09:15:00-04:00": "2026-06-05T13:35:52.213275+00:00",
     "MGC_PRIORITY_LOWER_2026-06-05 09:30:00-04:00": "2026-06-05T13:40:50.715051+00:00",
-    "MCL_PRIORITY_LOWER_2026-06-05 09:30:00-04:00": "2026-06-05T13:40:53.810069+00:00"
+    "MCL_PRIORITY_LOWER_2026-06-05 09:30:00-04:00": "2026-06-05T13:40:53.810069+00:00",
+    "MGC_PRIORITY_LOWER_2026-06-05 09:45:00-04:00": "2026-06-05T13:55:43.969051+00:00",
+    "MCL_PRIORITY_LOWER_2026-06-05 09:45:00-04:00": "2026-06-05T13:55:46.719085+00:00"
   },
   "is_sleeping": false
 }
