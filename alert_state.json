@@ -1,33 +1,6 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 4487.8,
-      "sl": 4489.0,
-      "target": 4486.0,
-      "risk": 1.2,
-      "reward": 1.8,
-      "entry_timestamp": "2026-06-05 03:15:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 92.3,
-      "sl": 92.29,
-      "target": 92.32,
-      "risk": 0.01,
-      "reward": 0.02,
-      "entry_timestamp": "2026-06-05 03:15:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -2730,6 +2703,34 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-06-05 03:00:00-04:00",
       "resolved_at": "2026-06-05T07:15:56.363894+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 4487.8,
+      "sl": 4489.0,
+      "target": 4486.0,
+      "exit_price": 4489.0,
+      "result": "LOSS",
+      "pnl_points": -1.2,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-06-05 03:15:00-04:00",
+      "resolved_at": "2026-06-05T07:31:04.704487+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 92.3,
+      "sl": 92.29,
+      "target": 92.32,
+      "exit_price": 92.29,
+      "result": "LOSS",
+      "pnl_points": -0.01,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-06-05 03:15:00-04:00",
+      "resolved_at": "2026-06-05T07:31:04.704619+00:00"
     }
   ],
   "trigger_candles": {
@@ -2746,7 +2747,7 @@
       "trigger_high": 92.4000015258789
     }
   },
-  "last_run_time": "2026-06-05T07:25:45.174643+00:00",
+  "last_run_time": "2026-06-05T07:31:03.650024+00:00",
   "sent_alerts": {
     "MGC_PRIORITY_UPPER_2026-06-02 00:00:00-04:00": "2026-06-02T04:20:46.666850+00:00",
     "MCL_CROSS_LOWER_2026-06-01 21:45:00-04:00": "2026-06-02T04:20:49.780303+00:00",
