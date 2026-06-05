@@ -1,6 +1,20 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [],
+  "tracked_signals": [
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 72.76,
+      "sl": 72.7,
+      "target": 72.85,
+      "risk": 0.06,
+      "reward": 0.09,
+      "entry_timestamp": "2026-06-04 21:15:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -2677,8 +2691,21 @@
       "resolved_at": "2026-06-05T03:50:38.800057+00:00"
     }
   ],
-  "trigger_candles": {},
-  "last_run_time": "2026-06-05T03:55:38.336862+00:00",
+  "trigger_candles": {
+    "MGC": {
+      "type": "PRIORITY_LOWER",
+      "trigger_timestamp": "2026-06-04 23:45:00-04:00",
+      "trigger_low": 4466.60009765625,
+      "trigger_high": 4466.60009765625
+    },
+    "SIL": {
+      "type": "PRIORITY_LOWER",
+      "trigger_timestamp": "2026-06-04 23:45:00-04:00",
+      "trigger_low": 72.83000183105469,
+      "trigger_high": 72.83000183105469
+    }
+  },
+  "last_run_time": "2026-06-05T04:01:16.007022+00:00",
   "sent_alerts": {
     "MGC_PRIORITY_UPPER_2026-06-02 00:00:00-04:00": "2026-06-02T04:20:46.666850+00:00",
     "MCL_CROSS_LOWER_2026-06-01 21:45:00-04:00": "2026-06-02T04:20:49.780303+00:00",
@@ -2826,7 +2853,11 @@
     "MCL_CROSS_LOWER_2026-06-04 12:45:00-04:00": "2026-06-04T17:10:46.006080+00:00",
     "MCL_CROSS_LOWER_2026-06-04 13:00:00-04:00": "2026-06-04T17:15:50.913870+00:00",
     "MCL_PRIORITY_LOWER_2026-06-04 13:15:00-04:00": "2026-06-04T17:25:39.600727+00:00",
-    "MGC_CROSS_LOWER_2026-06-04 23:15:00-04:00": "2026-06-05T03:50:39.278027+00:00"
+    "MGC_CROSS_LOWER_2026-06-04 23:15:00-04:00": "2026-06-05T03:50:39.278027+00:00",
+    "MGC_CROSS_LOWER_2026-06-04 21:15:00-04:00": "2026-06-05T04:01:17.638635+00:00",
+    "MGC_PRIORITY_LOWER_2026-06-04 23:45:00-04:00": "2026-06-05T04:01:18.493940+00:00",
+    "SIL_PRIORITY_LOWER_2026-06-04 21:15:00-04:00": "2026-06-05T04:01:21.794620+00:00",
+    "SIL_PRIORITY_LOWER_2026-06-04 23:45:00-04:00": "2026-06-05T04:01:24.960941+00:00"
   },
   "is_sleeping": false
 }
