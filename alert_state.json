@@ -1,20 +1,6 @@
 {
   "last_market_status": "OPEN",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 4387.1,
-      "sl": 4385.5,
-      "target": 4389.5,
-      "risk": 1.6,
-      "reward": 2.4,
-      "entry_timestamp": "2026-06-05 10:30:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2325,6 +2311,20 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-06-05 10:15:00-04:00",
       "resolved_at": "2026-06-05T14:31:08.908158+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4387.1,
+      "sl": 4385.5,
+      "target": 4389.5,
+      "exit_price": 4385.5,
+      "result": "LOSS",
+      "pnl_points": -1.6,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-06-05 10:30:00-04:00",
+      "resolved_at": "2026-06-05T14:45:48.768959+00:00"
     }
   ],
   "trigger_candles": {
@@ -2335,7 +2335,7 @@
       "trigger_high": 4388.7998046875
     }
   },
-  "last_run_time": "2026-06-05T14:40:47.687652+00:00",
+  "last_run_time": "2026-06-05T14:45:47.112712+00:00",
   "sent_alerts": {
     "MCL_REVERSAL_BREAK_UPPER_2026-06-02 13:45:00-04:00": "2026-06-02T17:55:50.786346+00:00",
     "MCL_REVERSAL_CLOSE_UPPER_2026-06-02 13:45:00-04:00": "2026-06-02T17:55:53.613454+00:00",
