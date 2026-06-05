@@ -11,7 +11,7 @@
       "risk": 0.41,
       "reward": 0.61,
       "entry_timestamp": "2026-06-05 04:30:00-04:00",
-      "candles_elapsed": 2,
+      "candles_elapsed": 3,
       "status": "TRACKING"
     }
   ],
@@ -2790,7 +2790,7 @@
     }
   ],
   "trigger_candles": {},
-  "last_run_time": "2026-06-05T08:50:45.427777+00:00",
+  "last_run_time": "2026-06-05T08:55:35.663192+00:00",
   "sent_alerts": {
     "MGC_PRIORITY_UPPER_2026-06-02 00:00:00-04:00": "2026-06-02T04:20:46.666850+00:00",
     "MCL_CROSS_LOWER_2026-06-01 21:45:00-04:00": "2026-06-02T04:20:49.780303+00:00",
