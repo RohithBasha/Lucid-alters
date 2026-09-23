@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-09-23T06:25:35.418152+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 4365.0,
-      "sl": 4364.7,
-      "target": 4365.45,
-      "risk": 0.3,
-      "reward": 0.45,
-      "entry_timestamp": "2026-09-23 02:15:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-09-23T06:31:03.064923+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MCL",
@@ -535,6 +521,20 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-09-23 01:45:00-04:00",
       "resolved_at": "2026-09-23T06:01:12.315308+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4365.0,
+      "sl": 4364.7,
+      "target": 4365.45,
+      "exit_price": 4364.7,
+      "result": "LOSS",
+      "pnl_points": -0.3,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-09-23 02:15:00-04:00",
+      "resolved_at": "2026-09-23T06:31:03.859930+00:00"
     }
   ],
   "trigger_candles": {
@@ -543,12 +543,6 @@
       "trigger_timestamp": "2026-09-23 02:15:00-04:00",
       "trigger_low": 4364.7001953125,
       "trigger_high": 4367.7998046875
-    },
-    "SIL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-09-23 02:15:00-04:00",
-      "trigger_low": 66.69499969482422,
-      "trigger_high": 66.75
     }
   },
   "sent_alerts": {
@@ -637,6 +631,7 @@
     "SIL_CROSS_LOWER_2026-09-23 02:00:00-04:00": "2026-09-23T06:10:43.870592+00:00",
     "MGC_CROSS_LOWER_2026-09-23 02:00:00-04:00": "2026-09-23T06:20:42.311899+00:00",
     "MGC_PRIORITY_LOWER_2026-09-23 02:15:00-04:00": "2026-09-23T06:25:36.706022+00:00",
-    "SIL_PRIORITY_LOWER_2026-09-23 02:15:00-04:00": "2026-09-23T06:25:39.340560+00:00"
+    "SIL_PRIORITY_LOWER_2026-09-23 02:15:00-04:00": "2026-09-23T06:25:39.340560+00:00",
+    "SIL_CROSS_LOWER_2026-09-23 02:15:00-04:00": "2026-09-23T06:31:04.687144+00:00"
   }
 }
