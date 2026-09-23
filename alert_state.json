@@ -1,48 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-09-23T12:55:38.657677+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 4338.9,
-      "sl": 4338.6,
-      "target": 4339.35,
-      "risk": 0.3,
-      "reward": 0.45,
-      "entry_timestamp": "2026-09-23 08:45:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "SIL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 65.44,
-      "sl": 65.43,
-      "target": 65.46,
-      "risk": 0.01,
-      "reward": 0.02,
-      "entry_timestamp": "2026-09-23 08:45:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 90.94,
-      "sl": 90.99,
-      "target": 90.87,
-      "risk": 0.05,
-      "reward": 0.07,
-      "entry_timestamp": "2026-09-23 08:45:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-09-23T13:01:21.289177+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MCL",
@@ -757,28 +717,51 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-09-23 07:45:00-04:00",
       "resolved_at": "2026-09-23T12:01:14.719479+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4338.9,
+      "sl": 4338.6,
+      "target": 4339.35,
+      "exit_price": 4338.6,
+      "result": "LOSS",
+      "pnl_points": -0.3,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-09-23 08:45:00-04:00",
+      "resolved_at": "2026-09-23T13:01:23.042520+00:00"
+    },
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 65.44,
+      "sl": 65.43,
+      "target": 65.46,
+      "exit_price": 65.43,
+      "result": "LOSS",
+      "pnl_points": -0.01,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-09-23 08:45:00-04:00",
+      "resolved_at": "2026-09-23T13:01:23.042715+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 90.94,
+      "sl": 90.99,
+      "target": 90.87,
+      "exit_price": 90.99,
+      "result": "LOSS",
+      "pnl_points": -0.05,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-09-23 08:45:00-04:00",
+      "resolved_at": "2026-09-23T13:01:23.042845+00:00"
     }
   ],
-  "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-09-23 08:45:00-04:00",
-      "trigger_low": 4338.60009765625,
-      "trigger_high": 4340.5
-    },
-    "SIL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-09-23 08:45:00-04:00",
-      "trigger_low": 65.42500305175781,
-      "trigger_high": 65.45500183105469
-    },
-    "MCL": {
-      "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-09-23 08:45:00-04:00",
-      "trigger_low": 90.9000015258789,
-      "trigger_high": 90.98999786376953
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MGC_CROSS_UPPER_2026-09-22 09:30:00-04:00": "2026-09-22T14:01:32.149143+00:00",
     "SIL_CROSS_UPPER_2026-09-22 09:30:00-04:00": "2026-09-22T14:01:32.803693+00:00",
@@ -910,6 +893,8 @@
     "MGC_CROSS_LOWER_2026-09-23 08:30:00-04:00": "2026-09-23T12:46:04.625356+00:00",
     "MGC_PRIORITY_LOWER_2026-09-23 08:45:00-04:00": "2026-09-23T12:55:40.145877+00:00",
     "SIL_PRIORITY_LOWER_2026-09-23 08:45:00-04:00": "2026-09-23T12:55:43.521170+00:00",
-    "MCL_PRIORITY_UPPER_2026-09-23 08:45:00-04:00": "2026-09-23T12:55:46.582261+00:00"
+    "MCL_PRIORITY_UPPER_2026-09-23 08:45:00-04:00": "2026-09-23T12:55:46.582261+00:00",
+    "MGC_CROSS_LOWER_2026-09-23 08:45:00-04:00": "2026-09-23T13:01:23.668620+00:00",
+    "MCL_CROSS_UPPER_2026-09-23 08:45:00-04:00": "2026-09-23T13:01:24.260127+00:00"
   }
 }
