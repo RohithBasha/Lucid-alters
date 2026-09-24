@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-09-24T09:25:42.837935+00:00",
+  "last_run_time": "2026-09-24T09:31:04.070899+00:00",
   "tracked_signals": [
     {
       "symbol": "SIL",
@@ -13,7 +13,7 @@
       "risk": 0.15,
       "reward": 0.22,
       "entry_timestamp": "2026-09-24 04:30:00-04:00",
-      "candles_elapsed": 9,
+      "candles_elapsed": 10,
       "status": "TRACKING"
     },
     {
@@ -26,7 +26,7 @@
       "risk": 0.45,
       "reward": 0.67,
       "entry_timestamp": "2026-09-24 04:30:00-04:00",
-      "candles_elapsed": 6,
+      "candles_elapsed": 7,
       "status": "TRACKING"
     }
   ],
@@ -1550,6 +1550,7 @@
     "MGC_PRIORITY_LOWER_2026-09-24 05:00:00-04:00": "2026-09-24T09:10:42.095360+00:00",
     "SIL_PRIORITY_LOWER_2026-09-24 05:00:00-04:00": "2026-09-24T09:10:44.795401+00:00",
     "MGC_CROSS_LOWER_2026-09-24 05:00:00-04:00": "2026-09-24T09:15:46.086761+00:00",
-    "SIL_CROSS_LOWER_2026-09-24 05:00:00-04:00": "2026-09-24T09:15:46.587186+00:00"
+    "SIL_CROSS_LOWER_2026-09-24 05:00:00-04:00": "2026-09-24T09:15:46.587186+00:00",
+    "MGC_CROSS_LOWER_2026-09-24 05:15:00-04:00": "2026-09-24T09:31:05.392154+00:00"
   }
 }
