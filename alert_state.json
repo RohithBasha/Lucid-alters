@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-09-28T05:10:36.278855+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 4229.0,
-      "sl": 4227.0,
-      "target": 4232.0,
-      "risk": 2.0,
-      "reward": 3.0,
-      "entry_timestamp": "2026-09-28 01:00:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-09-28T05:15:38.770470+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MCL",
@@ -2425,16 +2411,23 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-09-28 00:45:00-04:00",
       "resolved_at": "2026-09-28T05:01:13.021267+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4229.0,
+      "sl": 4227.0,
+      "target": 4232.0,
+      "exit_price": 4227.0,
+      "result": "LOSS",
+      "pnl_points": -2.0,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-09-28 01:00:00-04:00",
+      "resolved_at": "2026-09-28T05:15:39.645457+00:00"
     }
   ],
-  "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-09-28 01:00:00-04:00",
-      "trigger_low": 4227.0,
-      "trigger_high": 4229.39990234375
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "SIL_PRIORITY_UPPER_2026-09-24 12:30:00-04:00": "2026-09-24T16:40:43.528400+00:00",
     "SIL_CROSS_UPPER_2026-09-24 12:30:00-04:00": "2026-09-24T16:45:52.119748+00:00",
@@ -2594,6 +2587,7 @@
     "MCL_CROSS_UPPER_2026-09-28 00:30:00-04:00": "2026-09-28T04:45:44.136044+00:00",
     "MGC_PRIORITY_LOWER_2026-09-28 00:45:00-04:00": "2026-09-28T04:55:36.314621+00:00",
     "MCL_CROSS_UPPER_2026-09-28 00:45:00-04:00": "2026-09-28T04:55:38.979944+00:00",
-    "MGC_PRIORITY_LOWER_2026-09-28 01:00:00-04:00": "2026-09-28T05:10:37.807366+00:00"
+    "MGC_PRIORITY_LOWER_2026-09-28 01:00:00-04:00": "2026-09-28T05:10:37.807366+00:00",
+    "MGC_CROSS_LOWER_2026-09-28 01:00:00-04:00": "2026-09-28T05:15:40.220769+00:00"
   }
 }
