@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-09-29T18:25:39.083748+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 89.89,
-      "sl": 89.84,
-      "target": 89.97,
-      "risk": 0.05,
-      "reward": 0.08,
-      "entry_timestamp": "2026-09-29 14:15:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-09-29T18:30:57.899418+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2593,16 +2579,23 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-09-29 10:45:00-04:00",
       "resolved_at": "2026-09-29T15:01:13.997789+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 89.89,
+      "sl": 89.84,
+      "target": 89.97,
+      "exit_price": 89.84,
+      "result": "LOSS",
+      "pnl_points": -0.05,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-09-29 14:15:00-04:00",
+      "resolved_at": "2026-09-29T18:30:59.672063+00:00"
     }
   ],
-  "trigger_candles": {
-    "MCL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-09-29 14:15:00-04:00",
-      "trigger_low": 89.83999633789062,
-      "trigger_high": 89.91999816894531
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MCL_CROSS_UPPER_2026-09-28 05:45:00-04:00": "2026-09-28T10:01:14.056235+00:00",
     "MCL_CROSS_UPPER_2026-09-28 06:00:00-04:00": "2026-09-28T10:10:44.797186+00:00",
@@ -2774,6 +2767,7 @@
     "MGC_CROSS_LOWER_2026-09-29 13:45:00-04:00": "2026-09-29T18:05:37.829398+00:00",
     "MCL_CROSS_LOWER_2026-09-29 14:00:00-04:00": "2026-09-29T18:15:54.551438+00:00",
     "SIL_CROSS_UPPER_2026-09-29 14:00:00-04:00": "2026-09-29T18:25:40.508067+00:00",
-    "MCL_PRIORITY_LOWER_2026-09-29 14:15:00-04:00": "2026-09-29T18:25:40.982644+00:00"
+    "MCL_PRIORITY_LOWER_2026-09-29 14:15:00-04:00": "2026-09-29T18:25:40.982644+00:00",
+    "MCL_CROSS_LOWER_2026-09-29 14:15:00-04:00": "2026-09-29T18:31:00.277346+00:00"
   }
 }
