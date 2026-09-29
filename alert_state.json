@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-09-29T02:10:39.508107+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 4166.2,
-      "sl": 4167.6,
-      "target": 4164.1,
-      "risk": 1.4,
-      "reward": 2.1,
-      "entry_timestamp": "2026-09-28 22:00:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-09-29T02:15:49.635359+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2173,16 +2159,23 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-09-28 21:45:00-04:00",
       "resolved_at": "2026-09-29T02:01:09.739471+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 4166.2,
+      "sl": 4167.6,
+      "target": 4164.1,
+      "exit_price": 4167.6,
+      "result": "LOSS",
+      "pnl_points": -1.4,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-09-28 22:00:00-04:00",
+      "resolved_at": "2026-09-29T02:15:50.611446+00:00"
     }
   ],
-  "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-09-28 22:00:00-04:00",
-      "trigger_low": 4165.7998046875,
-      "trigger_high": 4167.60009765625
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MGC_PRIORITY_LOWER_2026-09-25 10:15:00-04:00": "2026-09-25T14:25:34.525020+00:00",
     "SIL_PRIORITY_LOWER_2026-09-25 10:15:00-04:00": "2026-09-25T14:25:37.394349+00:00",
@@ -2340,6 +2333,7 @@
     "MCL_PRIORITY_UPPER_2026-09-28 21:45:00-04:00": "2026-09-29T01:55:36.242692+00:00",
     "MGC_CROSS_UPPER_2026-09-28 21:45:00-04:00": "2026-09-29T02:01:10.247030+00:00",
     "MCL_CROSS_UPPER_2026-09-28 21:45:00-04:00": "2026-09-29T02:05:36.085599+00:00",
-    "MGC_PRIORITY_UPPER_2026-09-28 22:00:00-04:00": "2026-09-29T02:10:40.861587+00:00"
+    "MGC_PRIORITY_UPPER_2026-09-28 22:00:00-04:00": "2026-09-29T02:10:40.861587+00:00",
+    "SIL_CROSS_LOWER_2026-09-28 22:00:00-04:00": "2026-09-29T02:15:51.284033+00:00"
   }
 }
