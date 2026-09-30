@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-09-30T07:10:53.567907+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 4223.1,
-      "sl": 4224.0,
-      "target": 4221.75,
-      "risk": 0.9,
-      "reward": 1.35,
-      "entry_timestamp": "2026-09-30 03:00:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-09-30T07:15:48.197351+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2733,6 +2719,20 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-09-30 02:15:00-04:00",
       "resolved_at": "2026-09-30T06:30:59.081534+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 4223.1,
+      "sl": 4224.0,
+      "target": 4221.75,
+      "exit_price": 4224.0,
+      "result": "LOSS",
+      "pnl_points": -0.9,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-09-30 03:00:00-04:00",
+      "resolved_at": "2026-09-30T07:15:49.332393+00:00"
     }
   ],
   "trigger_candles": {
@@ -2855,6 +2855,7 @@
     "MGC_CROSS_UPPER_2026-09-30 02:45:00-04:00": "2026-09-30T07:01:18.804492+00:00",
     "SIL_CROSS_UPPER_2026-09-30 02:45:00-04:00": "2026-09-30T07:05:39.344389+00:00",
     "MGC_PRIORITY_UPPER_2026-09-30 03:00:00-04:00": "2026-09-30T07:10:55.093172+00:00",
-    "SIL_CROSS_UPPER_2026-09-30 03:00:00-04:00": "2026-09-30T07:10:58.072020+00:00"
+    "SIL_CROSS_UPPER_2026-09-30 03:00:00-04:00": "2026-09-30T07:10:58.072020+00:00",
+    "MCL_CROSS_LOWER_2026-09-30 03:00:00-04:00": "2026-09-30T07:15:49.874532+00:00"
   }
 }
