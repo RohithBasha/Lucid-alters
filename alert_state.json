@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-01T04:20:39.782990+00:00",
+  "last_run_time": "2026-10-01T04:25:41.523412+00:00",
   "tracked_signals": [
     {
       "symbol": "SIL",
@@ -13,7 +13,7 @@
       "risk": 0.03,
       "reward": 0.05,
       "entry_timestamp": "2026-10-01 00:00:00-04:00",
-      "candles_elapsed": 1,
+      "candles_elapsed": 2,
       "status": "TRACKING"
     }
   ],
@@ -2497,26 +2497,7 @@
       "resolved_at": "2026-10-01T04:20:40.616108+00:00"
     }
   ],
-  "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-01 00:00:00-04:00",
-      "trigger_low": 4204.39990234375,
-      "trigger_high": 4206.0
-    },
-    "SIL": {
-      "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-01 00:00:00-04:00",
-      "trigger_low": 61.42499923706055,
-      "trigger_high": 61.47999954223633
-    },
-    "MCL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-01 00:00:00-04:00",
-      "trigger_low": 89.11000061035156,
-      "trigger_high": 89.22000122070312
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MGC_CROSS_UPPER_2026-09-30 02:00:00-04:00": "2026-09-30T06:15:43.189444+00:00",
     "MCL_CROSS_LOWER_2026-09-30 02:00:00-04:00": "2026-09-30T06:15:43.742763+00:00",
