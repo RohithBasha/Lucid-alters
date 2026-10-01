@@ -1,21 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-01T04:15:46.892677+00:00",
+  "last_run_time": "2026-10-01T04:20:39.782990+00:00",
   "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 4205.1,
-      "sl": 4206.0,
-      "target": 4203.75,
-      "risk": 0.9,
-      "reward": 1.35,
-      "entry_timestamp": "2026-10-01 00:00:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    },
     {
       "symbol": "SIL",
       "type": "PRIORITY_UPPER",
@@ -26,20 +13,7 @@
       "risk": 0.03,
       "reward": 0.05,
       "entry_timestamp": "2026-10-01 00:00:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 89.14,
-      "sl": 89.11,
-      "target": 89.18,
-      "risk": 0.03,
-      "reward": 0.04,
-      "entry_timestamp": "2026-10-01 00:00:00-04:00",
-      "candles_elapsed": 0,
+      "candles_elapsed": 1,
       "status": "TRACKING"
     }
   ],
@@ -2493,6 +2467,34 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-09-30 23:45:00-04:00",
       "resolved_at": "2026-10-01T04:01:06.681669+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 4205.1,
+      "sl": 4206.0,
+      "target": 4203.75,
+      "exit_price": 4206.0,
+      "result": "LOSS",
+      "pnl_points": -0.9,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-01 00:00:00-04:00",
+      "resolved_at": "2026-10-01T04:20:40.615872+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 89.14,
+      "sl": 89.11,
+      "target": 89.18,
+      "exit_price": 89.18,
+      "result": "WIN",
+      "pnl_points": 0.04,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-01 00:00:00-04:00",
+      "resolved_at": "2026-10-01T04:20:40.616108+00:00"
     }
   ],
   "trigger_candles": {
