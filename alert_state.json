@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-02T05:10:42.355727+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 92.57,
-      "sl": 92.52,
-      "target": 92.65,
-      "risk": 0.05,
-      "reward": 0.08,
-      "entry_timestamp": "2026-10-02 01:00:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-10-02T05:15:42.036999+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MCL",
@@ -2439,16 +2425,23 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-02 00:15:00-04:00",
       "resolved_at": "2026-10-02T04:30:53.506350+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 92.57,
+      "sl": 92.52,
+      "target": 92.65,
+      "exit_price": 92.52,
+      "result": "LOSS",
+      "pnl_points": -0.05,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-02 01:00:00-04:00",
+      "resolved_at": "2026-10-02T05:15:43.619109+00:00"
     }
   ],
-  "trigger_candles": {
-    "MCL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-02 01:00:00-04:00",
-      "trigger_low": 92.5199966430664,
-      "trigger_high": 92.56999969482422
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MGC_REVERSAL_BREAK_LOWER_2026-09-30 21:00:00-04:00": "2026-10-01T01:10:48.800453+00:00",
     "MGC_REVERSAL_CLOSE_LOWER_2026-09-30 21:00:00-04:00": "2026-10-01T01:10:51.863506+00:00",
@@ -2611,6 +2604,7 @@
     "MCL_PRIORITY_LOWER_2026-10-02 00:30:00-04:00": "2026-10-02T04:40:43.908280+00:00",
     "MCL_CROSS_LOWER_2026-10-02 00:30:00-04:00": "2026-10-02T04:45:49.113111+00:00",
     "MCL_CROSS_LOWER_2026-10-02 00:45:00-04:00": "2026-10-02T04:55:40.217421+00:00",
-    "MCL_PRIORITY_LOWER_2026-10-02 01:00:00-04:00": "2026-10-02T05:10:44.366828+00:00"
+    "MCL_PRIORITY_LOWER_2026-10-02 01:00:00-04:00": "2026-10-02T05:10:44.366828+00:00",
+    "MCL_CROSS_LOWER_2026-10-02 01:00:00-04:00": "2026-10-02T05:15:44.235642+00:00"
   }
 }
