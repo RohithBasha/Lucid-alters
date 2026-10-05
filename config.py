@@ -24,6 +24,12 @@ INSTRUMENTS = {
         "exchange": "NYMEX",
         "fallback_ticker": None,
     },
+    "MNQ": {
+        "ticker": "MNQ=F",
+        "name": "Micro Nasdaq",
+        "exchange": "CME",
+        "fallback_ticker": None,
+    },
 }
 
 # ─── Bollinger Band Settings ──────────────────────────────────────────────────
