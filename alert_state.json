@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-06T02:55:33.202994+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 4148.7,
-      "sl": 4148.4,
-      "target": 4149.15,
-      "risk": 0.3,
-      "reward": 0.45,
-      "entry_timestamp": "2026-10-05 22:45:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-10-06T03:01:14.302298+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2117,22 +2103,23 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-05 22:30:00-04:00",
       "resolved_at": "2026-10-06T02:45:38.110799+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4148.7,
+      "sl": 4148.4,
+      "target": 4149.15,
+      "exit_price": 4148.4,
+      "result": "LOSS",
+      "pnl_points": -0.3,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-05 22:45:00-04:00",
+      "resolved_at": "2026-10-06T03:01:15.520177+00:00"
     }
   ],
-  "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-05 22:45:00-04:00",
-      "trigger_low": 4148.39990234375,
-      "trigger_high": 4149.5
-    },
-    "SIL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-05 22:45:00-04:00",
-      "trigger_low": 60.95500183105469,
-      "trigger_high": 60.96500015258789
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "SIL_CROSS_UPPER_2026-10-05 04:15:00-04:00": "2026-10-05T08:35:32.475386+00:00",
     "MGC_REVERSAL_BREAK_UPPER_2026-10-05 04:30:00-04:00": "2026-10-05T08:40:44.468934+00:00",
@@ -2236,6 +2223,7 @@
     "MGC_PRIORITY_LOWER_2026-10-05 22:45:00-04:00": "2026-10-06T02:55:35.912586+00:00",
     "SIL_PRIORITY_LOWER_2026-10-05 22:45:00-04:00": "2026-10-06T02:55:38.631446+00:00",
     "MCL_REVERSAL_BREAK_UPPER_2026-10-05 22:45:00-04:00": "2026-10-06T02:55:41.288671+00:00",
-    "MCL_REVERSAL_CLOSE_UPPER_2026-10-05 22:45:00-04:00": "2026-10-06T02:55:43.930842+00:00"
+    "MCL_REVERSAL_CLOSE_UPPER_2026-10-05 22:45:00-04:00": "2026-10-06T02:55:43.930842+00:00",
+    "MCL_CROSS_UPPER_2026-10-05 22:45:00-04:00": "2026-10-06T03:01:16.025357+00:00"
   }
 }
