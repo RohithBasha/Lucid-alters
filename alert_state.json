@@ -1,8 +1,35 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-06T01:30:58.195393+00:00",
-  "tracked_signals": [],
+  "last_run_time": "2026-10-06T01:40:37.815081+00:00",
+  "tracked_signals": [
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 61.15,
+      "sl": 61.14,
+      "target": 61.18,
+      "risk": 0.01,
+      "reward": 0.02,
+      "entry_timestamp": "2026-10-05 21:30:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 89.54,
+      "sl": 89.55,
+      "target": 89.52,
+      "risk": 0.01,
+      "reward": 0.02,
+      "entry_timestamp": "2026-10-05 21:30:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "MCL",
@@ -2710,9 +2737,15 @@
   "trigger_candles": {
     "MCL": {
       "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-05 21:15:00-04:00",
-      "trigger_low": 89.56999969482422,
-      "trigger_high": 89.5999984741211
+      "trigger_timestamp": "2026-10-05 21:30:00-04:00",
+      "trigger_low": 89.52999877929688,
+      "trigger_high": 89.55000305175781
+    },
+    "SIL": {
+      "type": "PRIORITY_LOWER",
+      "trigger_timestamp": "2026-10-05 21:30:00-04:00",
+      "trigger_low": 61.13999938964844,
+      "trigger_high": 61.16999816894531
     }
   },
   "sent_alerts": {
@@ -2893,6 +2926,8 @@
     "MNQ_CROSS_UPPER_2026-10-05 21:00:00-04:00": "2026-10-06T01:20:42.481180+00:00",
     "MGC_CROSS_UPPER_2026-10-05 21:15:00-04:00": "2026-10-06T01:25:36.367938+00:00",
     "MCL_PRIORITY_UPPER_2026-10-05 21:15:00-04:00": "2026-10-06T01:25:36.855382+00:00",
-    "SIL_CROSS_LOWER_2026-10-05 21:15:00-04:00": "2026-10-06T01:30:59.970582+00:00"
+    "SIL_CROSS_LOWER_2026-10-05 21:15:00-04:00": "2026-10-06T01:30:59.970582+00:00",
+    "SIL_PRIORITY_LOWER_2026-10-05 21:30:00-04:00": "2026-10-06T01:40:39.402473+00:00",
+    "MCL_PRIORITY_UPPER_2026-10-05 21:30:00-04:00": "2026-10-06T01:40:41.921975+00:00"
   }
 }
