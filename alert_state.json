@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-06T19:20:43.654794+00:00",
+  "last_run_time": "2026-10-06T19:25:44.661828+00:00",
   "tracked_signals": [
     {
       "symbol": "SIL",
@@ -13,6 +13,19 @@
       "risk": 0.18,
       "reward": 0.27,
       "entry_timestamp": "2026-10-06 15:00:00-04:00",
+      "candles_elapsed": 1,
+      "status": "TRACKING"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 4204.7,
+      "sl": 4205.1,
+      "target": 4204.1,
+      "risk": 0.4,
+      "reward": 0.6,
+      "entry_timestamp": "2026-10-06 15:15:00-04:00",
       "candles_elapsed": 0,
       "status": "TRACKING"
     }
@@ -2136,15 +2149,15 @@
   "trigger_candles": {
     "MGC": {
       "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-06 15:00:00-04:00",
-      "trigger_low": 4203.39990234375,
-      "trigger_high": 4207.2998046875
+      "trigger_timestamp": "2026-10-06 15:15:00-04:00",
+      "trigger_low": 4204.10009765625,
+      "trigger_high": 4205.10009765625
     },
     "SIL": {
       "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-06 15:00:00-04:00",
-      "trigger_low": 61.9900016784668,
-      "trigger_high": 62.209999084472656
+      "trigger_timestamp": "2026-10-06 15:15:00-04:00",
+      "trigger_low": 62.025001525878906,
+      "trigger_high": 62.029998779296875
     }
   },
   "sent_alerts": {
@@ -2296,6 +2309,8 @@
     "SIL_CROSS_UPPER_2026-10-06 14:45:00-04:00": "2026-10-06T19:01:20.309136+00:00",
     "MGC_PRIORITY_UPPER_2026-10-06 15:00:00-04:00": "2026-10-06T19:10:40.620036+00:00",
     "SIL_CROSS_UPPER_2026-10-06 15:00:00-04:00": "2026-10-06T19:10:43.123067+00:00",
-    "SIL_PRIORITY_UPPER_2026-10-06 15:00:00-04:00": "2026-10-06T19:20:45.690210+00:00"
+    "SIL_PRIORITY_UPPER_2026-10-06 15:00:00-04:00": "2026-10-06T19:20:45.690210+00:00",
+    "MGC_PRIORITY_UPPER_2026-10-06 15:15:00-04:00": "2026-10-06T19:25:46.812829+00:00",
+    "SIL_PRIORITY_UPPER_2026-10-06 15:15:00-04:00": "2026-10-06T19:25:49.446024+00:00"
   }
 }
