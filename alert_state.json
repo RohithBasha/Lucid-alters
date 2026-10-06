@@ -1,8 +1,35 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-06T12:05:38.249115+00:00",
-  "tracked_signals": [],
+  "last_run_time": "2026-10-06T12:10:43.316730+00:00",
+  "tracked_signals": [
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 4201.8,
+      "sl": 4202.6,
+      "target": 4200.6,
+      "risk": 0.8,
+      "reward": 1.2,
+      "entry_timestamp": "2026-10-06 08:00:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    },
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 61.88,
+      "sl": 61.92,
+      "target": 61.83,
+      "risk": 0.03,
+      "reward": 0.05,
+      "entry_timestamp": "2026-10-06 08:00:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2632,15 +2659,15 @@
     },
     "SIL": {
       "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-06 07:45:00-04:00",
-      "trigger_low": 61.755001068115234,
-      "trigger_high": 61.814998626708984
+      "trigger_timestamp": "2026-10-06 08:00:00-04:00",
+      "trigger_low": 61.869998931884766,
+      "trigger_high": 61.91999816894531
     },
     "MGC": {
       "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-06 07:45:00-04:00",
-      "trigger_low": 4198.0,
-      "trigger_high": 4200.60009765625
+      "trigger_timestamp": "2026-10-06 08:00:00-04:00",
+      "trigger_low": 4201.2001953125,
+      "trigger_high": 4202.60009765625
     }
   },
   "sent_alerts": {
@@ -2751,6 +2778,10 @@
     "MNQ_PRIORITY_UPPER_2026-10-06 07:30:00-04:00": "2026-10-06T11:40:46.285570+00:00",
     "MGC_PRIORITY_UPPER_2026-10-06 07:45:00-04:00": "2026-10-06T11:55:35.641831+00:00",
     "SIL_PRIORITY_UPPER_2026-10-06 07:45:00-04:00": "2026-10-06T11:55:38.559994+00:00",
-    "MNQ_PRIORITY_UPPER_2026-10-06 07:45:00-04:00": "2026-10-06T11:55:41.326880+00:00"
+    "MNQ_PRIORITY_UPPER_2026-10-06 07:45:00-04:00": "2026-10-06T11:55:41.326880+00:00",
+    "MGC_PRIORITY_UPPER_2026-10-06 08:00:00-04:00": "2026-10-06T12:10:45.216521+00:00",
+    "SIL_PRIORITY_UPPER_2026-10-06 08:00:00-04:00": "2026-10-06T12:10:48.460662+00:00",
+    "MNQ_REVERSAL_BREAK_UPPER_2026-10-06 08:00:00-04:00": "2026-10-06T12:10:51.160588+00:00",
+    "MNQ_CROSS_UPPER_2026-10-06 08:00:00-04:00": "2026-10-06T12:10:54.333561+00:00"
   }
 }
