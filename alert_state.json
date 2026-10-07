@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-07T03:35:37.404305+00:00",
+  "last_run_time": "2026-10-07T03:40:46.865061+00:00",
   "tracked_signals": [
     {
       "symbol": "SIL",
@@ -13,7 +13,7 @@
       "risk": 0.06,
       "reward": 0.09,
       "entry_timestamp": "2026-10-06 23:15:00-04:00",
-      "candles_elapsed": 1,
+      "candles_elapsed": 2,
       "status": "TRACKING"
     }
   ],
@@ -2441,14 +2441,7 @@
       "resolved_at": "2026-10-07T03:15:40.577239+00:00"
     }
   ],
-  "trigger_candles": {
-    "SIL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-06 23:15:00-04:00",
-      "trigger_low": 60.9900016784668,
-      "trigger_high": 61.064998626708984
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MCL_REVERSAL_BREAK_UPPER_2026-10-05 22:45:00-04:00": "2026-10-06T02:55:41.288671+00:00",
     "MCL_REVERSAL_CLOSE_UPPER_2026-10-05 22:45:00-04:00": "2026-10-06T02:55:43.930842+00:00",
