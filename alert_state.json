@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-08T06:15:48.327747+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 4143.2,
-      "sl": 4141.7,
-      "target": 4145.45,
-      "risk": 1.5,
-      "reward": 2.25,
-      "entry_timestamp": "2026-10-08 02:00:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-10-08T06:20:43.614167+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MCL",
@@ -2117,6 +2103,20 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-08 02:00:00-04:00",
       "resolved_at": "2026-10-08T06:15:49.397790+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4143.2,
+      "sl": 4141.7,
+      "target": 4145.45,
+      "exit_price": 4145.45,
+      "result": "WIN",
+      "pnl_points": 2.25,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-08 02:00:00-04:00",
+      "resolved_at": "2026-10-08T06:20:44.791725+00:00"
     }
   ],
   "trigger_candles": {
@@ -2125,18 +2125,6 @@
       "trigger_timestamp": "2026-10-08 02:00:00-04:00",
       "trigger_low": 59.48500061035156,
       "trigger_high": 59.6150016784668
-    },
-    "MCL": {
-      "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-08 02:00:00-04:00",
-      "trigger_low": 90.30000305175781,
-      "trigger_high": 90.43000030517578
-    },
-    "MGC": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-08 02:00:00-04:00",
-      "trigger_low": 4141.7001953125,
-      "trigger_high": 4145.60009765625
     }
   },
   "sent_alerts": {
@@ -2254,6 +2242,8 @@
     "SIL_PRIORITY_LOWER_2026-10-08 02:00:00-04:00": "2026-10-08T06:11:16.653005+00:00",
     "MCL_PRIORITY_UPPER_2026-10-08 02:00:00-04:00": "2026-10-08T06:11:19.269016+00:00",
     "MNQ_PRIORITY_LOWER_2026-10-08 02:00:00-04:00": "2026-10-08T06:11:21.948990+00:00",
-    "MGC_PRIORITY_LOWER_2026-10-08 02:00:00-04:00": "2026-10-08T06:15:50.053711+00:00"
+    "MGC_PRIORITY_LOWER_2026-10-08 02:00:00-04:00": "2026-10-08T06:15:50.053711+00:00",
+    "MCL_CROSS_UPPER_2026-10-08 02:00:00-04:00": "2026-10-08T06:20:45.292506+00:00",
+    "MNQ_CROSS_LOWER_2026-10-08 02:00:00-04:00": "2026-10-08T06:20:45.818118+00:00"
   }
 }
