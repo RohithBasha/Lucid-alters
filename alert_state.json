@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-08T17:40:44.354417+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MNQ",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 30841.75,
-      "sl": 30828.75,
-      "target": 30861.25,
-      "risk": 13.0,
-      "reward": 19.5,
-      "entry_timestamp": "2026-10-08 13:30:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-10-08T17:45:45.778527+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MCL",
@@ -2565,6 +2551,20 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-08 13:15:00-04:00",
       "resolved_at": "2026-10-08T17:30:58.283686+00:00"
+    },
+    {
+      "symbol": "MNQ",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 30841.75,
+      "sl": 30828.75,
+      "target": 30861.25,
+      "exit_price": 30828.75,
+      "result": "LOSS",
+      "pnl_points": -13.0,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-08 13:30:00-04:00",
+      "resolved_at": "2026-10-08T17:45:47.309280+00:00"
     }
   ],
   "trigger_candles": {
