@@ -1,8 +1,35 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-08T17:05:42.155558+00:00",
-  "tracked_signals": [],
+  "last_run_time": "2026-10-08T17:10:50.920196+00:00",
+  "tracked_signals": [
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 90.99,
+      "sl": 90.98,
+      "target": 91.0,
+      "risk": 0.01,
+      "reward": 0.01,
+      "entry_timestamp": "2026-10-08 13:00:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    },
+    {
+      "symbol": "MNQ",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 30953.0,
+      "sl": 30950.0,
+      "target": 30957.5,
+      "risk": 3.0,
+      "reward": 4.5,
+      "entry_timestamp": "2026-10-08 13:00:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "MCL",
@@ -2514,9 +2541,15 @@
   "trigger_candles": {
     "MCL": {
       "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-08 12:45:00-04:00",
-      "trigger_low": 90.87000274658203,
-      "trigger_high": 91.02999877929688
+      "trigger_timestamp": "2026-10-08 13:00:00-04:00",
+      "trigger_low": 90.9800033569336,
+      "trigger_high": 91.11000061035156
+    },
+    "MNQ": {
+      "type": "PRIORITY_LOWER",
+      "trigger_timestamp": "2026-10-08 13:00:00-04:00",
+      "trigger_low": 30950.0,
+      "trigger_high": 31001.0
     }
   },
   "sent_alerts": {
@@ -2714,6 +2747,8 @@
     "MCL_CROSS_LOWER_2026-10-08 12:15:00-04:00": "2026-10-08T16:30:58.215081+00:00",
     "MCL_PRIORITY_LOWER_2026-10-08 12:30:00-04:00": "2026-10-08T16:40:48.974509+00:00",
     "MCL_PRIORITY_LOWER_2026-10-08 12:45:00-04:00": "2026-10-08T16:55:43.737623+00:00",
-    "MNQ_CROSS_LOWER_2026-10-08 12:45:00-04:00": "2026-10-08T17:01:19.591953+00:00"
+    "MNQ_CROSS_LOWER_2026-10-08 12:45:00-04:00": "2026-10-08T17:01:19.591953+00:00",
+    "MCL_PRIORITY_LOWER_2026-10-08 13:00:00-04:00": "2026-10-08T17:10:53.754652+00:00",
+    "MNQ_PRIORITY_LOWER_2026-10-08 13:00:00-04:00": "2026-10-08T17:10:56.928748+00:00"
   }
 }
