@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-12T04:55:41.658251+00:00",
+  "last_run_time": "2026-10-12T05:01:18.989175+00:00",
   "tracked_signals": [
     {
       "symbol": "MCL",
@@ -13,7 +13,7 @@
       "risk": 0.09,
       "reward": 0.14,
       "entry_timestamp": "2026-10-12 00:30:00-04:00",
-      "candles_elapsed": 1,
+      "candles_elapsed": 2,
       "status": "TRACKING"
     }
   ],
@@ -2749,14 +2749,7 @@
       "resolved_at": "2026-10-12T04:31:03.933365+00:00"
     }
   ],
-  "trigger_candles": {
-    "MCL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-12 00:30:00-04:00",
-      "trigger_low": 90.27999877929688,
-      "trigger_high": 90.38999938964844
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MCL_CROSS_UPPER_2026-10-09 03:15:00-04:00": "2026-10-09T07:30:59.528757+00:00",
     "MNQ_CROSS_UPPER_2026-10-09 03:15:00-04:00": "2026-10-09T07:35:43.598849+00:00",
