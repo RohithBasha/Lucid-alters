@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-13T05:05:40.068182+00:00",
+  "last_run_time": "2026-10-13T05:10:44.435573+00:00",
   "tracked_signals": [
     {
       "symbol": "MCL",
@@ -13,7 +13,7 @@
       "risk": 0.2,
       "reward": 0.3,
       "entry_timestamp": "2026-10-12 22:00:00-04:00",
-      "candles_elapsed": 12,
+      "candles_elapsed": 13,
       "status": "TRACKING"
     }
   ],
