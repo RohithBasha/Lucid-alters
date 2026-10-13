@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-13T04:25:35.835043+00:00",
+  "last_run_time": "2026-10-13T04:31:03.971730+00:00",
   "tracked_signals": [
     {
       "symbol": "MCL",
@@ -13,33 +13,7 @@
       "risk": 0.2,
       "reward": 0.3,
       "entry_timestamp": "2026-10-12 22:00:00-04:00",
-      "candles_elapsed": 4,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 4213.9,
-      "sl": 4213.3,
-      "target": 4214.8,
-      "risk": 0.6,
-      "reward": 0.9,
-      "entry_timestamp": "2026-10-13 00:15:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 92.55,
-      "sl": 92.53,
-      "target": 92.58,
-      "risk": 0.02,
-      "reward": 0.03,
-      "entry_timestamp": "2026-10-13 00:15:00-04:00",
-      "candles_elapsed": 0,
+      "candles_elapsed": 5,
       "status": "TRACKING"
     }
   ],
@@ -2143,6 +2117,34 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-13 00:00:00-04:00",
       "resolved_at": "2026-10-13T04:20:47.837804+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4213.9,
+      "sl": 4213.3,
+      "target": 4214.8,
+      "exit_price": 4213.3,
+      "result": "LOSS",
+      "pnl_points": -0.6,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-13 00:15:00-04:00",
+      "resolved_at": "2026-10-13T04:31:05.187119+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 92.55,
+      "sl": 92.53,
+      "target": 92.58,
+      "exit_price": 92.53,
+      "result": "LOSS",
+      "pnl_points": -0.02,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-13 00:15:00-04:00",
+      "resolved_at": "2026-10-13T04:31:05.187214+00:00"
     }
   ],
   "trigger_candles": {
@@ -2157,12 +2159,6 @@
       "trigger_timestamp": "2026-10-13 00:15:00-04:00",
       "trigger_low": 60.76499938964844,
       "trigger_high": 60.779998779296875
-    },
-    "MCL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-13 00:15:00-04:00",
-      "trigger_low": 92.52999877929688,
-      "trigger_high": 92.55000305175781
     }
   },
   "sent_alerts": {
