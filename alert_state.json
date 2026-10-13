@@ -1,48 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-13T13:25:35.835261+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 4200.6,
-      "sl": 4199.7,
-      "target": 4201.95,
-      "risk": 0.9,
-      "reward": 1.35,
-      "entry_timestamp": "2026-10-13 09:15:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "SIL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 60.17,
-      "sl": 60.15,
-      "target": 60.21,
-      "risk": 0.02,
-      "reward": 0.04,
-      "entry_timestamp": "2026-10-13 09:15:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 93.11,
-      "sl": 93.16,
-      "target": 93.03,
-      "risk": 0.05,
-      "reward": 0.08,
-      "entry_timestamp": "2026-10-13 09:15:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-10-13T13:31:08.588033+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MNQ",
@@ -2465,15 +2425,51 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-13 08:45:00-04:00",
       "resolved_at": "2026-10-13T13:01:25.598016+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4200.6,
+      "sl": 4199.7,
+      "target": 4201.95,
+      "exit_price": 4199.7,
+      "result": "LOSS",
+      "pnl_points": -0.9,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-13 09:15:00-04:00",
+      "resolved_at": "2026-10-13T13:31:11.214711+00:00"
+    },
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 60.17,
+      "sl": 60.15,
+      "target": 60.21,
+      "exit_price": 60.15,
+      "result": "LOSS",
+      "pnl_points": -0.02,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-13 09:15:00-04:00",
+      "resolved_at": "2026-10-13T13:31:11.214856+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 93.11,
+      "sl": 93.16,
+      "target": 93.03,
+      "exit_price": 93.16,
+      "result": "LOSS",
+      "pnl_points": -0.05,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-13 09:15:00-04:00",
+      "resolved_at": "2026-10-13T13:31:11.214972+00:00"
     }
   ],
   "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-13 09:15:00-04:00",
-      "trigger_low": 4199.7001953125,
-      "trigger_high": 4200.89990234375
-    },
     "SIL": {
       "type": "PRIORITY_LOWER",
       "trigger_timestamp": "2026-10-13 09:15:00-04:00",
