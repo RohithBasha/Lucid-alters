@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-13T04:45:48.448290+00:00",
+  "last_run_time": "2026-10-13T04:50:46.774317+00:00",
   "tracked_signals": [
     {
       "symbol": "MCL",
@@ -13,33 +13,7 @@
       "risk": 0.2,
       "reward": 0.3,
       "entry_timestamp": "2026-10-12 22:00:00-04:00",
-      "candles_elapsed": 8,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 4215.5,
-      "sl": 4217.5,
-      "target": 4212.5,
-      "risk": 2.0,
-      "reward": 3.0,
-      "entry_timestamp": "2026-10-13 00:15:00-04:00",
-      "candles_elapsed": 1,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "SIL",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 60.75,
-      "sl": 60.83,
-      "target": 60.64,
-      "risk": 0.08,
-      "reward": 0.11,
-      "entry_timestamp": "2026-10-13 00:15:00-04:00",
-      "candles_elapsed": 1,
+      "candles_elapsed": 9,
       "status": "TRACKING"
     }
   ],
@@ -2213,6 +2187,34 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-13 00:30:00-04:00",
       "resolved_at": "2026-10-13T04:45:49.765021+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 4215.5,
+      "sl": 4217.5,
+      "target": 4212.5,
+      "exit_price": 4217.5,
+      "result": "LOSS",
+      "pnl_points": -2.0,
+      "candles_to_resolve": 2,
+      "entry_timestamp": "2026-10-13 00:15:00-04:00",
+      "resolved_at": "2026-10-13T04:50:48.321489+00:00"
+    },
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 60.75,
+      "sl": 60.83,
+      "target": 60.64,
+      "exit_price": 60.83,
+      "result": "LOSS",
+      "pnl_points": -0.08,
+      "candles_to_resolve": 2,
+      "entry_timestamp": "2026-10-13 00:15:00-04:00",
+      "resolved_at": "2026-10-13T04:50:48.321614+00:00"
     }
   ],
   "trigger_candles": {},
