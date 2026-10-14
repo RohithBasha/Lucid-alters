@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-14T04:45:44.864412+00:00",
+  "last_run_time": "2026-10-14T04:50:49.696684+00:00",
   "tracked_signals": [
     {
       "symbol": "MNQ",
@@ -13,7 +13,7 @@
       "risk": 17.0,
       "reward": 25.5,
       "entry_timestamp": "2026-10-14 00:00:00-04:00",
-      "candles_elapsed": 3,
+      "candles_elapsed": 4,
       "status": "TRACKING"
     }
   ],
