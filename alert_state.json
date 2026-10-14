@@ -1,8 +1,35 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-14T04:25:37.330727+00:00",
-  "tracked_signals": [],
+  "last_run_time": "2026-10-14T04:31:04.789473+00:00",
+  "tracked_signals": [
+    {
+      "symbol": "MNQ",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 30871.75,
+      "sl": 30888.75,
+      "target": 30846.25,
+      "risk": 17.0,
+      "reward": 25.5,
+      "entry_timestamp": "2026-10-14 00:00:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    },
+    {
+      "symbol": "MNQ",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 30873.25,
+      "sl": 30874.75,
+      "target": 30871.0,
+      "risk": 1.5,
+      "reward": 2.25,
+      "entry_timestamp": "2026-10-14 00:15:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "MNQ",
@@ -2721,7 +2748,14 @@
       "resolved_at": "2026-10-14T02:45:47.262070+00:00"
     }
   ],
-  "trigger_candles": {},
+  "trigger_candles": {
+    "MNQ": {
+      "type": "PRIORITY_UPPER",
+      "trigger_timestamp": "2026-10-14 00:15:00-04:00",
+      "trigger_low": 30866.75,
+      "trigger_high": 30874.75
+    }
+  },
   "sent_alerts": {
     "MNQ_CROSS_LOWER_2026-10-12 22:30:00-04:00": "2026-10-13T02:45:48.384880+00:00",
     "MNQ_CROSS_LOWER_2026-10-12 22:45:00-04:00": "2026-10-13T03:01:19.352982+00:00",
@@ -2911,6 +2945,8 @@
     "MNQ_CROSS_UPPER_2026-10-13 23:15:00-04:00": "2026-10-14T03:25:37.737110+00:00",
     "SIL_CROSS_UPPER_2026-10-13 23:15:00-04:00": "2026-10-14T03:31:08.544165+00:00",
     "MNQ_PRIORITY_UPPER_2026-10-13 23:45:00-04:00": "2026-10-14T04:01:21.685056+00:00",
-    "MNQ_CROSS_UPPER_2026-10-14 00:00:00-04:00": "2026-10-14T04:20:48.041352+00:00"
+    "MNQ_CROSS_UPPER_2026-10-14 00:00:00-04:00": "2026-10-14T04:20:48.041352+00:00",
+    "MNQ_PRIORITY_UPPER_2026-10-14 00:00:00-04:00": "2026-10-14T04:31:06.546270+00:00",
+    "MNQ_PRIORITY_UPPER_2026-10-14 00:15:00-04:00": "2026-10-14T04:31:09.782137+00:00"
   }
 }
