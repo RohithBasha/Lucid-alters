@@ -1,8 +1,22 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-15T01:35:35.572337+00:00",
-  "tracked_signals": [],
+  "last_run_time": "2026-10-15T01:40:44.850870+00:00",
+  "tracked_signals": [
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 94.24,
+      "sl": 94.22,
+      "target": 94.27,
+      "risk": 0.02,
+      "reward": 0.03,
+      "entry_timestamp": "2026-10-14 21:30:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2722,17 +2736,11 @@
     }
   ],
   "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-14 21:15:00-04:00",
-      "trigger_low": 4166.2998046875,
-      "trigger_high": 4170.2998046875
-    },
     "MCL": {
       "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-14 21:15:00-04:00",
-      "trigger_low": 94.04000091552734,
-      "trigger_high": 94.19999694824219
+      "trigger_timestamp": "2026-10-14 21:30:00-04:00",
+      "trigger_low": 94.22000122070312,
+      "trigger_high": 94.29000091552734
     }
   },
   "sent_alerts": {
@@ -2864,6 +2872,10 @@
     "MGC_PRIORITY_UPPER_2026-10-14 21:15:00-04:00": "2026-10-15T01:25:37.152759+00:00",
     "SIL_PRIORITY_UPPER_2026-10-14 21:15:00-04:00": "2026-10-15T01:25:40.143900+00:00",
     "MCL_PRIORITY_LOWER_2026-10-14 21:15:00-04:00": "2026-10-15T01:25:43.150627+00:00",
-    "SIL_CROSS_UPPER_2026-10-14 21:15:00-04:00": "2026-10-15T01:31:05.153072+00:00"
+    "SIL_CROSS_UPPER_2026-10-14 21:15:00-04:00": "2026-10-15T01:31:05.153072+00:00",
+    "MGC_REVERSAL_BREAK_UPPER_2026-10-14 21:30:00-04:00": "2026-10-15T01:40:46.618314+00:00",
+    "MGC_REVERSAL_CLOSE_UPPER_2026-10-14 21:30:00-04:00": "2026-10-15T01:40:49.260528+00:00",
+    "SIL_CROSS_UPPER_2026-10-14 21:30:00-04:00": "2026-10-15T01:40:51.676099+00:00",
+    "MCL_PRIORITY_LOWER_2026-10-14 21:30:00-04:00": "2026-10-15T01:40:52.155812+00:00"
   }
 }
