@@ -1,8 +1,22 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-15T15:35:53.622486+00:00",
-  "tracked_signals": [],
+  "last_run_time": "2026-10-15T15:40:47.325493+00:00",
+  "tracked_signals": [
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 96.05,
+      "sl": 96.13,
+      "target": 95.93,
+      "risk": 0.08,
+      "reward": 0.12,
+      "entry_timestamp": "2026-10-15 11:30:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "MNQ",
@@ -2484,17 +2498,11 @@
     }
   ],
   "trigger_candles": {
-    "SIL": {
+    "MCL": {
       "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-15 11:15:00-04:00",
-      "trigger_low": 57.29999923706055,
-      "trigger_high": 57.36000061035156
-    },
-    "MNQ": {
-      "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-15 11:15:00-04:00",
-      "trigger_low": 30025.5,
-      "trigger_high": 30062.0
+      "trigger_timestamp": "2026-10-15 11:30:00-04:00",
+      "trigger_low": 95.98999786376953,
+      "trigger_high": 96.12999725341797
     }
   },
   "sent_alerts": {
@@ -2632,6 +2640,11 @@
     "SIL_PRIORITY_UPPER_2026-10-15 11:15:00-04:00": "2026-10-15T15:25:49.467055+00:00",
     "MCL_PRIORITY_UPPER_2026-10-15 11:15:00-04:00": "2026-10-15T15:25:52.322688+00:00",
     "MNQ_PRIORITY_UPPER_2026-10-15 11:15:00-04:00": "2026-10-15T15:25:55.076640+00:00",
-    "MCL_CROSS_UPPER_2026-10-15 11:15:00-04:00": "2026-10-15T15:31:14.910536+00:00"
+    "MCL_CROSS_UPPER_2026-10-15 11:15:00-04:00": "2026-10-15T15:31:14.910536+00:00",
+    "SIL_REVERSAL_BREAK_UPPER_2026-10-15 11:30:00-04:00": "2026-10-15T15:40:49.014883+00:00",
+    "SIL_REVERSAL_CLOSE_UPPER_2026-10-15 11:30:00-04:00": "2026-10-15T15:40:51.669066+00:00",
+    "MCL_PRIORITY_UPPER_2026-10-15 11:30:00-04:00": "2026-10-15T15:40:54.196113+00:00",
+    "MNQ_REVERSAL_BREAK_UPPER_2026-10-15 11:30:00-04:00": "2026-10-15T15:40:56.785709+00:00",
+    "MNQ_REVERSAL_CLOSE_UPPER_2026-10-15 11:30:00-04:00": "2026-10-15T15:40:59.375710+00:00"
   }
 }
