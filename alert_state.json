@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-15T01:40:44.850870+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 94.24,
-      "sl": 94.22,
-      "target": 94.27,
-      "risk": 0.02,
-      "reward": 0.03,
-      "entry_timestamp": "2026-10-14 21:30:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-10-15T01:45:47.389652+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2733,16 +2719,23 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-14 21:15:00-04:00",
       "resolved_at": "2026-10-15T01:31:04.526387+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 94.24,
+      "sl": 94.22,
+      "target": 94.27,
+      "exit_price": 94.22,
+      "result": "LOSS",
+      "pnl_points": -0.02,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-14 21:30:00-04:00",
+      "resolved_at": "2026-10-15T01:45:48.600859+00:00"
     }
   ],
-  "trigger_candles": {
-    "MCL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-14 21:30:00-04:00",
-      "trigger_low": 94.22000122070312,
-      "trigger_high": 94.29000091552734
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MCL_CROSS_LOWER_2026-10-14 01:30:00-04:00": "2026-10-14T05:55:36.400892+00:00",
     "MNQ_CROSS_LOWER_2026-10-14 01:30:00-04:00": "2026-10-14T05:55:36.901278+00:00",
@@ -2876,6 +2869,8 @@
     "MGC_REVERSAL_BREAK_UPPER_2026-10-14 21:30:00-04:00": "2026-10-15T01:40:46.618314+00:00",
     "MGC_REVERSAL_CLOSE_UPPER_2026-10-14 21:30:00-04:00": "2026-10-15T01:40:49.260528+00:00",
     "SIL_CROSS_UPPER_2026-10-14 21:30:00-04:00": "2026-10-15T01:40:51.676099+00:00",
-    "MCL_PRIORITY_LOWER_2026-10-14 21:30:00-04:00": "2026-10-15T01:40:52.155812+00:00"
+    "MCL_PRIORITY_LOWER_2026-10-14 21:30:00-04:00": "2026-10-15T01:40:52.155812+00:00",
+    "MGC_CROSS_UPPER_2026-10-14 21:30:00-04:00": "2026-10-15T01:45:49.079722+00:00",
+    "MCL_CROSS_LOWER_2026-10-14 21:30:00-04:00": "2026-10-15T01:45:49.662994+00:00"
   }
 }
