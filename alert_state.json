@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-16T04:05:35.812780+00:00",
+  "last_run_time": "2026-10-16T04:10:37.035884+00:00",
   "tracked_signals": [],
   "signal_results": [
     {
@@ -2696,21 +2696,21 @@
   "trigger_candles": {
     "MGC": {
       "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-15 23:45:00-04:00",
-      "trigger_low": 4203.7001953125,
-      "trigger_high": 4203.7001953125
+      "trigger_timestamp": "2026-10-16 00:00:00-04:00",
+      "trigger_low": 4204.0,
+      "trigger_high": 4204.0
+    },
+    "SIL": {
+      "type": "PRIORITY_UPPER",
+      "trigger_timestamp": "2026-10-16 00:00:00-04:00",
+      "trigger_low": 58.04999923706055,
+      "trigger_high": 58.04999923706055
     },
     "MCL": {
-      "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-15 23:45:00-04:00",
-      "trigger_low": 95.69000244140625,
-      "trigger_high": 95.69000244140625
-    },
-    "MNQ": {
-      "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-15 23:45:00-04:00",
-      "trigger_low": 30201.0,
-      "trigger_high": 30201.0
+      "type": "PRIORITY_LOWER",
+      "trigger_timestamp": "2026-10-16 00:00:00-04:00",
+      "trigger_low": 95.66000366210938,
+      "trigger_high": 95.66000366210938
     }
   },
   "sent_alerts": {
@@ -2892,6 +2892,9 @@
     "SIL_PRIORITY_UPPER_2026-10-15 23:15:00-04:00": "2026-10-16T03:25:43.062389+00:00",
     "MGC_PRIORITY_UPPER_2026-10-15 23:45:00-04:00": "2026-10-16T04:01:20.227240+00:00",
     "MCL_PRIORITY_UPPER_2026-10-15 23:45:00-04:00": "2026-10-16T04:01:20.849668+00:00",
-    "MNQ_PRIORITY_UPPER_2026-10-15 23:45:00-04:00": "2026-10-16T04:01:21.464822+00:00"
+    "MNQ_PRIORITY_UPPER_2026-10-15 23:45:00-04:00": "2026-10-16T04:01:21.464822+00:00",
+    "MGC_PRIORITY_UPPER_2026-10-16 00:00:00-04:00": "2026-10-16T04:10:39.782763+00:00",
+    "SIL_PRIORITY_UPPER_2026-10-16 00:00:00-04:00": "2026-10-16T04:10:42.469636+00:00",
+    "MCL_PRIORITY_LOWER_2026-10-16 00:00:00-04:00": "2026-10-16T04:10:44.985180+00:00"
   }
 }
