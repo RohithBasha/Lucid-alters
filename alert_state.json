@@ -1,8 +1,35 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-19T14:05:41.423976+00:00",
-  "tracked_signals": [],
+  "last_run_time": "2026-10-19T14:10:46.706039+00:00",
+  "tracked_signals": [
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4171.8,
+      "sl": 4171.5,
+      "target": 4172.25,
+      "risk": 0.3,
+      "reward": 0.45,
+      "entry_timestamp": "2026-10-19 10:00:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    },
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 57.42,
+      "sl": 57.42,
+      "target": 57.43,
+      "risk": 0.0,
+      "reward": 0.01,
+      "entry_timestamp": "2026-10-19 10:00:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2374,9 +2401,15 @@
   "trigger_candles": {
     "MGC": {
       "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-19 09:45:00-04:00",
-      "trigger_low": 4169.89990234375,
-      "trigger_high": 4173.2998046875
+      "trigger_timestamp": "2026-10-19 10:00:00-04:00",
+      "trigger_low": 4171.5,
+      "trigger_high": 4174.7998046875
+    },
+    "SIL": {
+      "type": "PRIORITY_LOWER",
+      "trigger_timestamp": "2026-10-19 10:00:00-04:00",
+      "trigger_low": 57.415000915527344,
+      "trigger_high": 57.45000076293945
     }
   },
   "sent_alerts": {
@@ -2506,6 +2539,9 @@
     "MCL_CROSS_LOWER_2026-10-19 09:30:00-04:00": "2026-10-19T13:50:48.660935+00:00",
     "MGC_PRIORITY_LOWER_2026-10-19 09:45:00-04:00": "2026-10-19T13:55:41.790922+00:00",
     "SIL_PRIORITY_LOWER_2026-10-19 09:45:00-04:00": "2026-10-19T13:55:44.319271+00:00",
-    "SIL_CROSS_LOWER_2026-10-19 09:45:00-04:00": "2026-10-19T14:05:44.354193+00:00"
+    "SIL_CROSS_LOWER_2026-10-19 09:45:00-04:00": "2026-10-19T14:05:44.354193+00:00",
+    "MGC_PRIORITY_LOWER_2026-10-19 10:00:00-04:00": "2026-10-19T14:10:49.647875+00:00",
+    "SIL_PRIORITY_LOWER_2026-10-19 10:00:00-04:00": "2026-10-19T14:10:52.502680+00:00",
+    "MCL_CROSS_LOWER_2026-10-19 09:45:00-04:00": "2026-10-19T14:10:55.203632+00:00"
   }
 }
