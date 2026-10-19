@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-19T07:15:44.824000+00:00",
+  "last_run_time": "2026-10-19T07:20:42.678933+00:00",
   "tracked_signals": [],
   "signal_results": [
     {
@@ -2105,14 +2105,7 @@
       "resolved_at": "2026-10-19T07:15:45.815430+00:00"
     }
   ],
-  "trigger_candles": {
-    "MCL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-19 03:00:00-04:00",
-      "trigger_low": 96.76000213623047,
-      "trigger_high": 96.93000030517578
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MCL_CROSS_LOWER_2026-10-16 02:30:00-04:00": "2026-10-16T06:45:46.859783+00:00",
     "MGC_CROSS_UPPER_2026-10-16 03:00:00-04:00": "2026-10-16T07:20:55.087501+00:00",
