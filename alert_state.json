@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-19T03:10:43.269847+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "SIL",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 57.74,
-      "sl": 57.75,
-      "target": 57.74,
-      "risk": 0.01,
-      "reward": 0.01,
-      "entry_timestamp": "2026-10-18 23:00:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-10-19T03:15:47.573049+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MNQ",
@@ -2635,16 +2621,23 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-18 22:45:00-04:00",
       "resolved_at": "2026-10-19T03:01:24.074310+00:00"
+    },
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 57.74,
+      "sl": 57.75,
+      "target": 57.74,
+      "exit_price": 57.75,
+      "result": "LOSS",
+      "pnl_points": -0.01,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-18 23:00:00-04:00",
+      "resolved_at": "2026-10-19T03:15:49.789567+00:00"
     }
   ],
-  "trigger_candles": {
-    "SIL": {
-      "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-18 23:00:00-04:00",
-      "trigger_low": 57.72999954223633,
-      "trigger_high": 57.75
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MCL_CROSS_LOWER_2026-10-16 02:30:00-04:00": "2026-10-16T06:45:46.859783+00:00",
     "MGC_CROSS_UPPER_2026-10-16 03:00:00-04:00": "2026-10-16T07:20:55.087501+00:00",
@@ -2772,6 +2765,7 @@
     "SIL_CROSS_UPPER_2026-10-18 22:45:00-04:00": "2026-10-19T03:05:35.206185+00:00",
     "MNQ_CROSS_UPPER_2026-10-18 22:45:00-04:00": "2026-10-19T03:05:35.752602+00:00",
     "SIL_PRIORITY_UPPER_2026-10-18 23:00:00-04:00": "2026-10-19T03:10:44.925775+00:00",
-    "MNQ_CROSS_UPPER_2026-10-18 23:00:00-04:00": "2026-10-19T03:10:47.626031+00:00"
+    "MNQ_CROSS_UPPER_2026-10-18 23:00:00-04:00": "2026-10-19T03:10:47.626031+00:00",
+    "SIL_CROSS_UPPER_2026-10-18 23:00:00-04:00": "2026-10-19T03:15:50.414437+00:00"
   }
 }
