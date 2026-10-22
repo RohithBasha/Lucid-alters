@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-22T04:05:40.021296+00:00",
+  "last_run_time": "2026-10-22T04:10:50.988372+00:00",
   "tracked_signals": [],
   "signal_results": [
     {
@@ -2612,27 +2612,21 @@
   "trigger_candles": {
     "MGC": {
       "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-21 23:45:00-04:00",
-      "trigger_low": 4109.2998046875,
-      "trigger_high": 4110.89990234375
+      "trigger_timestamp": "2026-10-22 00:00:00-04:00",
+      "trigger_low": 4107.89990234375,
+      "trigger_high": 4107.89990234375
     },
     "SIL": {
       "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-21 23:45:00-04:00",
-      "trigger_low": 56.45500183105469,
-      "trigger_high": 56.474998474121094
+      "trigger_timestamp": "2026-10-22 00:00:00-04:00",
+      "trigger_low": 56.42499923706055,
+      "trigger_high": 56.42499923706055
     },
     "MCL": {
       "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-21 23:45:00-04:00",
-      "trigger_low": 98.44999694824219,
-      "trigger_high": 98.44999694824219
-    },
-    "MNQ": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-21 23:45:00-04:00",
-      "trigger_low": 29635.5,
-      "trigger_high": 29635.5
+      "trigger_timestamp": "2026-10-22 00:00:00-04:00",
+      "trigger_low": 98.52999877929688,
+      "trigger_high": 98.52999877929688
     }
   },
   "sent_alerts": {
@@ -2738,6 +2732,9 @@
     "SIL_PRIORITY_LOWER_2026-10-21 23:45:00-04:00": "2026-10-22T03:55:43.918755+00:00",
     "MNQ_CROSS_LOWER_2026-10-21 23:45:00-04:00": "2026-10-22T03:55:46.704575+00:00",
     "MCL_PRIORITY_UPPER_2026-10-21 23:45:00-04:00": "2026-10-22T04:01:22.283386+00:00",
-    "MNQ_PRIORITY_LOWER_2026-10-21 23:45:00-04:00": "2026-10-22T04:01:25.035581+00:00"
+    "MNQ_PRIORITY_LOWER_2026-10-21 23:45:00-04:00": "2026-10-22T04:01:25.035581+00:00",
+    "MGC_PRIORITY_LOWER_2026-10-22 00:00:00-04:00": "2026-10-22T04:10:52.917320+00:00",
+    "SIL_PRIORITY_LOWER_2026-10-22 00:00:00-04:00": "2026-10-22T04:10:55.888315+00:00",
+    "MCL_PRIORITY_UPPER_2026-10-22 00:00:00-04:00": "2026-10-22T04:10:58.774817+00:00"
   }
 }
