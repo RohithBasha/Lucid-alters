@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-22T12:10:49.533718+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 4074.6,
-      "sl": 4074.1,
-      "target": 4075.35,
-      "risk": 0.5,
-      "reward": 0.75,
-      "entry_timestamp": "2026-10-22 08:00:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-10-22T12:15:49.663753+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MNQ",
@@ -2257,16 +2243,23 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-22 07:45:00-04:00",
       "resolved_at": "2026-10-22T12:01:27.533872+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4074.6,
+      "sl": 4074.1,
+      "target": 4075.35,
+      "exit_price": 4075.35,
+      "result": "WIN",
+      "pnl_points": 0.75,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-22 08:00:00-04:00",
+      "resolved_at": "2026-10-22T12:15:51.666681+00:00"
     }
   ],
-  "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-22 08:00:00-04:00",
-      "trigger_low": 4074.10009765625,
-      "trigger_high": 4076.89990234375
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "SIL_CROSS_UPPER_2026-10-21 09:00:00-04:00": "2026-10-21T13:10:48.680587+00:00",
     "MCL_PRIORITY_LOWER_2026-10-21 09:00:00-04:00": "2026-10-21T13:10:49.229820+00:00",
@@ -2454,6 +2447,7 @@
     "MGC_PRIORITY_LOWER_2026-10-22 07:45:00-04:00": "2026-10-22T11:55:46.624224+00:00",
     "MGC_CROSS_LOWER_2026-10-22 07:45:00-04:00": "2026-10-22T12:01:28.090787+00:00",
     "SIL_CROSS_LOWER_2026-10-22 07:45:00-04:00": "2026-10-22T12:01:28.641233+00:00",
-    "MGC_PRIORITY_LOWER_2026-10-22 08:00:00-04:00": "2026-10-22T12:10:51.335638+00:00"
+    "MGC_PRIORITY_LOWER_2026-10-22 08:00:00-04:00": "2026-10-22T12:10:51.335638+00:00",
+    "MGC_CROSS_LOWER_2026-10-22 08:00:00-04:00": "2026-10-22T12:15:52.221411+00:00"
   }
 }
