@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-23T14:55:37.831587+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MNQ",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 29245.25,
-      "sl": 29268.0,
-      "target": 29211.12,
-      "risk": 22.75,
-      "reward": 34.12,
-      "entry_timestamp": "2026-10-23 10:45:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-10-23T15:01:29.269609+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MCL",
@@ -2215,15 +2201,23 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-23 10:30:00-04:00",
       "resolved_at": "2026-10-23T14:45:57.596348+00:00"
+    },
+    {
+      "symbol": "MNQ",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 29245.25,
+      "sl": 29268.0,
+      "target": 29211.12,
+      "exit_price": 29268.0,
+      "result": "LOSS",
+      "pnl_points": -22.75,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-23 10:45:00-04:00",
+      "resolved_at": "2026-10-23T15:01:31.223745+00:00"
     }
   ],
   "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-23 10:30:00-04:00",
-      "trigger_low": 3989.10009765625,
-      "trigger_high": 3994.300048828125
-    },
     "MNQ": {
       "type": "PRIORITY_UPPER",
       "trigger_timestamp": "2026-10-23 10:45:00-04:00",
@@ -2397,6 +2391,7 @@
     "MNQ_CROSS_UPPER_2026-10-23 10:30:00-04:00": "2026-10-23T14:50:52.036129+00:00",
     "MGC_REVERSAL_BREAK_LOWER_2026-10-23 10:45:00-04:00": "2026-10-23T14:55:40.322787+00:00",
     "MGC_CROSS_LOWER_2026-10-23 10:45:00-04:00": "2026-10-23T14:55:42.879764+00:00",
-    "MNQ_PRIORITY_UPPER_2026-10-23 10:45:00-04:00": "2026-10-23T14:55:43.467114+00:00"
+    "MNQ_PRIORITY_UPPER_2026-10-23 10:45:00-04:00": "2026-10-23T14:55:43.467114+00:00",
+    "MGC_REVERSAL_CLOSE_LOWER_2026-10-23 10:45:00-04:00": "2026-10-23T15:01:31.843806+00:00"
   }
 }
