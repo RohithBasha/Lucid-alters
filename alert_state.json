@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
-  "last_market_status": "OPEN",
-  "last_run_time": "2026-10-23T19:26:07.416392+00:00",
+  "last_market_status": "CLOSED",
+  "last_run_time": "2026-10-24T00:31:07.231193+00:00",
   "tracked_signals": [],
   "signal_results": [
     {
