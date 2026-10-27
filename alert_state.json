@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-27T09:55:33.600862+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MNQ",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 29462.5,
-      "sl": 29467.0,
-      "target": 29455.75,
-      "risk": 4.5,
-      "reward": 6.75,
-      "entry_timestamp": "2026-10-27 05:45:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-10-27T10:01:23.008610+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2565,16 +2551,23 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-27 05:30:00-04:00",
       "resolved_at": "2026-10-27T09:45:46.659980+00:00"
+    },
+    {
+      "symbol": "MNQ",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 29462.5,
+      "sl": 29467.0,
+      "target": 29455.75,
+      "exit_price": 29467.0,
+      "result": "LOSS",
+      "pnl_points": -4.5,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-27 05:45:00-04:00",
+      "resolved_at": "2026-10-27T10:01:24.072750+00:00"
     }
   ],
-  "trigger_candles": {
-    "MNQ": {
-      "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-10-27 05:45:00-04:00",
-      "trigger_low": 29456.75,
-      "trigger_high": 29467.0
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MCL_REVERSAL_BREAK_UPPER_2026-10-26 12:45:00-04:00": "2026-10-26T16:55:45.380833+00:00",
     "MCL_REVERSAL_CLOSE_UPPER_2026-10-26 12:45:00-04:00": "2026-10-26T17:01:36.625274+00:00",
@@ -2698,6 +2691,7 @@
     "MNQ_CROSS_UPPER_2026-10-27 05:15:00-04:00": "2026-10-27T09:25:38.323479+00:00",
     "MNQ_PRIORITY_UPPER_2026-10-27 05:30:00-04:00": "2026-10-27T09:40:46.345160+00:00",
     "MNQ_CROSS_UPPER_2026-10-27 05:30:00-04:00": "2026-10-27T09:45:47.240341+00:00",
-    "MNQ_PRIORITY_UPPER_2026-10-27 05:45:00-04:00": "2026-10-27T09:55:35.457716+00:00"
+    "MNQ_PRIORITY_UPPER_2026-10-27 05:45:00-04:00": "2026-10-27T09:55:35.457716+00:00",
+    "MNQ_CROSS_UPPER_2026-10-27 05:45:00-04:00": "2026-10-27T10:01:24.563223+00:00"
   }
 }
