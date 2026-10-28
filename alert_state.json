@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-28T13:55:48.138134+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MNQ",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 29853.5,
-      "sl": 29848.75,
-      "target": 29860.62,
-      "risk": 4.75,
-      "reward": 7.12,
-      "entry_timestamp": "2026-10-28 09:45:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-10-28T14:01:31.139592+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2257,16 +2243,23 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-28 09:00:00-04:00",
       "resolved_at": "2026-10-28T13:15:56.968764+00:00"
+    },
+    {
+      "symbol": "MNQ",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 29853.5,
+      "sl": 29848.75,
+      "target": 29860.62,
+      "exit_price": 29848.75,
+      "result": "LOSS",
+      "pnl_points": -4.75,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-28 09:45:00-04:00",
+      "resolved_at": "2026-10-28T14:01:32.823401+00:00"
     }
   ],
-  "trigger_candles": {
-    "MNQ": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-28 09:45:00-04:00",
-      "trigger_low": 29848.75,
-      "trigger_high": 29879.75
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MGC_CROSS_UPPER_2026-10-27 11:30:00-04:00": "2026-10-27T15:46:07.752533+00:00",
     "SIL_REVERSAL_BREAK_UPPER_2026-10-27 11:30:00-04:00": "2026-10-27T15:46:08.234635+00:00",
@@ -2429,6 +2422,7 @@
     "SIL_CROSS_UPPER_2026-10-28 09:15:00-04:00": "2026-10-28T13:25:55.318998+00:00",
     "SIL_REVERSAL_CLOSE_UPPER_2026-10-28 09:15:00-04:00": "2026-10-28T13:31:13.878924+00:00",
     "MNQ_CROSS_LOWER_2026-10-28 09:30:00-04:00": "2026-10-28T13:50:50.625388+00:00",
-    "MNQ_PRIORITY_LOWER_2026-10-28 09:45:00-04:00": "2026-10-28T13:55:51.431144+00:00"
+    "MNQ_PRIORITY_LOWER_2026-10-28 09:45:00-04:00": "2026-10-28T13:55:51.431144+00:00",
+    "MNQ_CROSS_LOWER_2026-10-28 09:45:00-04:00": "2026-10-28T14:01:33.361901+00:00"
   }
 }
