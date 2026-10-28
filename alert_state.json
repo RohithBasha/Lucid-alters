@@ -1,35 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-28T05:40:48.075699+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 101.38,
-      "sl": 101.5,
-      "target": 101.2,
-      "risk": 0.12,
-      "reward": 0.18,
-      "entry_timestamp": "2026-10-28 00:45:00-04:00",
-      "candles_elapsed": 6,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 4046.6,
-      "sl": 4045.4,
-      "target": 4048.4,
-      "risk": 1.2,
-      "reward": 1.8,
-      "entry_timestamp": "2026-10-28 01:30:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-10-28T05:45:49.669838+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2704,16 +2677,37 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-28 01:15:00-04:00",
       "resolved_at": "2026-10-28T05:31:10.036021+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 101.38,
+      "sl": 101.5,
+      "target": 101.2,
+      "exit_price": 101.5,
+      "result": "LOSS",
+      "pnl_points": -0.12,
+      "candles_to_resolve": 7,
+      "entry_timestamp": "2026-10-28 00:45:00-04:00",
+      "resolved_at": "2026-10-28T05:45:51.412924+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4046.6,
+      "sl": 4045.4,
+      "target": 4048.4,
+      "exit_price": 4045.4,
+      "result": "LOSS",
+      "pnl_points": -1.2,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-28 01:30:00-04:00",
+      "resolved_at": "2026-10-28T05:45:51.413089+00:00"
     }
   ],
-  "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-28 01:30:00-04:00",
-      "trigger_low": 4045.39990234375,
-      "trigger_high": 4048.199951171875
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MCL_PRIORITY_UPPER_2026-10-27 03:15:00-04:00": "2026-10-27T07:25:43.797603+00:00",
     "MNQ_PRIORITY_LOWER_2026-10-27 03:15:00-04:00": "2026-10-27T07:25:46.606862+00:00",
