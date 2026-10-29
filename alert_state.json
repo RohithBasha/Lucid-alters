@@ -1,8 +1,22 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-29T04:15:53.417436+00:00",
-  "tracked_signals": [],
+  "last_run_time": "2026-10-29T04:20:49.981575+00:00",
+  "tracked_signals": [
+    {
+      "symbol": "MNQ",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 29544.75,
+      "sl": 29542.75,
+      "target": 29547.75,
+      "risk": 2.0,
+      "reward": 3.0,
+      "entry_timestamp": "2026-10-29 00:00:00-04:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2568,23 +2582,17 @@
     }
   ],
   "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-29 00:00:00-04:00",
-      "trigger_low": 4049.699951171875,
-      "trigger_high": 4049.699951171875
-    },
     "SIL": {
       "type": "PRIORITY_LOWER",
       "trigger_timestamp": "2026-10-29 00:00:00-04:00",
       "trigger_low": 53.2400016784668,
       "trigger_high": 53.25
     },
-    "MCL": {
+    "MNQ": {
       "type": "PRIORITY_LOWER",
       "trigger_timestamp": "2026-10-29 00:00:00-04:00",
-      "trigger_low": 101.44000244140625,
-      "trigger_high": 101.44000244140625
+      "trigger_low": 29542.75,
+      "trigger_high": 29566.0
     }
   },
   "sent_alerts": {
@@ -2735,6 +2743,9 @@
     "MCL_PRIORITY_LOWER_2026-10-28 23:45:00-04:00": "2026-10-29T04:01:23.942560+00:00",
     "MGC_PRIORITY_LOWER_2026-10-29 00:00:00-04:00": "2026-10-29T04:10:55.724039+00:00",
     "SIL_PRIORITY_LOWER_2026-10-29 00:00:00-04:00": "2026-10-29T04:10:58.534127+00:00",
-    "MCL_PRIORITY_LOWER_2026-10-29 00:00:00-04:00": "2026-10-29T04:11:01.338591+00:00"
+    "MCL_PRIORITY_LOWER_2026-10-29 00:00:00-04:00": "2026-10-29T04:11:01.338591+00:00",
+    "MGC_CROSS_LOWER_2026-10-29 00:00:00-04:00": "2026-10-29T04:20:51.729399+00:00",
+    "MCL_CROSS_LOWER_2026-10-29 00:00:00-04:00": "2026-10-29T04:20:52.226306+00:00",
+    "MNQ_PRIORITY_LOWER_2026-10-29 00:00:00-04:00": "2026-10-29T04:20:52.726057+00:00"
   }
 }
