@@ -1,35 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-10-29T02:40:51.025550+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 101.59,
-      "sl": 101.47,
-      "target": 101.77,
-      "risk": 0.12,
-      "reward": 0.18,
-      "entry_timestamp": "2026-10-28 22:30:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "MNQ",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 29507.5,
-      "sl": 29500.25,
-      "target": 29518.38,
-      "risk": 7.25,
-      "reward": 10.88,
-      "entry_timestamp": "2026-10-28 22:30:00-04:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-10-29T02:45:51.892846+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2508,15 +2481,37 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-10-28 22:15:00-04:00",
       "resolved_at": "2026-10-29T02:31:10.948813+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 101.59,
+      "sl": 101.47,
+      "target": 101.77,
+      "exit_price": 101.77,
+      "result": "WIN",
+      "pnl_points": 0.18,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-28 22:30:00-04:00",
+      "resolved_at": "2026-10-29T02:45:52.846339+00:00"
+    },
+    {
+      "symbol": "MNQ",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 29507.5,
+      "sl": 29500.25,
+      "target": 29518.38,
+      "exit_price": 29500.25,
+      "result": "LOSS",
+      "pnl_points": -7.25,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-10-28 22:30:00-04:00",
+      "resolved_at": "2026-10-29T02:45:52.846496+00:00"
     }
   ],
   "trigger_candles": {
-    "MCL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-10-28 22:30:00-04:00",
-      "trigger_low": 101.47000122070312,
-      "trigger_high": 101.62999725341797
-    },
     "MNQ": {
       "type": "PRIORITY_LOWER",
       "trigger_timestamp": "2026-10-28 22:30:00-04:00",
