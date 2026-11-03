@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-03T05:01:26.673918+00:00",
+  "last_run_time": "2026-11-03T05:05:50.355861+00:00",
   "tracked_signals": [
     {
       "symbol": "MGC",
@@ -13,7 +13,7 @@
       "risk": 0.9,
       "reward": 1.35,
       "entry_timestamp": "2026-11-02 23:45:00-05:00",
-      "candles_elapsed": 1,
+      "candles_elapsed": 2,
       "status": "TRACKING"
     }
   ],
