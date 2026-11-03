@@ -1,8 +1,35 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-03T03:35:44.425123+00:00",
-  "tracked_signals": [],
+  "last_run_time": "2026-11-03T03:40:52.420889+00:00",
+  "tracked_signals": [
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 3945.9,
+      "sl": 3945.0,
+      "target": 3947.25,
+      "risk": 0.9,
+      "reward": 1.35,
+      "entry_timestamp": "2026-11-02 22:30:00-05:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    },
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 49.94,
+      "sl": 49.94,
+      "target": 49.95,
+      "risk": 0.0,
+      "reward": 0.01,
+      "entry_timestamp": "2026-11-02 22:30:00-05:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -2178,9 +2205,15 @@
   "trigger_candles": {
     "SIL": {
       "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-11-02 22:15:00-05:00",
-      "trigger_low": 50.025001525878906,
-      "trigger_high": 50.04999923706055
+      "trigger_timestamp": "2026-11-02 22:30:00-05:00",
+      "trigger_low": 49.935001373291016,
+      "trigger_high": 50.0
+    },
+    "MGC": {
+      "type": "PRIORITY_LOWER",
+      "trigger_timestamp": "2026-11-02 22:30:00-05:00",
+      "trigger_low": 3945.0,
+      "trigger_high": 3947.199951171875
     }
   },
   "sent_alerts": {
@@ -2292,6 +2325,8 @@
     "SIL_PRIORITY_LOWER_2026-11-02 22:00:00-05:00": "2026-11-03T03:10:52.108597+00:00",
     "MGC_CROSS_LOWER_2026-11-02 22:00:00-05:00": "2026-11-03T03:25:45.348721+00:00",
     "MGC_CROSS_LOWER_2026-11-02 22:15:00-05:00": "2026-11-03T03:25:46.025420+00:00",
-    "SIL_PRIORITY_LOWER_2026-11-02 22:15:00-05:00": "2026-11-03T03:25:46.720356+00:00"
+    "SIL_PRIORITY_LOWER_2026-11-02 22:15:00-05:00": "2026-11-03T03:25:46.720356+00:00",
+    "MGC_PRIORITY_LOWER_2026-11-02 22:30:00-05:00": "2026-11-03T03:40:54.024068+00:00",
+    "SIL_PRIORITY_LOWER_2026-11-02 22:30:00-05:00": "2026-11-03T03:40:56.630447+00:00"
   }
 }
