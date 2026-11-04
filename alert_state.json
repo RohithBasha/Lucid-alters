@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-04T06:40:47.014556+00:00",
+  "last_run_time": "2026-11-04T06:45:50.693420+00:00",
   "tracked_signals": [
     {
       "symbol": "MNQ",
@@ -13,7 +13,7 @@
       "risk": 64.75,
       "reward": 97.12,
       "entry_timestamp": "2026-11-04 01:00:00-05:00",
-      "candles_elapsed": 3,
+      "candles_elapsed": 4,
       "status": "TRACKING"
     },
     {
@@ -26,7 +26,7 @@
       "risk": 4.1,
       "reward": 6.15,
       "entry_timestamp": "2026-11-04 01:30:00-05:00",
-      "candles_elapsed": 0,
+      "candles_elapsed": 1,
       "status": "TRACKING"
     }
   ],
@@ -2729,6 +2729,7 @@
     "MNQ_CROSS_UPPER_2026-11-04 01:15:00-05:00": "2026-11-04T06:31:05.513153+00:00",
     "MGC_PRIORITY_UPPER_2026-11-04 01:30:00-05:00": "2026-11-04T06:40:50.166894+00:00",
     "MCL_CROSS_UPPER_2026-11-04 01:15:00-05:00": "2026-11-04T06:40:52.864715+00:00",
-    "MCL_CROSS_UPPER_2026-11-04 01:30:00-05:00": "2026-11-04T06:40:53.386895+00:00"
+    "MCL_CROSS_UPPER_2026-11-04 01:30:00-05:00": "2026-11-04T06:40:53.386895+00:00",
+    "MNQ_CROSS_UPPER_2026-11-04 01:30:00-05:00": "2026-11-04T06:45:52.244957+00:00"
   }
 }
