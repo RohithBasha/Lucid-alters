@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-05T13:01:31.108608+00:00",
+  "last_run_time": "2026-11-05T13:05:40.584648+00:00",
   "tracked_signals": [],
   "signal_results": [
     {
@@ -2139,12 +2139,6 @@
       "trigger_timestamp": "2026-11-05 07:15:00-05:00",
       "trigger_low": 89.36000061035156,
       "trigger_high": 89.51000213623047
-    },
-    "MGC": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-11-05 07:45:00-05:00",
-      "trigger_low": 4128.39990234375,
-      "trigger_high": 4129.60009765625
     }
   },
   "sent_alerts": {
