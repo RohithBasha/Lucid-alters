@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-06T02:15:52.953823+00:00",
+  "last_run_time": "2026-11-06T02:20:53.080784+00:00",
   "tracked_signals": [
     {
       "symbol": "MGC",
@@ -13,7 +13,7 @@
       "risk": 10.7,
       "reward": 16.05,
       "entry_timestamp": "2026-11-05 20:30:00-05:00",
-      "candles_elapsed": 7,
+      "candles_elapsed": 8,
       "status": "TRACKING"
     }
   ],
@@ -2287,14 +2287,7 @@
       "resolved_at": "2026-11-06T02:15:54.220941+00:00"
     }
   ],
-  "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-11-05 21:00:00-05:00",
-      "trigger_low": 4066.39990234375,
-      "trigger_high": 4070.800048828125
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MGC_PRIORITY_UPPER_2026-11-04 19:30:00-05:00": "2026-11-05T00:40:56.412447+00:00",
     "SIL_PRIORITY_UPPER_2026-11-04 19:30:00-05:00": "2026-11-05T00:40:59.204356+00:00",
