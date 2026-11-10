@@ -1,8 +1,48 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-10T14:05:34.853758+00:00",
-  "tracked_signals": [],
+  "last_run_time": "2026-11-10T14:10:51.985687+00:00",
+  "tracked_signals": [
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 4064.6,
+      "sl": 4059.3,
+      "target": 4072.55,
+      "risk": 5.3,
+      "reward": 7.95,
+      "entry_timestamp": "2026-11-10 09:00:00-05:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    },
+    {
+      "symbol": "SIL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 51.87,
+      "sl": 51.73,
+      "target": 52.07,
+      "risk": 0.14,
+      "reward": 0.2,
+      "entry_timestamp": "2026-11-10 09:00:00-05:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    },
+    {
+      "symbol": "MNQ",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 27712.25,
+      "sl": 27646.5,
+      "target": 27810.88,
+      "risk": 65.75,
+      "reward": 98.62,
+      "entry_timestamp": "2026-11-10 09:00:00-05:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "MCL",
@@ -2570,9 +2610,21 @@
   "trigger_candles": {
     "MNQ": {
       "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-11-10 08:45:00-05:00",
-      "trigger_low": 27675.0,
-      "trigger_high": 27715.0
+      "trigger_timestamp": "2026-11-10 09:00:00-05:00",
+      "trigger_low": 27646.5,
+      "trigger_high": 27713.25
+    },
+    "MGC": {
+      "type": "PRIORITY_LOWER",
+      "trigger_timestamp": "2026-11-10 09:00:00-05:00",
+      "trigger_low": 4059.300048828125,
+      "trigger_high": 4066.699951171875
+    },
+    "SIL": {
+      "type": "PRIORITY_LOWER",
+      "trigger_timestamp": "2026-11-10 09:00:00-05:00",
+      "trigger_low": 51.72999954223633,
+      "trigger_high": 51.92499923706055
     }
   },
   "sent_alerts": {
@@ -2731,6 +2783,9 @@
     "SIL_PRIORITY_LOWER_2026-11-10 08:45:00-05:00": "2026-11-10T13:55:49.795922+00:00",
     "MNQ_PRIORITY_LOWER_2026-11-10 08:45:00-05:00": "2026-11-10T13:55:52.787721+00:00",
     "MGC_CROSS_LOWER_2026-11-10 08:45:00-05:00": "2026-11-10T14:01:39.770745+00:00",
-    "SIL_CROSS_LOWER_2026-11-10 08:45:00-05:00": "2026-11-10T14:01:40.455414+00:00"
+    "SIL_CROSS_LOWER_2026-11-10 08:45:00-05:00": "2026-11-10T14:01:40.455414+00:00",
+    "MGC_PRIORITY_LOWER_2026-11-10 09:00:00-05:00": "2026-11-10T14:10:53.667360+00:00",
+    "SIL_PRIORITY_LOWER_2026-11-10 09:00:00-05:00": "2026-11-10T14:10:56.213221+00:00",
+    "MNQ_PRIORITY_LOWER_2026-11-10 09:00:00-05:00": "2026-11-10T14:10:58.860916+00:00"
   }
 }
