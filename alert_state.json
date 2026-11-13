@@ -1,8 +1,22 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-13T12:21:28.740257+00:00",
-  "tracked_signals": [],
+  "last_run_time": "2026-11-13T12:25:36.717704+00:00",
+  "tracked_signals": [
+    {
+      "symbol": "MNQ",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 28447.75,
+      "sl": 28451.0,
+      "target": 28442.88,
+      "risk": 3.25,
+      "reward": 4.88,
+      "entry_timestamp": "2026-11-13 07:15:00-05:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2500,9 +2514,9 @@
   "trigger_candles": {
     "MNQ": {
       "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-11-13 07:00:00-05:00",
-      "trigger_low": 28443.75,
-      "trigger_high": 28462.25
+      "trigger_timestamp": "2026-11-13 07:15:00-05:00",
+      "trigger_low": 28446.0,
+      "trigger_high": 28451.0
     }
   },
   "sent_alerts": {
@@ -2634,6 +2648,7 @@
     "SIL_CROSS_LOWER_2026-11-13 06:30:00-05:00": "2026-11-13T11:45:46.629564+00:00",
     "MGC_CROSS_LOWER_2026-11-13 06:30:00-05:00": "2026-11-13T11:55:43.482340+00:00",
     "MNQ_CROSS_UPPER_2026-11-13 06:45:00-05:00": "2026-11-13T12:01:40.471638+00:00",
-    "MNQ_PRIORITY_UPPER_2026-11-13 07:00:00-05:00": "2026-11-13T12:10:52.816857+00:00"
+    "MNQ_PRIORITY_UPPER_2026-11-13 07:00:00-05:00": "2026-11-13T12:10:52.816857+00:00",
+    "MNQ_PRIORITY_UPPER_2026-11-13 07:15:00-05:00": "2026-11-13T12:25:39.382035+00:00"
   }
 }
