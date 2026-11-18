@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-18T07:40:51.935273+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 3773.3,
-      "sl": 3772.8,
-      "target": 3774.05,
-      "risk": 0.5,
-      "reward": 0.75,
-      "entry_timestamp": "2026-11-18 02:30:00-05:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-11-18T07:45:51.398614+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MCL",
@@ -2719,15 +2705,23 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-11-18 02:15:00-05:00",
       "resolved_at": "2026-11-18T07:31:09.708515+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 3773.3,
+      "sl": 3772.8,
+      "target": 3774.05,
+      "exit_price": 3772.8,
+      "result": "LOSS",
+      "pnl_points": -0.5,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-11-18 02:30:00-05:00",
+      "resolved_at": "2026-11-18T07:45:52.595907+00:00"
     }
   ],
   "trigger_candles": {
-    "MCL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-11-18 02:30:00-05:00",
-      "trigger_low": 83.88999938964844,
-      "trigger_high": 83.91000366210938
-    },
     "MGC": {
       "type": "PRIORITY_LOWER",
       "trigger_timestamp": "2026-11-18 02:30:00-05:00",
@@ -2877,6 +2871,7 @@
     "MCL_PRIORITY_LOWER_2026-11-18 02:15:00-05:00": "2026-11-18T07:25:46.187561+00:00",
     "MGC_PRIORITY_LOWER_2026-11-18 02:30:00-05:00": "2026-11-18T07:40:53.837731+00:00",
     "MCL_PRIORITY_LOWER_2026-11-18 02:30:00-05:00": "2026-11-18T07:40:56.763342+00:00",
-    "MNQ_CROSS_UPPER_2026-11-18 02:15:00-05:00": "2026-11-18T07:40:59.839981+00:00"
+    "MNQ_CROSS_UPPER_2026-11-18 02:15:00-05:00": "2026-11-18T07:40:59.839981+00:00",
+    "MGC_CROSS_LOWER_2026-11-18 02:15:00-05:00": "2026-11-18T07:45:53.088943+00:00"
   }
 }
