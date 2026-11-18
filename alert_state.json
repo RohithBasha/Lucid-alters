@@ -1,8 +1,22 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-18T07:35:40.317739+00:00",
-  "tracked_signals": [],
+  "last_run_time": "2026-11-18T07:40:51.935273+00:00",
+  "tracked_signals": [
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 3773.3,
+      "sl": 3772.8,
+      "target": 3774.05,
+      "risk": 0.5,
+      "reward": 0.75,
+      "entry_timestamp": "2026-11-18 02:30:00-05:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "MCL",
@@ -2710,15 +2724,15 @@
   "trigger_candles": {
     "MCL": {
       "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-11-18 02:15:00-05:00",
-      "trigger_low": 83.87000274658203,
-      "trigger_high": 83.95999908447266
+      "trigger_timestamp": "2026-11-18 02:30:00-05:00",
+      "trigger_low": 83.88999938964844,
+      "trigger_high": 83.91000366210938
     },
     "MGC": {
       "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-11-18 02:15:00-05:00",
-      "trigger_low": 3774.300048828125,
-      "trigger_high": 3776.0
+      "trigger_timestamp": "2026-11-18 02:30:00-05:00",
+      "trigger_low": 3772.800048828125,
+      "trigger_high": 3773.89990234375
     }
   },
   "sent_alerts": {
@@ -2860,6 +2874,9 @@
     "MCL_PRIORITY_LOWER_2026-11-18 02:00:00-05:00": "2026-11-18T07:10:49.281332+00:00",
     "SIL_CROSS_LOWER_2026-11-18 02:00:00-05:00": "2026-11-18T07:15:50.555008+00:00",
     "MGC_PRIORITY_LOWER_2026-11-18 02:15:00-05:00": "2026-11-18T07:25:43.340251+00:00",
-    "MCL_PRIORITY_LOWER_2026-11-18 02:15:00-05:00": "2026-11-18T07:25:46.187561+00:00"
+    "MCL_PRIORITY_LOWER_2026-11-18 02:15:00-05:00": "2026-11-18T07:25:46.187561+00:00",
+    "MGC_PRIORITY_LOWER_2026-11-18 02:30:00-05:00": "2026-11-18T07:40:53.837731+00:00",
+    "MCL_PRIORITY_LOWER_2026-11-18 02:30:00-05:00": "2026-11-18T07:40:56.763342+00:00",
+    "MNQ_CROSS_UPPER_2026-11-18 02:15:00-05:00": "2026-11-18T07:40:59.839981+00:00"
   }
 }
