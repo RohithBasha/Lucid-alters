@@ -1,8 +1,35 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-18T07:20:46.881414+00:00",
-  "tracked_signals": [],
+  "last_run_time": "2026-11-18T07:25:41.320949+00:00",
+  "tracked_signals": [
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 3774.4,
+      "sl": 3774.3,
+      "target": 3774.55,
+      "risk": 0.1,
+      "reward": 0.15,
+      "entry_timestamp": "2026-11-18 02:15:00-05:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 83.91,
+      "sl": 83.87,
+      "target": 83.97,
+      "risk": 0.04,
+      "reward": 0.06,
+      "entry_timestamp": "2026-11-18 02:15:00-05:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "MCL",
@@ -2682,9 +2709,15 @@
   "trigger_candles": {
     "MCL": {
       "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-11-18 02:00:00-05:00",
-      "trigger_low": 84.02999877929688,
-      "trigger_high": 84.12000274658203
+      "trigger_timestamp": "2026-11-18 02:15:00-05:00",
+      "trigger_low": 83.87000274658203,
+      "trigger_high": 83.95999908447266
+    },
+    "MGC": {
+      "type": "PRIORITY_LOWER",
+      "trigger_timestamp": "2026-11-18 02:15:00-05:00",
+      "trigger_low": 3774.300048828125,
+      "trigger_high": 3776.0
     }
   },
   "sent_alerts": {
@@ -2824,6 +2857,8 @@
     "MGC_CROSS_LOWER_2026-11-18 01:45:00-05:00": "2026-11-18T07:01:28.724092+00:00",
     "MGC_CROSS_LOWER_2026-11-18 02:00:00-05:00": "2026-11-18T07:10:48.722380+00:00",
     "MCL_PRIORITY_LOWER_2026-11-18 02:00:00-05:00": "2026-11-18T07:10:49.281332+00:00",
-    "SIL_CROSS_LOWER_2026-11-18 02:00:00-05:00": "2026-11-18T07:15:50.555008+00:00"
+    "SIL_CROSS_LOWER_2026-11-18 02:00:00-05:00": "2026-11-18T07:15:50.555008+00:00",
+    "MGC_PRIORITY_LOWER_2026-11-18 02:15:00-05:00": "2026-11-18T07:25:43.340251+00:00",
+    "MCL_PRIORITY_LOWER_2026-11-18 02:15:00-05:00": "2026-11-18T07:25:46.187561+00:00"
   }
 }
