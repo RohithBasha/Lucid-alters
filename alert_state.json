@@ -1,8 +1,35 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-19T10:05:43.358901+00:00",
-  "tracked_signals": [],
+  "last_run_time": "2026-11-19T10:10:47.996944+00:00",
+  "tracked_signals": [
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 3727.9,
+      "sl": 3727.1,
+      "target": 3729.1,
+      "risk": 0.8,
+      "reward": 1.2,
+      "entry_timestamp": "2026-11-19 05:00:00-05:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 82.83,
+      "sl": 82.91,
+      "target": 82.71,
+      "risk": 0.08,
+      "reward": 0.12,
+      "entry_timestamp": "2026-11-19 05:00:00-05:00",
+      "candles_elapsed": 0,
+      "status": "TRACKING"
+    }
+  ],
   "signal_results": [
     {
       "symbol": "MGC",
@@ -2679,7 +2706,20 @@
       "resolved_at": "2026-11-19T09:31:12.184082+00:00"
     }
   ],
-  "trigger_candles": {},
+  "trigger_candles": {
+    "MGC": {
+      "type": "PRIORITY_LOWER",
+      "trigger_timestamp": "2026-11-19 05:00:00-05:00",
+      "trigger_low": 3727.10009765625,
+      "trigger_high": 3728.60009765625
+    },
+    "MCL": {
+      "type": "PRIORITY_UPPER",
+      "trigger_timestamp": "2026-11-19 05:00:00-05:00",
+      "trigger_low": 82.77999877929688,
+      "trigger_high": 82.91000366210938
+    }
+  },
   "sent_alerts": {
     "MNQ_CROSS_LOWER_2026-11-18 09:30:00-05:00": "2026-11-18T14:45:56.429316+00:00",
     "SIL_PRIORITY_LOWER_2026-11-18 09:45:00-05:00": "2026-11-18T14:55:45.412626+00:00",
@@ -2788,6 +2828,10 @@
     "SIL_CROSS_LOWER_2026-11-19 04:15:00-05:00": "2026-11-19T09:31:12.800219+00:00",
     "MGC_CROSS_LOWER_2026-11-19 04:30:00-05:00": "2026-11-19T09:40:52.200284+00:00",
     "SIL_PRIORITY_LOWER_2026-11-19 04:30:00-05:00": "2026-11-19T09:40:52.763347+00:00",
-    "MCL_CROSS_LOWER_2026-11-19 04:30:00-05:00": "2026-11-19T09:51:02.297982+00:00"
+    "MCL_CROSS_LOWER_2026-11-19 04:30:00-05:00": "2026-11-19T09:51:02.297982+00:00",
+    "MGC_CROSS_LOWER_2026-11-19 04:45:00-05:00": "2026-11-19T10:10:50.981832+00:00",
+    "MGC_PRIORITY_LOWER_2026-11-19 05:00:00-05:00": "2026-11-19T10:10:51.536592+00:00",
+    "MCL_CROSS_UPPER_2026-11-19 04:45:00-05:00": "2026-11-19T10:10:54.262086+00:00",
+    "MCL_PRIORITY_UPPER_2026-11-19 05:00:00-05:00": "2026-11-19T10:10:54.836686+00:00"
   }
 }
