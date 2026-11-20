@@ -1,35 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-20T18:40:54.899448+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MGC",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 3514.3,
-      "sl": 3513.3,
-      "target": 3515.8,
-      "risk": 1.0,
-      "reward": 1.5,
-      "entry_timestamp": "2026-11-20 13:30:00-05:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    },
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 82.93,
-      "sl": 83.01,
-      "target": 82.81,
-      "risk": 0.08,
-      "reward": 0.12,
-      "entry_timestamp": "2026-11-20 13:30:00-05:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-11-20T18:45:59.226734+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -2284,15 +2257,37 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-11-20 12:45:00-05:00",
       "resolved_at": "2026-11-20T18:01:30.266292+00:00"
+    },
+    {
+      "symbol": "MGC",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 3514.3,
+      "sl": 3513.3,
+      "target": 3515.8,
+      "exit_price": 3513.3,
+      "result": "LOSS",
+      "pnl_points": -1.0,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-11-20 13:30:00-05:00",
+      "resolved_at": "2026-11-20T18:46:01.234108+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 82.93,
+      "sl": 83.01,
+      "target": 82.81,
+      "exit_price": 83.01,
+      "result": "LOSS",
+      "pnl_points": -0.08,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-11-20 13:30:00-05:00",
+      "resolved_at": "2026-11-20T18:46:01.234246+00:00"
     }
   ],
   "trigger_candles": {
-    "MGC": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-11-20 13:30:00-05:00",
-      "trigger_low": 3513.300048828125,
-      "trigger_high": 3516.10009765625
-    },
     "MCL": {
       "type": "PRIORITY_UPPER",
       "trigger_timestamp": "2026-11-20 13:30:00-05:00",
