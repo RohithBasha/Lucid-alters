@@ -1,18 +1,18 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-20T05:20:47.817082+00:00",
+  "last_run_time": "2026-11-20T05:25:39.241844+00:00",
   "tracked_signals": [
     {
       "symbol": "MNQ",
       "type": "PRIORITY_LOWER",
       "direction": "LONG",
-      "entry_price": 26292.25,
-      "sl": 26281.75,
-      "target": 26308.0,
-      "risk": 10.5,
-      "reward": 15.75,
-      "entry_timestamp": "2026-11-20 00:00:00-05:00",
+      "entry_price": 26288.5,
+      "sl": 26275.0,
+      "target": 26308.75,
+      "risk": 13.5,
+      "reward": 20.25,
+      "entry_timestamp": "2026-11-20 00:15:00-05:00",
       "candles_elapsed": 0,
       "status": "TRACKING"
     }
@@ -2467,14 +2467,28 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-11-19 22:15:00-05:00",
       "resolved_at": "2026-11-20T03:31:08.364824+00:00"
+    },
+    {
+      "symbol": "MNQ",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 26292.25,
+      "sl": 26281.75,
+      "target": 26308.0,
+      "exit_price": 26281.75,
+      "result": "LOSS",
+      "pnl_points": -10.5,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-11-20 00:00:00-05:00",
+      "resolved_at": "2026-11-20T05:25:41.021434+00:00"
     }
   ],
   "trigger_candles": {
     "MNQ": {
       "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-11-20 00:00:00-05:00",
-      "trigger_low": 26281.75,
-      "trigger_high": 26317.5
+      "trigger_timestamp": "2026-11-20 00:15:00-05:00",
+      "trigger_low": 26275.0,
+      "trigger_high": 26316.0
     }
   },
   "sent_alerts": {
@@ -2610,6 +2624,7 @@
     "MNQ_CROSS_LOWER_2026-11-19 23:30:00-05:00": "2026-11-20T04:45:52.762915+00:00",
     "MNQ_PRIORITY_LOWER_2026-11-19 23:45:00-05:00": "2026-11-20T05:01:25.058320+00:00",
     "MGC_CROSS_LOWER_2026-11-20 00:00:00-05:00": "2026-11-20T05:15:52.720327+00:00",
-    "MNQ_PRIORITY_LOWER_2026-11-20 00:00:00-05:00": "2026-11-20T05:20:49.355127+00:00"
+    "MNQ_PRIORITY_LOWER_2026-11-20 00:00:00-05:00": "2026-11-20T05:20:49.355127+00:00",
+    "MNQ_PRIORITY_LOWER_2026-11-20 00:15:00-05:00": "2026-11-20T05:25:41.548732+00:00"
   }
 }
