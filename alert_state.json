@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-23T11:10:45.848042+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MCL",
-      "type": "PRIORITY_LOWER",
-      "direction": "LONG",
-      "entry_price": 82.58,
-      "sl": 82.52,
-      "target": 82.67,
-      "risk": 0.06,
-      "reward": 0.09,
-      "entry_timestamp": "2026-11-23 06:00:00-05:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-11-23T11:15:56.236569+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "SIL",
@@ -2439,16 +2425,23 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-11-23 04:15:00-05:00",
       "resolved_at": "2026-11-23T09:31:08.094965+00:00"
+    },
+    {
+      "symbol": "MCL",
+      "type": "PRIORITY_LOWER",
+      "direction": "LONG",
+      "entry_price": 82.58,
+      "sl": 82.52,
+      "target": 82.67,
+      "exit_price": 82.52,
+      "result": "LOSS",
+      "pnl_points": -0.06,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-11-23 06:00:00-05:00",
+      "resolved_at": "2026-11-23T11:15:57.464267+00:00"
     }
   ],
-  "trigger_candles": {
-    "MCL": {
-      "type": "PRIORITY_LOWER",
-      "trigger_timestamp": "2026-11-23 06:00:00-05:00",
-      "trigger_low": 82.5199966430664,
-      "trigger_high": 82.62000274658203
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "MNQ_CROSS_UPPER_2026-11-20 09:15:00-05:00": "2026-11-20T14:40:59.837860+00:00",
     "MNQ_CROSS_UPPER_2026-11-20 09:45:00-05:00": "2026-11-20T15:05:44.719746+00:00",
@@ -2554,6 +2547,7 @@
     "MNQ_CROSS_UPPER_2026-11-23 04:30:00-05:00": "2026-11-23T09:40:58.682709+00:00",
     "MNQ_REVERSAL_CLOSE_UPPER_2026-11-23 04:30:00-05:00": "2026-11-23T09:45:51.763278+00:00",
     "MCL_CROSS_LOWER_2026-11-23 05:45:00-05:00": "2026-11-23T11:01:28.298262+00:00",
-    "MCL_PRIORITY_LOWER_2026-11-23 06:00:00-05:00": "2026-11-23T11:10:48.040307+00:00"
+    "MCL_PRIORITY_LOWER_2026-11-23 06:00:00-05:00": "2026-11-23T11:10:48.040307+00:00",
+    "MCL_CROSS_LOWER_2026-11-23 06:00:00-05:00": "2026-11-23T11:15:58.225966+00:00"
   }
 }
