@@ -1,7 +1,7 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-24T14:01:26.296243+00:00",
+  "last_run_time": "2026-11-24T14:05:44.034793+00:00",
   "tracked_signals": [
     {
       "symbol": "SIL",
@@ -13,7 +13,7 @@
       "risk": 0.77,
       "reward": 1.16,
       "entry_timestamp": "2026-11-24 07:45:00-05:00",
-      "candles_elapsed": 11,
+      "candles_elapsed": 12,
       "status": "TRACKING"
     }
   ],
