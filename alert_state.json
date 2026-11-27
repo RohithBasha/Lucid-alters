@@ -1,22 +1,8 @@
 {
   "is_sleeping": false,
   "last_market_status": "OPEN",
-  "last_run_time": "2026-11-27T16:40:55.618966+00:00",
-  "tracked_signals": [
-    {
-      "symbol": "MNQ",
-      "type": "PRIORITY_UPPER",
-      "direction": "SHORT",
-      "entry_price": 26575.0,
-      "sl": 26581.75,
-      "target": 26564.88,
-      "risk": 6.75,
-      "reward": 10.12,
-      "entry_timestamp": "2026-11-27 11:30:00-05:00",
-      "candles_elapsed": 0,
-      "status": "TRACKING"
-    }
-  ],
+  "last_run_time": "2026-11-27T16:45:59.122859+00:00",
+  "tracked_signals": [],
   "signal_results": [
     {
       "symbol": "MNQ",
@@ -2131,16 +2117,23 @@
       "candles_to_resolve": 1,
       "entry_timestamp": "2026-11-27 11:15:00-05:00",
       "resolved_at": "2026-11-27T16:31:12.876616+00:00"
+    },
+    {
+      "symbol": "MNQ",
+      "type": "PRIORITY_UPPER",
+      "direction": "SHORT",
+      "entry_price": 26575.0,
+      "sl": 26581.75,
+      "target": 26564.88,
+      "exit_price": 26581.75,
+      "result": "LOSS",
+      "pnl_points": -6.75,
+      "candles_to_resolve": 1,
+      "entry_timestamp": "2026-11-27 11:30:00-05:00",
+      "resolved_at": "2026-11-27T16:46:00.449614+00:00"
     }
   ],
-  "trigger_candles": {
-    "MNQ": {
-      "type": "PRIORITY_UPPER",
-      "trigger_timestamp": "2026-11-27 11:30:00-05:00",
-      "trigger_low": 26558.75,
-      "trigger_high": 26581.75
-    }
-  },
+  "trigger_candles": {},
   "sent_alerts": {
     "SIL_PRIORITY_LOWER_2026-11-25 08:45:00-05:00": "2026-11-25T13:55:53.893219+00:00",
     "MCL_CROSS_UPPER_2026-11-25 08:45:00-05:00": "2026-11-25T13:55:56.841311+00:00",
@@ -2255,6 +2248,7 @@
     "MNQ_CROSS_UPPER_2026-11-27 11:15:00-05:00": "2026-11-27T16:25:46.586816+00:00",
     "MCL_CROSS_LOWER_2026-11-27 11:15:00-05:00": "2026-11-27T16:35:48.430764+00:00",
     "MCL_CROSS_LOWER_2026-11-27 11:30:00-05:00": "2026-11-27T16:40:58.184478+00:00",
-    "MNQ_PRIORITY_UPPER_2026-11-27 11:30:00-05:00": "2026-11-27T16:40:58.790621+00:00"
+    "MNQ_PRIORITY_UPPER_2026-11-27 11:30:00-05:00": "2026-11-27T16:40:58.790621+00:00",
+    "MNQ_CROSS_UPPER_2026-11-27 11:30:00-05:00": "2026-11-27T16:46:01.104369+00:00"
   }
 }
